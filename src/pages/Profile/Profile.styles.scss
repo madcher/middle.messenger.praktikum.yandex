@@ -1,0 +1,48 @@
+.profile__wrapper,  {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.profile__back-panel {
+  width: 64px;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: #FBFBFB;
+}
+
+.profile {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-info {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 500px;
+}
+.user-info__name {
+  font-size: 16px;
+  padding: 10px;
+}
+.user-info__filed {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-top: 1px solid #EAEAEA;
+}
+.user-info__value {
+  color: #999999;
+}
+.user-info__logout {
+  width: 100%;
+  padding: 10px;
+  color: #FF0000;
+}

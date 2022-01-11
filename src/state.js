@@ -1,9 +1,15 @@
 import { App } from "./index";
 
-const state = {};
+const initialState = {
+    count: 1,
+    route: '',
+    modalOpen: false,
+    user: null,
+    isNotRegistred: false,
+    isProfileOpen: false,
+};
 
-state.count = 1;
-state.route = '';
+
 const update = () => {
     const fn = () => '';
     const content = App || fn;
@@ -11,9 +17,10 @@ const update = () => {
     root.innerHTML = content();
 }
 
-export const _state = new Proxy(state, {
+export const _state = new Proxy(initialState, {
     set(target, property, value) {
         target[property] = value;
         update();
+        return true;
     }
 });
