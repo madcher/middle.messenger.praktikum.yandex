@@ -1,3 +1,4 @@
+
 Мессенджер для первого модуля
 
 Готово для первого спринта:
@@ -6,3 +7,6 @@
 - экран информации о пользователе с актуальными данными. Кнопка выйти активна
 
 домен netlify: https://zen-perlman-c8cf62.netlify.app
+
+Ссылка на пулл реквест: https://github.com/madcher/middle.messenger.praktikum.yandex/pull/1
+
