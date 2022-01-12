@@ -6,10 +6,13 @@
   border-top: 1px solid #EAEAEA;
   border-bottom: 1px solid #EAEAEA;
   align-items: center;
+  position: relative;
 }
 
 .contact__avatar__wrapper {
   width: 50px;
+  height: 50px;
+  margin-right: 10px;
 }
 
 .contact__avatar {
@@ -20,8 +23,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #999999;
 }
+.contact_info {
+  display: flex;
+  flex-direction: column;
+  height: 50px;
+}
+
 .contact_name {
   display: flex;
   align-items: center;
+}
+.contact_text {
+  color: #999999;
+}
+.contact__time {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  color: #999999;
+  font-size: 9px;
 }

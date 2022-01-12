@@ -23,7 +23,7 @@ const Contacts = () => {
                 </svg>
             </div>
             <div class="contacts__search">
-                <input type="search" placeholder="Поиск"/>
+                <input type="search" placeholder="Поиск" class="contacts__search-input"/>
             </div>
             <div class="contacts">
                 ${tempContacts.map(contact => Contact(contact)).join('')}

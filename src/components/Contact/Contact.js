@@ -6,8 +6,16 @@ const Contact = ({ avatar, name, day, text}) => {
             <div class="contact__avatar__wrapper">
                 <div class="contact__avatar">${avatar}</div>
             </div>
-            <div class="contact_name">
-                ${name}
+            <div class="contact_info">
+                <div class="contact_name">
+                    ${name}
+                </div>
+                <div class="contact_text">
+                    ${text}
+                </div>
+            </div>
+            <div class="contact__time">
+                ${day}
             </div>
         </div>
     `;
