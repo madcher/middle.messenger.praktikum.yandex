@@ -1,10 +1,10 @@
 import { _fn } from './utils';
-import Chat from "./pages/Chat/Chat";
-import Contacts from "./pages/Contacts/Contacts";
-import Profile from "./pages/Profile/Profile";
+import Chat from './pages/Chat/Chat';
+import Contacts from './pages/Contacts/Contacts';
+import Profile from './pages/Profile/Profile';
 import './styles.scss';
-import {_state} from "./state";
-import Modal from "./pages/Modal/Modal";
+import { _state } from './state';
+import Modal from './pages/Modal/Modal';
 
 export const App = () => {
     if (!_state.user) {

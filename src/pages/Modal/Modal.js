@@ -1,5 +1,5 @@
-import {_fn} from "../../utils";
-import { _state } from "../../state";
+import { _fn } from '../../utils';
+import { _state } from '../../state';
 import './Modal.style.scss';
 
 export const Login = () => {

@@ -22,11 +22,6 @@ app.use(function(req, res) {
     res.sendFile('./src/pages/Errors/404.html', {root: __dirname })
 });
 
-app.get('/test', function(req, res){
-    res.send("<h2>test</h2>");
-});
-
-
 app.listen(PORT, function () {
     console.log(`Example app listening on port ${PORT}!`);
 });

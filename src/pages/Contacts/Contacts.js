@@ -1,6 +1,6 @@
-import {_fn} from "../../utils";
-import {_state} from "../../state";
-import Contact from "../../components/Contact/Contact";
+import { _fn } from '../../utils';
+import { _state } from '../../state';
+import Contact from '../../components/Contact/Contact';
 import './Contacts.style.scss';
 
 const tempContacts = [

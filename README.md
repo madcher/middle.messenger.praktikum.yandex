@@ -5,4 +5,4 @@
 - экраны ошибок. (можно посмотреть на пути ../400 и ../500)
 - экран информации о пользователе с актуальными данными. Кнопка выйти активна
 
-домен netlify: https://wizardly-mestorf-6ea7d9.netlify.app/
+домен netlify: https://zen-perlman-c8cf62.netlify.app
