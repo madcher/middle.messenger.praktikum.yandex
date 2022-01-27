@@ -9,21 +9,25 @@
   color: $gray1;
   font-size: 12px;
 }
+
 .contacts__search {
   padding: 10px;
 }
+
 .contacts__search-input {
   background: $gray2;
   border-radius: 5px;
   height: 32px;
   border: none;
 }
-.contacts__profile__link {
+
+.contacts__profile-link {
   width: 52px;
   text-align: left;
   display: flex;
   align-items: center;
 }
+
 .contacts__wrapper {
   width: 310px;
   height: 100%;

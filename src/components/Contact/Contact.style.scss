@@ -27,19 +27,22 @@
   justify-content: center;
   color: $gray1;
 }
-.contact_info {
+
+.contact__info {
   display: flex;
   flex-direction: column;
   height: 50px;
 }
 
-.contact_name {
+.contact__name {
   display: flex;
   align-items: center;
 }
-.contact_text {
+
+.contact__text {
   color: $gray1;
 }
+
 .contact__time {
   position: absolute;
   top: 12px;

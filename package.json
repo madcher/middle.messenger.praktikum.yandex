@@ -11,7 +11,8 @@
     "build": "./node_modules/.bin/parcel build index.html --dist-dir ./build",
     "lint": "eslint --ext .js,.ts src/ --fix --quiet",
     "prettier": "prettier --config .prettierrc.js 'src/**/*.{js,ts}' --write",
-    "format": "npm run prettier && npm run lint"
+    "format": "npm run prettier && npm run lint",
+    "stylelint": "stylelint \"src/**/*.scss\" --fix; exit 0"
   },
   "keywords": [],
   "author": "",
@@ -29,6 +30,9 @@
     "express": "^4.17.2",
     "parcel": "^2.2.1",
     "prettier": "^2.5.1",
+    "stylelint": "^14.3.0",
+    "stylelint-config-standard": "^24.0.0",
+    "stylelint-scss": "^4.1.0",
     "typescript": "^4.5.5"
   }
 }

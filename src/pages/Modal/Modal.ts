@@ -78,8 +78,8 @@ const Modal = () => {
 	};
 
 	return `
-        <div class="modal_background"></div>
-        <div onclick="_fn.headerCloseHandler(event)" class="modal_wrapper">
+        <div class="modal__background"></div>
+        <div onclick="_fn.headerCloseHandler(event)" class="modal__wrapper">
             <div class="modal">
                 ${_state.isNotRegistered ? Registration() : Login()}
             </div>
