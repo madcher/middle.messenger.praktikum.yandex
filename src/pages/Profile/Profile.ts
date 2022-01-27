@@ -1,16 +1,16 @@
 import './Profile.styles.scss';
-import { _state } from "../../state";
-import {_fn} from "../../utils";
+import { _state } from '../../state';
+import { _fn } from '../../utils';
 
 const Profile = () => {
-    _fn.closeProfileHandler= () => {
-        _state.isProfileOpen = false;
-    };
-    _fn.logOff = () => {
-        _state.user = null;
-    };
+	_fn.closeProfileHandler = () => {
+		_state.isProfileOpen = false;
+	};
+	_fn.logOff = () => {
+		_state.user = null;
+	};
 
-    return `
+	return `
         <div class="profile__wrapper">
             <div class="profile__back-panel" onclick="_fn.closeProfileHandler()">
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -7,25 +7,23 @@ import { _state } from './state';
 import Modal from './pages/Modal/Modal';
 
 export const App = () => {
-    if (!_state.user) {
-        return Modal();
-    }
-    if (_state.isProfileOpen) {
-        return Profile();
-    }
-    return `
+	if (!_state.user) {
+		return Modal();
+	}
+	if (_state.isProfileOpen) {
+		return Profile();
+	}
+	return `
         <div class="messenger__wrapper">
             ${Contacts()}
             ${Chat()}
         </div>
-    `
-}
+    `;
+};
 const root = document.querySelector('#root');
 root.innerHTML = App();
 
-
 _fn.update = () => {
-    const root = document.querySelector('#root');
-    root.innerHTML = App();
-}
-
+	const root = document.querySelector('#root');
+	root.innerHTML = App();
+};

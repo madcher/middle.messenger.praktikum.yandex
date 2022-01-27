@@ -1,26 +1,28 @@
 import { _fn } from '../../utils';
 import { _state } from '../../state';
 import './Modal.style.scss';
+import { IForm } from './types';
 
 export const Login = () => {
-    _fn.submitHandler = (e) => {
-        e.preventDefault();
-        const {login, password} = e.target.elements;
-        _state.user = {
-            login: login.value,
-            password: password.value,
-            email: 'pochta@yandex.ru',
-            name: 'Иван',
-            surname: 'Иванов',
-            phone: '+7(909)9673030',
-        };
-        _state.modalOpen = false;
-    };
-    _fn.registrationHandler = () => {
-        _state.isNotRegistred = true;
-    };
+	_fn.submitHandler = (e: IForm) => {
+		e.preventDefault();
+		const target = e.target as HTMLFormElement & IForm;
+		const { login, password } = target.elements;
+		_state.user = {
+			login: login.value,
+			password: password.value,
+			email: 'pochta@yandex.ru',
+			name: 'Иван',
+			surname: 'Иванов',
+			phone: '+7(909)9673030',
+		};
+		_state.modalOpen = false;
+	};
+	_fn.registrationHandler = () => {
+		_state.isNotRegistered = true;
+	};
 
-    return `
+	return `
         <div>Вход</div>
         <form onsubmit="_fn.submitHandler(event)" class="modal__form">
             <input type="text" name="login" placeholder="логин" required="required"/>
@@ -32,27 +34,28 @@ export const Login = () => {
 };
 
 export const Registration = () => {
-    _fn.submitHandler = (e) => {
-        e.preventDefault();
-        const {email, login, name, surname, phone, password1, password2 } = e.target.elements;
-        if (password1.value !== password2.value) {
-            alert('пароли не совпадают')
-            return;
-        }
+	_fn.submitHandler = (e: MouseEvent) => {
+		e.preventDefault();
+		const target = e.target as HTMLFormElement & IForm;
+		const { email, login, name, surname, phone, password1, password2 } = target.elements;
+		if (password1.value !== password2.value) {
+			alert('пароли не совпадают');
+			return;
+		}
 
-        _state.user = {
-            email: email.value,
-            login: login.value,
-            name: name.value,
-            surname: surname.value,
-            phone: phone.value,
-            password: password1.value,
-        };
-        _state.modalOpen = false;
-        _state.isNotRegistred = false;
-    };
+		_state.user = {
+			email: email.value,
+			login: login.value,
+			name: name.value,
+			surname: surname.value,
+			phone: phone.value,
+			password: password1.value,
+		};
+		_state.modalOpen = false;
+		_state.isNotRegistered = false;
+	};
 
-    return `
+	return `
         <div>Регистрация</div>
         <form onsubmit="_fn.submitHandler(event)" class="modal__form">
             <input type="email" name="email" placeholder="почта" required="required"/>
@@ -68,20 +71,20 @@ export const Registration = () => {
 };
 
 const Modal = () => {
-    _fn.headerCloseHandler = (e) => {
-        if (e.target === e.currentTarget) {
-            _state.modalOpen = false;
-        }
-    };
+	_fn.headerCloseHandler = (e: MouseEvent) => {
+		if (e.target === e.currentTarget) {
+			_state.modalOpen = false;
+		}
+	};
 
-    return `
+	return `
         <div class="modal_background"></div>
         <div onclick="_fn.headerCloseHandler(event)" class="modal_wrapper">
             <div class="modal">
-                ${_state.isNotRegistred ? Registration() : Login()}
+                ${_state.isNotRegistered ? Registration() : Login()}
             </div>
         </div>
     `;
 };
 
-export default Modal
+export default Modal;

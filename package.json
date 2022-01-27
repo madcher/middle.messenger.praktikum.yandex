@@ -6,16 +6,29 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "dev": "./node_modules/.bin/parcel index.html --dist-dir ./build",
-    "start": "npm run build && node ./server.js",
-    "build": "./node_modules/.bin/parcel build index.html --dist-dir ./build"
+    "dev": "npm run lint && ./node_modules/.bin/parcel index.html --dist-dir ./build",
+    "start": "npm run lint && npm run build && node ./server.js",
+    "build": "./node_modules/.bin/parcel build index.html --dist-dir ./build",
+    "lint": "eslint --ext .js,.ts src/ --fix --quiet",
+    "prettier": "prettier --config .prettierrc.js 'src/**/*.{js,ts}' --write",
+    "format": "npm run prettier && npm run lint"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.1.0",
+    "@parcel/transformer-sass": "^2.2.1",
+    "@parcel/transformer-typescript-tsc": "^2.2.1",
+    "@parcel/validator-typescript": "^2.2.1",
+    "@typescript-eslint/eslint-plugin": "^5.10.1",
+    "@typescript-eslint/parser": "^5.10.1",
+    "eslint": "^8.7.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.28.0",
     "express": "^4.17.2",
-    "parcel": "^2.1.0"
+    "parcel": "^2.2.1",
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.5"
   }
 }

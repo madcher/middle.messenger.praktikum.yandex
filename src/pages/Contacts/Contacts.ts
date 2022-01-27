@@ -4,17 +4,17 @@ import Contact from '../../components/Contact/Contact';
 import './Contacts.style.scss';
 
 const tempContacts = [
-    { avatar: 'М', name: 'Максим Иванов', day: 'Пт', text: 'some text'},
-    { avatar: 'П', name: 'Паша Иванов', day: 'Пт', text: 'some text'},
-    { avatar: 'Ж', name: 'Женя Иванов', day: 'Пт', text: 'some text'},
-    { avatar: 'Л', name: 'Лена Иванова', day: 'Пт', text: 'some text'},
+	{ avatar: 'М', name: 'Максим Иванов', day: 'Пт', text: 'some text' },
+	{ avatar: 'П', name: 'Паша Иванов', day: 'Пт', text: 'some text' },
+	{ avatar: 'Ж', name: 'Женя Иванов', day: 'Пт', text: 'some text' },
+	{ avatar: 'Л', name: 'Лена Иванова', day: 'Пт', text: 'some text' },
 ];
 const Contacts = () => {
-    _fn.profileOpenHandler = () => {
-        _state.isProfileOpen = true;
-    };
+	_fn.profileOpenHandler = () => {
+		_state.isProfileOpen = true;
+	};
 
-    return `
+	return `
         <div class="contacts__wrapper">
             <div class="contacts__profile" onclick="_fn.profileOpenHandler()">
                 <div class="contacts__profile__link">Профиль </div>

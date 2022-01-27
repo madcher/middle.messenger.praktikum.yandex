@@ -1,7 +1,7 @@
 import './Chat.style.scss';
 
 const Chat = () => {
-    return `
+	return `
         <div class="chat__wrapper">
             Выберите чат чтобы отправить сообщение
         </div>

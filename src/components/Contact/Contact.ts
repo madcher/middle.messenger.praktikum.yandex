@@ -1,7 +1,7 @@
 import './Contact.style.scss';
 
-const Contact = ({ avatar, name, day, text}) => {
-    return `
+const Contact = ({ avatar, name, day, text }: any) => {
+	return `
         <div class="contact__wrapper">
             <div class="contact__avatar-wrapper">
                 <div class="contact__avatar">${avatar}</div>
