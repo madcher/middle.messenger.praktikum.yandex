@@ -1,4 +1,3 @@
-// @ts-ignore
 import { EventBus } from './EventBus';
 import * as Handlebars from 'handlebars';
 import { propsType } from '../types';
