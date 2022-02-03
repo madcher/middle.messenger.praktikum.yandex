@@ -13,7 +13,7 @@ const MAIN_BUTTON = {
 };
 
 const MESSAGE_FIELD = {
-	name: 'chats-form',
+	name: 'message',
 	message: 'message',
 	mainButton: new MainButton(MAIN_BUTTON),
 };

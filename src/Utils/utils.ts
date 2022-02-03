@@ -25,7 +25,7 @@ export class FormValidator {
 
 		if (data[name]) {
 			const re = data[name].re;
-			validationResult = re.test(value) ? '' : data[name].message;
+			validationResult = re.test(value) ? '' : data[name]?.message;
 		}
 		if (this.errorField) {
 			this.errorField.innerHTML = validationResult;
@@ -37,7 +37,7 @@ export class FormValidator {
 		if (this.password === value) {
 			this.errorField.innerHTML = '';
 		} else {
-			this.errorField.innerHTML = data[name].message;
+			this.errorField.innerHTML = data[name]?.message;
 		}
 	};
 
