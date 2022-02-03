@@ -1,5 +1,6 @@
-import { EventBus } from './eventBus';
-import Handlebars from 'handlebars';
+// @ts-ignore
+import { EventBus } from './EventBus';
+import * as Handlebars from 'handlebars';
 import { propsType } from '../types';
 
 export default abstract class Block {
