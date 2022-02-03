@@ -1,10 +1,23 @@
-<html lang="ru, en">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <script src="src/index.ts" type="module"></script>
-    <title>Messenger</title>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Messenger</title>
 </head>
 <body>
-<div id="root"></div>
+<div class="top-menu">
+	<a href="/#login" class="top-menu__item">Login</a>
+	<a href="/#registration" class="top-menu__item">Registration</a>
+	<a href="/#chats" class="top-menu__item">Chats</a>
+	<a href="/#profile" class="top-menu__item">Profile</a>
+	<a href="/#error404" class="top-menu__item">Error 404</a>
+	<a href="/#error500" class="top-menu__item">Error 500</a>
+</div>
+<main id="output" class="container">
+</main>
 </body>
-</html> 
+<script type="module" src="./src/index.ts"></script>
+</html>

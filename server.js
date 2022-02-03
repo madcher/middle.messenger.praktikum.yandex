@@ -6,7 +6,7 @@ const PORT = 3000;
 app.use(express.static('./build/'));
 
 // Handle 500
-app.use(function(error, req, res, next) {
+app.use(function(error, req, res) {
     res.status(500);
     res.sendFile('./src/pages/Errors/500.html', {root: __dirname })
 });

@@ -1,0 +1,27 @@
+@import "src/scss/colors";
+@import "src/scss/mixins";
+
+.error__container {
+  @include flex(column, space-evenly, center);
+
+  height: 160px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.error {
+  &__label {
+    font-weight: 600;
+  }
+
+  &__text {
+    font-size: 20px;
+  }
+
+  &__back {
+    color: $main-color;
+    margin-top: 50px;
+  }
+}

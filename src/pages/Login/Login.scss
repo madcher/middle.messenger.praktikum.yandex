@@ -1,0 +1,9 @@
+.login {
+  &.form__container {
+    position: absolute;
+    height: 450px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

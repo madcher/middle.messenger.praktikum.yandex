@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "engines": {
-    "node": ">=12.0.0"
+    "node": "14.5.0"
   },
   "scripts": {
-    "dev": "npm run lint && ./node_modules/.bin/parcel index.html --dist-dir ./build",
+    "dev": "npm run lint && parcel index.html --dist-dir ./build",
     "start": "npm run lint && npm run build && node ./server.js",
-    "build": "./node_modules/.bin/parcel build index.html --dist-dir ./build",
+    "build": "parcel build index.html --dist-dir ./build",
     "lint": "eslint --ext .js,.ts src/ --fix --quiet",
     "prettier": "prettier --config .prettierrc.js 'src/**/*.{js,ts}' --write",
     "format": "npm run prettier && npm run lint",
@@ -23,7 +23,7 @@
     "@parcel/validator-typescript": "^2.2.1",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
-    "eslint": "^8.7.0",
+    "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.28.0",
@@ -34,5 +34,8 @@
     "stylelint-config-standard": "^24.0.0",
     "stylelint-scss": "^4.1.0",
     "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "handlebars": "^4.7.7"
   }
 }

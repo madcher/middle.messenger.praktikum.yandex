@@ -1,0 +1,9 @@
+@import "src/scss/colors";
+
+.secondary__btn {
+  color: $main-color;
+
+  &:hover {
+    color: $main-hover;
+  }
+}
