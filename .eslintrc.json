@@ -1,0 +1,25 @@
+{
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "extends": ["eslint:recommended", "google"],
+  "rules": {
+    "max-len": [2, 110],
+    "max-params": [2, 3],
+    "no-var": "error",
+    "no-multi-spaces": "error",
+    "require-jsdoc": "off",
+    "no-trailing-spaces": "off",
+    "operator-linebreak": "off",
+    "@typescript-eslint/no-unused-vars": 2
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+  "plugins": [
+    "@typescript-eslint"
+  ]
+}
