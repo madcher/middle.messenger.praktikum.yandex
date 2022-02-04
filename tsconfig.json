@@ -1,21 +1,20 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "es2020",
-    "moduleResolution": "node",
-    "rootDir": "./src",
-    "outDir": "./build"
+    "target": "es2017",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "isolatedModules": true,
+    "strictNullChecks": false,
+    "sourceMap": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node"
   },
-  "experimentalDecorators": true,
-  "esModuleInterop": true,
-  "forceConsistentCasingInFileNames": true,
-  "strict": true,
-  "noImplicitAny": true,
-  "noUnusedLocals": true,
-  "noUnusedParameters": true,
-  "sourceMap": true,
-  "noImplicitThis": false,
-  "strictNullChecks": true,
-  "strictPropertyInitialization": false,
-  "skipLibCheck": true
+  "include": ["src/**/*"]
 }
