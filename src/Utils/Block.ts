@@ -1,6 +1,7 @@
-import { EventBus } from './EventBus';
+// @ts-ignore
+import {EventBus} from './EventBus';
 import * as Handlebars from 'handlebars';
-import { propsType } from '../types';
+import {propsType} from '../types';
 
 export default abstract class Block {
 	private _element: any;
@@ -62,8 +63,8 @@ export default abstract class Block {
 		return oldProps !== newProps;
 	}
 
-	setProps = ({ ...nextProps }: propsType) => {
-		const previousProps = { ...this.props };
+	setProps = ({...nextProps}: propsType) => {
+		const previousProps = {...this.props};
 		if (!nextProps) {
 			return;
 		}
@@ -121,7 +122,7 @@ export default abstract class Block {
 	}
 
 	private _addEvents(element?: any) {
-		const { events } = this.props;
+		const {events} = this.props;
 		if (events) {
 			Object.entries(events).forEach(([event, handler]) => {
 				if (element) {
@@ -133,7 +134,7 @@ export default abstract class Block {
 	}
 
 	private _removeEvents(element?: any) {
-		const { events } = this.props;
+		const {events} = this.props;
 		if (events) {
 			Object.entries(events).forEach(([event, handler]) => {
 				if (element) {
@@ -160,7 +161,7 @@ export default abstract class Block {
 					throw new Error('Нет доступа');
 				}
 				target[prop] = value;
-				self.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
+				self.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
 				return true;
 			},
 			deleteProperty(target, prop: string) {

@@ -1,4 +1,4 @@
-import { ValidationFields as data } from '../consts';
+import {ValidationFields as data} from '../consts';
 
 export const render = (tag: string, block: HTMLElement) => {
 	const root = document.querySelector(tag) as HTMLElement;
@@ -10,7 +10,7 @@ export const render = (tag: string, block: HTMLElement) => {
 };
 
 export const css = (el: any, styles: Record<string, any> = {}) => {
-	Object.keys(styles).forEach(key => {
+	Object.keys(styles).forEach((key) => {
 		el.style[key] = styles[key];
 	});
 };
@@ -49,7 +49,7 @@ export class FormValidator {
 		const form = document.querySelector(`[name = ${formName}]`);
 		const fields = form.querySelectorAll('input');
 
-		fields.forEach(input => {
+		fields.forEach((input) => {
 			if (input.type !== 'submit') {
 				if (input.value !== '') {
 					this.output[input.name] = input.value;
@@ -58,7 +58,7 @@ export class FormValidator {
 				}
 			}
 		});
-		Object.keys(this.output).forEach(key => {
+		Object.keys(this.output).forEach((key) => {
 			const val = this.inputCheck(this.output[key], key);
 			if (val) {
 				isError = true;
