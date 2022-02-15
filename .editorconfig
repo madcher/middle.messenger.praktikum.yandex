@@ -1,0 +1,31 @@
+root = true
+
+[*.js]
+indent_style = tab
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+
+[*.jsx]
+indent_style = tab
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+
+[*.ts]
+indent_style = tab
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+
+[*.tsx]
+indent_style = tab
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+
+[*.html]
+indent_style = tab
+indent_size = 4
+end_of_line = lf
+charset = utf-8

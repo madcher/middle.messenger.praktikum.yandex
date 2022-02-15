@@ -1,0 +1,51 @@
+@import "src/scss/colors";
+@import "src/scss/mixins";
+
+.chat {
+  @include flex(row, space-evenly, center);
+  justify-content: flex-start;
+  position: relative;
+  border-top: 1px solid $border-color;
+  padding: 12px 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $chat-selected;
+  }
+
+  &:last-child {
+    border-bottom: 1px solid $border-color;
+  }
+
+  &__user-photo {
+    flex: 0 0 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: $dark-grey;
+    margin-right: 10px;
+  }
+
+  &__content {
+    @include flex(column, space-between, flex-start);
+  }
+
+  &__user-name {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  &__message {
+    font-size: 12px;
+    color: $text-secondary;
+  }
+
+  &__time {
+    position: absolute;
+    top: 12px;
+    right: 10px;
+    font-weight: 500;
+    font-size: 9px;
+    color: $text-secondary;
+  }
+}
