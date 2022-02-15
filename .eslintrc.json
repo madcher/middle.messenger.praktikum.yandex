@@ -7,6 +7,8 @@
   "extends": ["eslint:recommended", "google"],
   "rules": {
     "max-len": [2, 110],
+    "indent": [2, "tab"],
+    "no-tabs": 0,
     "max-params": [2, 3],
     "no-var": "error",
     "no-multi-spaces": "error",
