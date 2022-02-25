@@ -3,14 +3,12 @@ function isEqual(lhs: any, rhs: any) {
 	return lhs === rhs;
 }
 
-function render(query: any, block: any) {
-	const root = document.querySelector(query);
-	if (root.firstChild) {
-		root.removeChild(root.firstChild);
-	}
-	root.appendChild(block.getContent());
+const render = (tag: string, block: any) => {
+	const root = document.querySelector(tag) as HTMLElement;
+	root.innerHTML = '';
+	root.appendChild(block);
 	return root;
-}
+};
 
 class Route {
 	private _pathname: any;
@@ -45,11 +43,10 @@ class Route {
 	render() {
 		if (!this._block) {
 			this._block = new this._blockClass();
-			render(this._props.rootQuery, this._block);
-			return;
+			return render(this._props.rootQuery, this._block.getContent());
 		}
 
-		this._block.show();
+		render(this._props.rootQuery, this._block.render());
 	}
 }
 
@@ -58,11 +55,12 @@ export default class Router {
 	history: any;
 	_currentRoute: any;
 	_rootQuery: any;
-	__instance: any;
+	private static __instance: Router
 
 	constructor(rootQuery: any) {
-		if (this.__instance) {
-			return this.__instance;
+		if (Router.__instance) {
+			Router.__instance._rootQuery = rootQuery;
+			return Router.__instance;
 		}
 
 		this.routes = [];
@@ -70,13 +68,13 @@ export default class Router {
 		this._currentRoute = null;
 		this._rootQuery = rootQuery;
 
-		this.__instance = this;
+		Router.__instance = this;
 	}
 
 	use(pathname: any, block: any) {
 		const route = new Route(pathname, block, {rootQuery: this._rootQuery});
 		this.routes.push(route);
-		return this._onRoute(pathname);
+		return this;
 	}
 
 	start() {
@@ -98,7 +96,7 @@ export default class Router {
 			this._currentRoute.leave();
 		}
 		this._currentRoute = route;
-		route.render(route, pathname);
+		route.render();
 	}
 
 	go(pathname: any) {

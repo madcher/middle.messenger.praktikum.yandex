@@ -2,33 +2,17 @@ import Login from './pages/Login/Login';
 import Registration from './pages/Registration/Registration';
 import Profile from './pages/Profile/Profile';
 import Chats from './pages/Chats/Chats';
-import Error404 from './pages/Error/Error-404';
-import Error500 from './pages/Error/Error-500';
-import {render} from './Utils/utils';
+import Router from './utils/Router';
 import './scss/styles.scss';
-
-type TLocation = { [key: string]: any };
 
 const TAG = '#output';
 
-const location: TLocation = {
-	login: Login,
-	registration: Registration,
-	profile: Profile,
-	chats: Chats,
-	error404: Error404,
-	error500: Error500,
-};
+const router = new Router(TAG);
 
-window.addEventListener('hashchange', () => {
-	const hash = window.location.hash.slice(1);
-	let component;
-
-	if (Object.keys(location).includes(hash)) {
-		component = new location[hash]();
-	} else {
-		component = new Error404();
-	}
-
-	render(TAG, component.getContent());
-});
+router
+	.use('/', Login)
+	.use('/login', Login)
+	.use('/chats', Chats)
+	.use('/profile', Profile)
+	.use('/registration', Registration)
+	.start();

@@ -27,19 +27,19 @@ function queryStringify(data: TData) {
 
 export default class HTTPTransport {
 	public get = (url: string, options: IOptions = {}) =>
-		this.request(url, { ...options, method: METHODS.GET }, options.timeout);
+		this.request(url, {...options, method: METHODS.GET}, options.timeout);
 
 	public post = (url: string, options: IOptions = {}) =>
-		this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+		this.request(url, {...options, method: METHODS.POST}, options.timeout);
 
 	public put = (url: string, options: IOptions = {}) =>
-		this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+		this.request(url, {...options, method: METHODS.PUT}, options.timeout);
 
 	public delete = (url: string, options: IOptions = {}) =>
-		this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+		this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
 
 	private request = (url: string, options: IOptions = {}, timeout = 5000) => {
-		const { method, headers = {}, data } = options;
+		const {method, headers = {}, data} = options;
 
 		return new Promise((resolve, reject) => {
 			if (!method) {
@@ -52,7 +52,7 @@ export default class HTTPTransport {
 
 			xhr.open(method, isGet && !!data ? `${url}${queryStringify(data)}` : url);
 
-			Object.keys(headers).forEach(key => {
+			Object.keys(headers).forEach((key) => {
 				xhr.setRequestHeader(key, headers[key]);
 			});
 
