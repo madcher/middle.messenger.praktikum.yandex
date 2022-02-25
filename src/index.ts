@@ -7,7 +7,7 @@ import './scss/styles.scss';
 
 const TAG = '#output';
 
-const router = new Router(TAG);
+export const router = new Router(TAG);
 
 router
 	.use('/', Login)

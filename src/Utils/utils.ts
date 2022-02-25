@@ -25,6 +25,9 @@ export class FormValidator {
 
 		if (data[name]) {
 			const re = data[name].re;
+			if (!re) {
+				return '';
+			}
 			validationResult = re.test(value) ? '' : data[name]?.message;
 		}
 		if (this.errorField) {
@@ -41,7 +44,7 @@ export class FormValidator {
 		}
 	};
 
-	onSubmitButtonClick = (e: Event, formName: string) => {
+	onSubmitButtonClick = (e: Event, formName: string, callback: any) => {
 		e.preventDefault();
 		this.output = {};
 		let isError = false;
@@ -64,16 +67,17 @@ export class FormValidator {
 				isError = true;
 			}
 		});
-		console.log(this.output);
 
 		if (!isError) {
-			window.location.hash = '#chats';
+			callback(this.output);
+			// console.log(this.output);
+			// window.location.hash = '#chats';
 		}
 	};
 
 	onInput = (target: any) => {
 		target.getAttribute('name') === 'password_confirm'
-			? this.passwordCheck(target.value, 'password_confirm')
+			? ''
 			: this.inputCheck(target.value, target.name);
 	};
 

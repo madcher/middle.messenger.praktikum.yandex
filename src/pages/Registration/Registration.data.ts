@@ -1,7 +1,8 @@
 import Input from '../../components/input/input';
 import MainButton from '../../components/main-button/main-button';
 import SecondaryButton from '../../components/secondary-button/secondary-button';
-import { FormValidator } from '../../Utils/utils';
+import {FormValidator} from '../../utils/utils';
+import {registrationController} from '../../Controllers/RegistrationController';
 
 const validator = new FormValidator();
 
@@ -86,7 +87,8 @@ const MAIN_BUTTON = {
 	title: 'Зарегистрироваться',
 	href: '/#chats',
 	events: {
-		click: (e: Event) => validator.onSubmitButtonClick(e, REGISTRATION_DATA.name),
+		click: (e: Event) =>
+			validator.onSubmitButtonClick(e, REGISTRATION_DATA.name, registrationController.signUp),
 	},
 };
 

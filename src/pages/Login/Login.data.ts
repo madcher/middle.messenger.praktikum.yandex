@@ -1,7 +1,8 @@
 import Input from '../../components/input/input';
 import MainButton from '../../components/main-button/main-button';
-import { FormValidator } from '../../Utils/utils';
+import {FormValidator} from '../../utils/utils';
 import SecondaryButton from '../../components/secondary-button/secondary-button';
+import {registrationController} from '../../Controllers/RegistrationController';
 
 const validator = new FormValidator();
 
@@ -30,7 +31,7 @@ const PASSWORD = {
 const MAIN_BUTTON = {
 	title: 'Авторизоваться',
 	events: {
-		click: (e: Event) => validator.onSubmitButtonClick(e, LOGIN_DATA.name),
+		click: (e: Event) => validator.onSubmitButtonClick(e, LOGIN_DATA.name, registrationController.signIn),
 	},
 };
 

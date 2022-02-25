@@ -175,10 +175,14 @@ export default abstract class Block {
 	};
 
 	show() {
-		this._element.style.display = 'block';
+		if (this._element) {
+			this._element.style.display = 'block';
+		}
 	}
 
 	hide() {
-		this._element.style.display = 'none';
+		if (this._element) {
+			this._element.style.display = 'none';
+		}
 	}
 }
