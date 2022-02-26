@@ -41,6 +41,7 @@ class Route {
 	}
 
 	render() {
+		console.log('render');
 		if (!this._block) {
 			this._block = new this._blockClass();
 			return render(this._props.rootQuery, this._block.getContent());
@@ -88,6 +89,7 @@ export default class Router {
 
 	_onRoute(pathname: any) {
 		const route = this.getRoute(pathname);
+		console.log(route);
 		if (!route) {
 			return;
 		}
@@ -96,6 +98,7 @@ export default class Router {
 			this._currentRoute.leave();
 		}
 		this._currentRoute = route;
+		console.log(this._currentRoute);
 		route.render();
 	}
 

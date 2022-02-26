@@ -176,13 +176,15 @@ export default abstract class Block {
 
 	show() {
 		if (this._element) {
-			this._element.style.display = 'block';
+			const style = this._element.style || {};
+			style.display = 'block';
 		}
 	}
 
 	hide() {
 		if (this._element) {
-			this._element.style.display = 'none';
+			const style = this._element.style || {};
+			style.display = 'none';
 		}
 	}
 }
