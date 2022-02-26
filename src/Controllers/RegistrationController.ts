@@ -14,9 +14,9 @@ class RegistrationController {
 			password,
 		};
 		try {
+			const result = await registrationApi.post('/auth/signin', {data: reqData});
+			console.log(result);
 			router.go('/chats');
-			//const result = await registrationApi.post('/auth/signin', {data: reqData});
-			//console.log(result);
 		} catch (e) {
 			router.go('/login');
 		}

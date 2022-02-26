@@ -1,6 +1,6 @@
 import MessageField from '../../components/message-field/message-field';
 import MainButton from '../../components/main-button/main-button';
-import { FormValidator } from '../../Utils/utils';
+import {FormValidator} from '../../utils/utils';
 
 const validator = new FormValidator();
 

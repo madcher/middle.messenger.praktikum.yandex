@@ -41,7 +41,6 @@ class Route {
 	}
 
 	render() {
-		console.log('render');
 		if (!this._block) {
 			this._block = new this._blockClass();
 			return render(this._props.rootQuery, this._block.getContent());
@@ -88,8 +87,8 @@ export default class Router {
 	}
 
 	_onRoute(pathname: any) {
+		// this.checkRoute(pathname).then(() => {
 		const route = this.getRoute(pathname);
-		console.log(route);
 		if (!route) {
 			return;
 		}
@@ -98,10 +97,38 @@ export default class Router {
 			this._currentRoute.leave();
 		}
 		this._currentRoute = route;
-		console.log(this._currentRoute);
 		route.render();
 	}
 
+	/*
+	async checkRoute(pathname: string) {
+		if (pathname === Path.login || pathname === Path.registration) {
+			await authController.getUserInfo().then(async (res: TResponse) => {
+				if (res.status >= 200 && res.status < 400) {
+					store.dispatch(setUser(res.response));
+					await chatsController.getChatInfo().then((res: TResponse) => {
+						store.dispatch(loadChats(res.response));
+						this.go(Path.messenger);
+					});
+				}
+			});
+		}
+		if (pathname === Path.profile || pathname === Path.messenger || pathname === Path.changePassword) {
+			await authController.getUserInfo().then(async (res: TResponse) => {
+				if (res.status > 400) {
+					this.go(Path.login);
+				}
+				if (res.status >= 200 && res.status < 400) {
+					store.dispatch(setUser(res.response));
+					await chatsController.getChatInfo().then((res: TResponse) => {
+						store.dispatch(loadChats(res.response));
+					});
+				}
+			});
+		}
+		return;
+	}
+	*/
 	go(pathname: any) {
 		this.history.pushState({}, '', pathname);
 		this._onRoute(pathname);
