@@ -2,7 +2,7 @@ export default `
   <div class="chats__container">
     <div class="chats__sidebar chats">
       <div class="chats__profile">
-        <a class="chats__profile-link" href="/#profile">
+        <a class="chats__profile-link" href="/profile">
           <span>Профиль</span>
           <span class="icon-arrow-left"></span>
         </a>

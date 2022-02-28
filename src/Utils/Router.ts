@@ -1,3 +1,5 @@
+import { registrationController } from "../Controllers/RegistrationController";
+import { chatController } from "../Controllers/ChatsController";
 
 function isEqual(lhs: any, rhs: any) {
 	return lhs === rhs;
@@ -87,48 +89,52 @@ export default class Router {
 	}
 
 	_onRoute(pathname: any) {
-		// this.checkRoute(pathname).then(() => {
-		const route = this.getRoute(pathname);
-		if (!route) {
-			return;
-		}
+		this.checkRoute(pathname).then(() => {
+			let route = this.getRoute(pathname);
 
-		if (this._currentRoute) {
-			this._currentRoute.leave();
-		}
-		this._currentRoute = route;
-		route.render();
+			if (!route) {
+				route = this.getRoute('/error');
+			}
+
+			if (this._currentRoute) {
+				this._currentRoute.leave();
+			}
+
+			this._currentRoute = route;
+			route.render();
+		});
 	}
 
-	/*
+
 	async checkRoute(pathname: string) {
-		if (pathname === Path.login || pathname === Path.registration) {
-			await authController.getUserInfo().then(async (res: TResponse) => {
+		if (pathname === '/login' || pathname === '/registration') {
+			await registrationController.getUserInfo().then(async (res: any) => {
+				console.log('routerres', res);
 				if (res.status >= 200 && res.status < 400) {
-					store.dispatch(setUser(res.response));
-					await chatsController.getChatInfo().then((res: TResponse) => {
-						store.dispatch(loadChats(res.response));
-						this.go(Path.messenger);
+					console.log('user', res.response);
+					await chatController.getChats().then((res: any) => {
+						console.log('chat', res.response);
+						this.go('/chats');
 					});
 				}
 			});
 		}
-		if (pathname === Path.profile || pathname === Path.messenger || pathname === Path.changePassword) {
-			await authController.getUserInfo().then(async (res: TResponse) => {
+		if (pathname === '/profile' || pathname === '/chats') {
+			await registrationController.getUserInfo().then(async (res: any) => {
 				if (res.status > 400) {
-					this.go(Path.login);
+					this.go('/login');
 				}
 				if (res.status >= 200 && res.status < 400) {
-					store.dispatch(setUser(res.response));
-					await chatsController.getChatInfo().then((res: TResponse) => {
-						store.dispatch(loadChats(res.response));
+					console.log('user', res.response);
+					await chatController.getChats().then((res: any) => {
+						console.log('chat', res.response);
 					});
 				}
 			});
 		}
 		return;
 	}
-	*/
+
 	go(pathname: any) {
 		this.history.pushState({}, '', pathname);
 		this._onRoute(pathname);

@@ -1,8 +1,9 @@
 import chatsTmpl from './Chats.tmpl';
-import {CHATS_DATA} from './Chats.data';
+// import {CHATS_DATA} from './Chats.data';
 import Block from '../../Utils/Block';
 import '../../components/chat/chat';
 import './Chats.scss';
+import {chatController} from '../../Controllers/ChatsController';
 
 export default class Chats extends Block {
 	constructor(props?: any) {
@@ -10,7 +11,7 @@ export default class Chats extends Block {
 	}
 
 	componentDidMount() {
-		this.setProps(CHATS_DATA);
+		chatController.getChats(this.setProps);
 	}
 
 	public render() {

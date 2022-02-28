@@ -1,23 +1,18 @@
 import {router} from '../index';
 import Api from '../utils/Api';
 
-const registrationApi = new Api();
+const chatApi = new Api();
 
-class RegistrationController {
-	async signIn(data: any) {
-		const {
-			login,
-			password,
-		} = data;
-		const reqData = {
-			login,
-			password,
-		};
+class ChatController {
+	async getChats(setData?: any) {
 		try {
-			await registrationApi.post('/auth/signin', {data: reqData});
-			router.go('/chats');
+			const result = await chatApi.get('/chats');
+			if (setData) {
+				setData(result);
+			}
+			return result;
 		} catch (e) {
-			router.go('/chats');
+			router.go('/login');
 		}
 	}
 
@@ -41,7 +36,7 @@ class RegistrationController {
 			phone,
 		};
 		try {
-			const result = await registrationApi.post('/auth/signup', {data: reqData});
+			const result = await chatApi.post('/auth/signup', {data: reqData});
 			console.log(result);
 			router.go('/chats');
 		} catch (e) {
@@ -51,7 +46,7 @@ class RegistrationController {
 
 	async logout() {
 		try {
-			const result = await registrationApi.post('/auth/logout');
+			const result = await chatApi.post('/auth/logout');
 			console.log(result);
 			router.go('/login');
 		} catch (e: any) {
@@ -61,8 +56,8 @@ class RegistrationController {
 
 	async getUserInfo() {
 		try {
-			const result = await registrationApi.get('/auth/user');
-			return result;
+			const result = await chatApi.get('/auth/user');
+			console.log(result);
 		} catch (e) {
 			return e;
 			// throw new Error(`Error from AuthController: ${e.message}`);
@@ -70,4 +65,4 @@ class RegistrationController {
 	}
 }
 
-export const registrationController = new RegistrationController();
+export const chatController = new ChatController();
