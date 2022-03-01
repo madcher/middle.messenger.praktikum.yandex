@@ -1,5 +1,7 @@
-import { registrationController } from "../Controllers/RegistrationController";
-import { chatController } from "../Controllers/ChatsController";
+import {registrationController} from '../Controllers/RegistrationController';
+import {chatController} from '../Controllers/ChatsController';
+import {store} from '../store/store';
+import {loadChats, setUser} from '../store/reducers';
 
 function isEqual(lhs: any, rhs: any) {
 	return lhs === rhs;
@@ -52,7 +54,7 @@ class Route {
 	}
 }
 
-export default class Router {
+class Router {
 	routes: any;
 	history: any;
 	_currentRoute: any;
@@ -107,27 +109,31 @@ export default class Router {
 
 
 	async checkRoute(pathname: string) {
-		if (pathname === '/login' || pathname === '/registration') {
+		if (pathname === '/' || pathname === '/sign-up') {
 			await registrationController.getUserInfo().then(async (res: any) => {
-				console.log('routerres', res);
+				store.dispatch(setUser(res.response));
 				if (res.status >= 200 && res.status < 400) {
 					console.log('user', res.response);
-					await chatController.getChats().then((res: any) => {
-						console.log('chat', res.response);
-						this.go('/chats');
+					await chatController.getChatInfo().then((res: any) => {
+						store.dispatch(loadChats(res.response));
+						this.go('/messenger');
 					});
 				}
 			});
 		}
-		if (pathname === '/profile' || pathname === '/chats') {
+		if (
+			pathname === '/settings' ||
+			pathname === '/messenger' ||
+			pathname === '/settings/change-password'
+		) {
 			await registrationController.getUserInfo().then(async (res: any) => {
 				if (res.status > 400) {
-					this.go('/login');
+					this.go('/');
 				}
 				if (res.status >= 200 && res.status < 400) {
-					console.log('user', res.response);
-					await chatController.getChats().then((res: any) => {
-						console.log('chat', res.response);
+					store.dispatch(setUser(res.response));
+					await chatController.getChatInfo().then((res: any) => {
+						store.dispatch(loadChats(res.response));
 					});
 				}
 			});
@@ -152,3 +158,5 @@ export default class Router {
 		return this.routes.find((route: any) => route.match(pathname));
 	}
 }
+
+export default Router;

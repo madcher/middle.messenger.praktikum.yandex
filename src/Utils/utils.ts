@@ -44,16 +44,15 @@ export class FormValidator {
 		}
 	};
 
-	onSubmitButtonClick = (e: Event, formName: string, callback: any) => {
+	onSubmitButtonClick = (e: Event, formName: string) => {
 		e.preventDefault();
 		this.output = {};
-		let isError = false;
 
 		const form = document.querySelector(`[name = ${formName}]`);
 		const fields = form.querySelectorAll('input');
 
 		fields.forEach((input) => {
-			if (input.type !== 'submit') {
+			if (input.type !== 'submit' && input.name !== 'password_confirm') {
 				if (input.value !== '') {
 					this.output[input.name] = input.value;
 				} else {
@@ -61,18 +60,8 @@ export class FormValidator {
 				}
 			}
 		});
-		Object.keys(this.output).forEach((key) => {
-			const val = this.inputCheck(this.output[key], key);
-			if (val) {
-				isError = true;
-			}
-		});
 
-		if (!isError) {
-			callback(this.output);
-			// console.log(this.output);
-			// window.location.hash = '#chats';
-		}
+		return this.output;
 	};
 
 	onInput = (target: any) => {
@@ -92,3 +81,15 @@ export class FormValidator {
 		}
 	};
 }
+
+export const isEqual = (lhs: any, rhs: any) => {
+	return lhs === rhs;
+};
+
+export const isEmptyObject = (obj: any) => {
+	return (Object.keys(obj).length !== 0);
+};
+
+export const toLowerCase = (str: string) => {
+	return str.toLowerCase();
+};

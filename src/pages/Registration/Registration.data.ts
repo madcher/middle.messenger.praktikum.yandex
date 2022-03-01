@@ -1,7 +1,7 @@
 import Input from '../../components/input/input';
 import MainButton from '../../components/main-button/main-button';
 import SecondaryButton from '../../components/secondary-button/secondary-button';
-import {FormValidator} from '../../utils/utils';
+import {FormValidator} from '../../Utils/utils';
 import {registrationController} from '../../Controllers/RegistrationController';
 
 const validator = new FormValidator();

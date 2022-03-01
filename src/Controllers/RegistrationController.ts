@@ -1,59 +1,49 @@
 import {router} from '../index';
-import Api from '../utils/Api';
+import Api from '../Utils/Api';
 
-const registrationApi = new Api();
+class AuthAPI extends Api {
+	signUp(data: any) {
+		return this.post('/auth/signup', {data});
+	}
+
+	signIn(data: any) {
+		return this.post('/auth/signin', {data});
+	}
+
+	getUserInfo() {
+		return this.get('/auth/user');
+	}
+
+	logout() {
+		return this.post('/auth/logout');
+	}
+}
+
+const registrationApi = new AuthAPI();
 
 class RegistrationController {
 	async signIn(data: any) {
-		const {
-			login,
-			password,
-		} = data;
-		const reqData = {
-			login,
-			password,
-		};
 		try {
-			await registrationApi.post('/auth/signin', {data: reqData});
-			router.go('/chats');
+			await registrationApi.signIn(data);
+			router.go('/messenger');
 		} catch (e) {
-			router.go('/chats');
+			router.go('/');
 		}
 	}
 
 	async signUp(data: any) {
-		const {
-			// eslint-disable-next-line camelcase
-			first_name,
-			// eslint-disable-next-line camelcase
-			second_name,
-			login,
-			email,
-			password,
-			phone,
-		} = data;
-		const reqData = {
-			first_name,
-			second_name,
-			login,
-			email,
-			password,
-			phone,
-		};
 		try {
-			const result = await registrationApi.post('/auth/signup', {data: reqData});
-			console.log(result);
-			router.go('/chats');
+			await registrationApi.signUp(data);
+			router.go('/messenger');
 		} catch (e) {
-			router.go('/registration');
+			router.go('/sign-up');
 		}
 	}
 
 	async logout() {
 		try {
-			const result = await registrationApi.post('/auth/logout');
-			console.log(result);
-			router.go('/login');
+			await registrationApi.logout();
+			router.go('/');
 		} catch (e: any) {
 			throw new Error(`Error from AuthController: ${e.message}`);
 		}
@@ -61,8 +51,7 @@ class RegistrationController {
 
 	async getUserInfo() {
 		try {
-			const result = await registrationApi.get('/auth/user');
-			return result;
+			return await registrationApi.getUserInfo();
 		} catch (e) {
 			return e;
 			// throw new Error(`Error from AuthController: ${e.message}`);

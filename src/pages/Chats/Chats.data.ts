@@ -1,85 +1,64 @@
-import MessageField from '../../components/message-field/message-field';
+import ChatMessageInput from './components/ChatMessageInput/ChatMessageInput';
+import ChatList from './components/СhatList/ChatList';
+import ChatMessagesField from './components/ChatMessagesField/ChatMessagesField';
+import ChatHeader from './components/ChatHeader/ChatHeader';
 import MainButton from '../../components/main-button/main-button';
-import {FormValidator} from '../../utils/utils';
+import SecondaryButton from '../../components/secondary-button/secondary-button';
 
-const validator = new FormValidator();
 
-const MAIN_BUTTON = {
+export const MAIN_BUTTON = {
 	className: 'chats__message-send',
 	title: 'Отправить',
-	events: {
-		click: (e: Event) => validator.onSubmitButtonClick(e, MESSAGE_FIELD.name),
-	},
+	events: {},
 };
 
-const MESSAGE_FIELD = {
-	name: 'message',
+export const TO_PROFILE = {
+	className: 'chats__profile-link',
+	title: 'Профиль',
+	icon: true,
+	events: {},
+};
+
+export const ADD_CHAT = {
+	className: 'chats__add-chat-link',
+	title: 'Добавить чат',
+	events: {},
+};
+
+export const CREATE_NAME_CHAT = {
+	className: 'chats__add-chat-button',
+	title: 'Создать',
+	events: {},
+};
+
+export const MESSAGE_FIELD = {
+	name: 'chats-form',
 	message: 'message',
 	mainButton: new MainButton(MAIN_BUTTON),
 };
 
+export const CHAT_LIST: any = {
+	chats: [],
+	events: {},
+};
+
+export const ADD_USER = {
+	className: 'add-user__button',
+	title: 'Добавить',
+	events: {},
+};
+
+const CHAT_HEADER = {
+	addUserButton: new MainButton(ADD_USER),
+	events: {},
+};
+
 export const CHATS_DATA = {
-	chat: [
-		{
-			user: 'Андрей',
-			message: 'Всем привет!',
-			datetime: '',
-			time: '12:13',
-		},
-		{
-			user: 'Илья',
-			message: 'Всем пока!',
-			datetime: '',
-			time: '09:20',
-		},
-		{
-			user: 'Вадим',
-			message: 'Всем привет!',
-			datetime: '',
-			time: 'Пт',
-		},
-		{
-			user: 'Стас',
-			message: 'Всем пока!',
-			datetime: '',
-			time: 'Чт',
-		},
-		{
-			user: 'Иван',
-			message: 'Всем привет!',
-			datetime: '',
-			time: '2 февраля 2022',
-		},
-		{
-			user: 'Андрей',
-			message: 'Всем пока!',
-			datetime: '',
-			time: '10:49',
-		},
-		{
-			user: 'Илья',
-			message: 'Всем привет!',
-			datetime: '',
-			time: '09:20',
-		},
-		{
-			user: 'Вадим',
-			message: 'Всем пока!',
-			datetime: '',
-			time: 'Пт',
-		},
-		{
-			user: 'Стас',
-			message: 'Всем привет!',
-			datetime: '',
-			time: 'Чт',
-		},
-		{
-			user: 'Иван',
-			message: 'Всем пока!',
-			datetime: '',
-			time: '3 февраля 2022',
-		},
-	],
-	messageField: new MessageField(MESSAGE_FIELD),
+	chatList: new ChatList(CHAT_LIST),
+	addChatButton: new SecondaryButton(ADD_CHAT),
+	toProfileButton: new SecondaryButton(TO_PROFILE),
+	createNameChatButton: new MainButton(CREATE_NAME_CHAT),
+	chatHeader: new ChatHeader(CHAT_HEADER),
+	chatMessagesField: new ChatMessagesField(),
+	chatMessageInput: new ChatMessageInput(MESSAGE_FIELD),
 };

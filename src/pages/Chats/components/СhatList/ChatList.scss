@@ -1,0 +1,9 @@
+.chats__list {
+  flex: 1 1 80%;
+  overflow: auto;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}

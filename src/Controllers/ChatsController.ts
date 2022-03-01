@@ -1,66 +1,66 @@
-import {router} from '../index';
-import Api from '../utils/Api';
+import Api from '../Utils/Api';
 
-const chatApi = new Api();
+class ChatsAPI extends Api {
+	createChat(data: any) {
+		return this.post('/chats', {data});
+	}
+
+	addUser(data: any) {
+		return this.put('/chats/users', {data});
+	}
+
+	deleteChat(data: any) {
+		return this.delete('/chats', {data});
+	}
+
+	getChats(data: any) {
+		return this.get('/chats', {data});
+	}
+
+	getToken(id: any) {
+		return this.post(`/chats/token/${id}`);
+	}
+}
+const chatApi = new ChatsAPI();
 
 class ChatController {
-	async getChats(setData?: any) {
+	async createChat(data: any) {
 		try {
-			const result = await chatApi.get('/chats');
-			if (setData) {
-				setData(result);
-			}
-			return result;
-		} catch (e) {
-			router.go('/login');
-		}
-	}
-
-	async signUp(data: any) {
-		const {
-			// eslint-disable-next-line camelcase
-			first_name,
-			// eslint-disable-next-line camelcase
-			second_name,
-			login,
-			email,
-			password,
-			phone,
-		} = data;
-		const reqData = {
-			first_name,
-			second_name,
-			login,
-			email,
-			password,
-			phone,
-		};
-		try {
-			const result = await chatApi.post('/auth/signup', {data: reqData});
-			console.log(result);
-			router.go('/chats');
-		} catch (e) {
-			router.go('/registration');
-		}
-	}
-
-	async logout() {
-		try {
-			const result = await chatApi.post('/auth/logout');
-			console.log(result);
-			router.go('/login');
+			return await chatApi.createChat(data);
 		} catch (e: any) {
-			throw new Error(`Error from AuthController: ${e.message}`);
+			throw new Error(`Error from ChatsController: ${e.message}`);
 		}
 	}
 
-	async getUserInfo() {
+	async addUser(data: any) {
 		try {
-			const result = await chatApi.get('/auth/user');
-			console.log(result);
-		} catch (e) {
-			return e;
-			// throw new Error(`Error from AuthController: ${e.message}`);
+			await chatApi.addUser(data);
+		} catch (e: any) {
+			throw new Error(`Error from ChatsController: ${e.message}`);
+		}
+	}
+
+	async deleteChat(data: any) {
+		try {
+			await chatApi.deleteChat(data);
+		} catch (e: any) {
+			throw new Error(`Error from ChatsController: ${e.message}`);
+		}
+	}
+
+	async getChatInfo(data?: any) {
+		try {
+			return await chatApi.getChats(data);
+		} catch (e: any) {
+			throw new Error(`Error from ChatsController: ${e.message}`);
+		}
+	}
+
+	async getChatToken(data: any) {
+		try {
+			return await chatApi.getToken(data);
+		} catch (e: any) {
+			throw new Error(`Error from ChatsController: ${e.message}`);
 		}
 	}
 }

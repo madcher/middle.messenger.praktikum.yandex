@@ -1,6 +1,6 @@
 import Input from '../../components/input/input';
 import MainButton from '../../components/main-button/main-button';
-import {FormValidator} from '../../utils/utils';
+import {FormValidator} from '../../Utils/utils';
 import SecondaryButton from '../../components/secondary-button/secondary-button';
 import {registrationController} from '../../Controllers/RegistrationController';
 

@@ -1,0 +1,111 @@
+@import "../../../../scss/colors";
+@import "../../../../scss/mixins";
+
+.chat-header {
+  display: none;
+  height: 50px;
+  width: 100%;
+  padding: 0 10px;
+  background-color: $dark-grey;
+
+  &.show {
+    @include flex(row, space-between, center);
+  }
+
+  &__title {
+    color: $main-color;
+  }
+
+  & .icon-more {
+    font-size: 16px;
+    color: $text-secondary;
+    cursor: pointer;
+
+    &:hover {
+      color: $main-color;
+    }
+  }
+
+  &__options {
+    display: none;
+    position: absolute;
+    width: 220px;
+    right: 10px;
+    top: 45px;
+
+    &.show {
+      display: block;
+    }
+
+    &-list {
+      @include flex(column, space-evenly, flex-start);
+
+      background-color: #fff;
+      box-shadow: $box-shadow;
+      border-radius: 5px;
+      height: 60px;
+      padding: 0 10px;
+      font-size: 14px;
+
+      &-item {
+        color: $main-color;
+        cursor: pointer;
+
+        &:hover {
+          color: $main-hover;
+        }
+      }
+
+      &-item:last-child {
+        color: $warning-color;
+        &:hover {
+          color: $warning-hover;
+        }
+      }
+    }
+  }
+
+  &__add-user {
+    display: none;
+    margin-top: 5px;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: $box-shadow;
+    border-radius: 5px;
+
+    &.show {
+      @include flex(row, space-evenly, flex-end);
+    }
+
+    .add-user__input {
+      width: 130px;
+      height: 35px;
+      font-size: 14px;
+      padding: 5px;
+      margin-right: 5px;
+      background-color: transparent;
+      border-bottom: 1px solid $main-color;
+
+      &::placeholder {
+        font-size: 12px;
+        color: $text-secondary;
+      }
+
+    }
+
+    .add-user__button {
+      border: none;
+      width: 70px;
+      height: 25px;
+      border-radius: 30px;
+      font-size: 12px;
+      background-color: $main-color;
+      color: #fff;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $main-hover;
+      }
+    }
+  }
+}
