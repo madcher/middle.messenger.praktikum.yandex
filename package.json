@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "parcel serve index.html --dist-dir ./build",
     "start": "node server.js",
+    "test": "jest",
     "build": "parcel build index.html --dist-dir ./build",
     "lint": "eslint ./ --ext .ts --ext .js --fix",
     "prettier": "prettier --config .prettierrc.js 'src/**/*.{js,ts}' --write",
