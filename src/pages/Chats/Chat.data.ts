@@ -1,10 +1,9 @@
-import ChatMessageInput from './components/ChatMessageInput/ChatMessageInput';
-import ChatList from './components/СhatList/ChatList';
-import ChatMessagesField from './components/ChatMessagesField/ChatMessagesField';
-import ChatHeader from './components/ChatHeader/ChatHeader';
+import ChatMessageInput from './ChatMessageInput/ChatMessageInput';
 import MainButton from '../../components/main-button/main-button';
 import SecondaryButton from '../../components/secondary-button/secondary-button';
-
+import ChatList from './СhatList/ChatList';
+import ChatHeader from './ChatHeader/ChatHeader';
+import ChatMessagesField from './ChatMessagesField/ChatMessagesField';
 
 export const MAIN_BUTTON = {
 	className: 'chats__message-send',

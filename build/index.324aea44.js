@@ -465,8 +465,8 @@ var _registration = require("./pages/Registration/Registration");
 var _registrationDefault = parcelHelpers.interopDefault(_registration);
 var _profile = require("./pages/Profile/Profile");
 var _profileDefault = parcelHelpers.interopDefault(_profile);
-var _chats = require("./pages/Chats/Chats");
-var _chatsDefault = parcelHelpers.interopDefault(_chats);
+var _chat = require("./pages/Chats/Chat");
+var _chatDefault = parcelHelpers.interopDefault(_chat);
 var _router = require("./Utils/Router");
 var _routerDefault = parcelHelpers.interopDefault(_router);
 var _error = require("./pages/Error/Error");
@@ -476,9 +476,9 @@ var _changePasswordDefault = parcelHelpers.interopDefault(_changePassword);
 var _stylesScss = require("./scss/styles.scss");
 const TAG = '#output';
 const router = new _routerDefault.default(TAG);
-router.use('/', _loginDefault.default).use('/messenger', _chatsDefault.default).use('/settings', _profileDefault.default).use('/sign-up', _registrationDefault.default).use('/settings/change-password', _changePasswordDefault.default).use('/error', _errorDefault.default).start();
+router.use('/', _loginDefault.default).use('/messenger', _chatDefault.default).use('/settings', _profileDefault.default).use('/sign-up', _registrationDefault.default).use('/settings/change-password', _changePasswordDefault.default).use('/error', _errorDefault.default).start();
 
-},{"./pages/Login/Login":"l8v5I","./pages/Registration/Registration":"g7TgW","./pages/Profile/Profile":"i4cjb","./pages/Chats/Chats":"9OG4H","./scss/styles.scss":"bAPiR","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./Utils/Router":"kvCHm","./pages/Error/Error":"lm1LX","./pages/ChangePassword/ChangePassword":"aut7O"}],"l8v5I":[function(require,module,exports) {
+},{"./pages/Login/Login":"l8v5I","./pages/Registration/Registration":"g7TgW","./pages/Profile/Profile":"i4cjb","./Utils/Router":"kvCHm","./pages/Error/Error":"lm1LX","./pages/ChangePassword/ChangePassword":"aut7O","./scss/styles.scss":"bAPiR","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./pages/Chats/Chat":"eFvZC"}],"l8v5I":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>Login
@@ -593,7 +593,7 @@ const LOGIN_DATA = {
     password: new _inputDefault.default(PASSWORD)
 };
 
-},{"../../components/input/input":"k9f01","../../components/main-button/main-button":"3GRdu","../../components/secondary-button/secondary-button":"i4ETK","../../Controllers/RegistrationController":"j5qt0","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../../Utils/utils":"bReMK"}],"k9f01":[function(require,module,exports) {
+},{"../../components/input/input":"k9f01","../../components/main-button/main-button":"3GRdu","../../Utils/utils":"bReMK","../../components/secondary-button/secondary-button":"i4ETK","../../Controllers/RegistrationController":"j5qt0","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"k9f01":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>Input
@@ -644,6 +644,14 @@ class Block {
                 if (prop instanceof Block) {
                     nodes[index] = prop;
                     props1[propName] = `<div id='${index}'></div>`;
+                }
+                if (propName === 'chats') {
+                    if (prop.length !== 0) prop.forEach((item, index1)=>{
+                        if (prop[index1] instanceof Block) {
+                            nodes[index1] = item;
+                            return prop[index1] = `<div id='${index1}'></div>`;
+                        }
+                    });
                 }
             });
             fragment.innerHTML = template(props1);
@@ -12195,206 +12203,7 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 exports.default = `\n  {{#if className}}\n  <input class="{{className}}" type="submit" value="{{title}}">\n  {{else}}\n  <input class="main__btn" type="submit" value="{{title}}">\n  {{/if}}\n`;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"9fcAJ":[function() {},{}],"i4ETK":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>SecondaryButton
-);
-var _secondaryButtonTmpl = require("./secondary-button.tmpl");
-var _secondaryButtonTmplDefault = parcelHelpers.interopDefault(_secondaryButtonTmpl);
-var _block = require("../../Utils/Block");
-var _blockDefault = parcelHelpers.interopDefault(_block);
-var _secondaryButtonScss = require("./secondary-button.scss");
-class SecondaryButton extends _blockDefault.default {
-    constructor(props){
-        super(props);
-    }
-    render() {
-        return this.compile(_secondaryButtonTmplDefault.default, this.props);
-    }
-}
-
-},{"./secondary-button.tmpl":"6FazI","../../Utils/Block":"8SCws","./secondary-button.scss":"j0s30","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"6FazI":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-exports.default = `\n  <a class="secondary__btn" href="{{href}}">\n    <span>{{title}}</span>\n  </a>\n`;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"j0s30":[function() {},{}],"j5qt0":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "registrationController", ()=>registrationController
-);
-var _index = require("../index");
-var _api = require("../Utils/Api");
-var _apiDefault = parcelHelpers.interopDefault(_api);
-class AuthAPI extends _apiDefault.default {
-    signUp(data) {
-        return this.post('/auth/signup', {
-            data
-        });
-    }
-    signIn(data) {
-        return this.post('/auth/signin', {
-            data
-        });
-    }
-    getUserInfo() {
-        return this.get('/auth/user');
-    }
-    logout() {
-        return this.post('/auth/logout');
-    }
-}
-const registrationApi = new AuthAPI();
-class RegistrationController {
-    async signIn(data) {
-        try {
-            await registrationApi.signIn(data);
-            _index.router.go('/messenger');
-        } catch (e) {
-            _index.router.go('/');
-        }
-    }
-    async signUp(data) {
-        try {
-            await registrationApi.signUp(data);
-            _index.router.go('/messenger');
-        } catch (e) {
-            _index.router.go('/sign-up');
-        }
-    }
-    async logout() {
-        try {
-            await registrationApi.logout();
-            _index.router.go('/');
-        } catch (e) {
-            throw new Error(`Error from AuthController: ${e.message}`);
-        }
-    }
-    async getUserInfo() {
-        try {
-            return await registrationApi.getUserInfo();
-        } catch (e) {
-            return e;
-        // throw new Error(`Error from AuthController: ${e.message}`);
-        }
-    }
-}
-const registrationController = new RegistrationController();
-
-},{"../index":"4aleK","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../Utils/Api":"7475A"}],"7475A":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _httprequest = require("./HTTPRequest");
-var _httprequestDefault = parcelHelpers.interopDefault(_httprequest);
-const HTTP = new _httprequestDefault.default();
-class Api {
-    constructor(){
-        this.get = (url, options)=>{
-            return HTTP.get(url, options);
-        };
-        this.post = (url, options)=>{
-            console.log(options);
-            return HTTP.post(url, options);
-        };
-        this.put = (url, options)=>{
-            return HTTP.put(url, options);
-        };
-        this.delete = (url, options)=>{
-            return HTTP.delete(url, options);
-        };
-    }
-}
-exports.default = Api;
-
-},{"./HTTPRequest":"gG6ce","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"gG6ce":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>HTTPTransport
-);
-var METHODS;
-(function(METHODS1) {
-    METHODS1["GET"] = "GET";
-    METHODS1["POST"] = "POST";
-    METHODS1["PUT"] = "PUT";
-    METHODS1["DELETE"] = "DELETE";
-})(METHODS || (METHODS = {
-}));
-function queryStringify(data) {
-    if (typeof data !== 'object' && !data) throw new Error('Data must be object!');
-    const keys = Object.keys(data);
-    return keys.reduce((result, key, index)=>`${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`
-    , '?');
-}
-class HTTPTransport {
-    constructor(){
-        this.get = (url, options = {
-        })=>{
-            return this.request(url, {
-                ...options,
-                method: METHODS.GET
-            }, options.timeout);
-        };
-        this.post = (url, options = {
-        })=>{
-            return this.request(url, {
-                ...options,
-                method: METHODS.POST
-            }, options.timeout);
-        };
-        this.put = (url, options = {
-        })=>{
-            return this.request(url, {
-                ...options,
-                method: METHODS.PUT
-            }, options.timeout);
-        };
-        this.delete = (url, options = {
-        })=>{
-            return this.request(url, {
-                ...options,
-                method: METHODS.DELETE
-            }, options.timeout);
-        };
-        this.request = (url, options = {
-        }, timeout = 5000)=>{
-            const { method , headers ={
-            } , data  } = options;
-            url = `${this._baseURL}${url}`;
-            return new Promise((resolve, reject)=>{
-                if (!method) {
-                    reject(new Error('No method provided'));
-                    return;
-                }
-                const xhr = new XMLHttpRequest();
-                const isGet = method === METHODS.GET;
-                xhr.open(method, isGet && !!data ? `${url}${queryStringify(data)}` : url);
-                Object.keys(headers).forEach((key)=>{
-                    xhr.setRequestHeader(key, headers[key]);
-                });
-                xhr.onload = ()=>{
-                    if (xhr.status >= 200 && xhr.status < 300) resolve(xhr);
-                    else reject(xhr);
-                };
-                xhr.responseType = 'json';
-                xhr.withCredentials = true;
-                xhr.onabort = reject;
-                xhr.onerror = reject;
-                xhr.timeout = timeout;
-                xhr.ontimeout = reject;
-                if (isGet || !data) xhr.send();
-                else if (data instanceof FormData) xhr.send(data);
-                else {
-                    xhr.setRequestHeader('Content-Type', 'application/json');
-                    xhr.send(JSON.stringify(data));
-                }
-            });
-        };
-        this._baseURL = 'https://ya-praktikum.tech/api/v2';
-    }
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"bReMK":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"9fcAJ":[function() {},{}],"bReMK":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "render", ()=>render
@@ -12513,6 +12322,205 @@ const ValidationFields = {
         message: 'Пароли не совпадают'
     }
 };
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"i4ETK":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>SecondaryButton
+);
+var _secondaryButtonTmpl = require("./secondary-button.tmpl");
+var _secondaryButtonTmplDefault = parcelHelpers.interopDefault(_secondaryButtonTmpl);
+var _block = require("../../Utils/Block");
+var _blockDefault = parcelHelpers.interopDefault(_block);
+var _secondaryButtonScss = require("./secondary-button.scss");
+class SecondaryButton extends _blockDefault.default {
+    constructor(props){
+        super(props);
+    }
+    render() {
+        return this.compile(_secondaryButtonTmplDefault.default, this.props);
+    }
+}
+
+},{"./secondary-button.tmpl":"6FazI","../../Utils/Block":"8SCws","./secondary-button.scss":"j0s30","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"6FazI":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = `\n  <a class="secondary__btn" href="{{href}}">\n    <span>{{title}}</span>\n  </a>\n`;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"j0s30":[function() {},{}],"j5qt0":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "registrationController", ()=>registrationController
+);
+var _index = require("../index");
+var _api = require("../Utils/Api");
+var _apiDefault = parcelHelpers.interopDefault(_api);
+class AuthAPI extends _apiDefault.default {
+    signUp(data) {
+        return this.post('/auth/signup', {
+            data
+        });
+    }
+    signIn(data) {
+        return this.post('/auth/signin', {
+            data
+        });
+    }
+    getUserInfo() {
+        return this.get('/auth/user');
+    }
+    logout() {
+        return this.post('/auth/logout');
+    }
+}
+const registrationApi = new AuthAPI();
+class RegistrationController {
+    async signIn(data) {
+        try {
+            await registrationApi.signIn(data);
+            _index.router.go('/messenger');
+        } catch (e) {
+            _index.router.go('/');
+        }
+    }
+    async signUp(data) {
+        try {
+            await registrationApi.signUp(data);
+            _index.router.go('/messenger');
+        } catch (e) {
+            _index.router.go('/sign-up');
+        }
+    }
+    async logout() {
+        try {
+            await registrationApi.logout();
+            _index.router.go('/');
+        } catch (e) {
+            throw new Error(`Error from AuthController: ${e.message}`);
+        }
+    }
+    async getUserInfo() {
+        try {
+            return await registrationApi.getUserInfo();
+        } catch (e) {
+            return e;
+        // throw new Error(`Error from AuthController: ${e.message}`);
+        }
+    }
+}
+const registrationController = new RegistrationController();
+
+},{"../index":"4aleK","../Utils/Api":"7475A","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"7475A":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _httprequest = require("./HTTPRequest");
+var _httprequestDefault = parcelHelpers.interopDefault(_httprequest);
+const HTTP = new _httprequestDefault.default();
+class Api {
+    constructor(){
+        this.get = (url, options)=>{
+            return HTTP.get(url, options);
+        };
+        this.post = (url, options)=>{
+            console.log(options);
+            return HTTP.post(url, options);
+        };
+        this.put = (url, options)=>{
+            return HTTP.put(url, options);
+        };
+        this.delete = (url, options)=>{
+            return HTTP.delete(url, options);
+        };
+    }
+}
+exports.default = Api;
+
+},{"./HTTPRequest":"gG6ce","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"gG6ce":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>HTTPTransport
+);
+var METHODS;
+(function(METHODS1) {
+    METHODS1["GET"] = "GET";
+    METHODS1["POST"] = "POST";
+    METHODS1["PUT"] = "PUT";
+    METHODS1["DELETE"] = "DELETE";
+})(METHODS || (METHODS = {
+}));
+function queryStringify(data) {
+    if (typeof data !== 'object' && !data) throw new Error('Data must be object!');
+    const keys = Object.keys(data);
+    return keys.reduce((result, key, index)=>`${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`
+    , '?');
+}
+class HTTPTransport {
+    constructor(){
+        this.get = (url, options = {
+        })=>{
+            return this.request(url, {
+                ...options,
+                method: METHODS.GET
+            }, options.timeout);
+        };
+        this.post = (url, options = {
+        })=>{
+            return this.request(url, {
+                ...options,
+                method: METHODS.POST
+            }, options.timeout);
+        };
+        this.put = (url, options = {
+        })=>{
+            return this.request(url, {
+                ...options,
+                method: METHODS.PUT
+            }, options.timeout);
+        };
+        this.delete = (url, options = {
+        })=>{
+            return this.request(url, {
+                ...options,
+                method: METHODS.DELETE
+            }, options.timeout);
+        };
+        this.request = (url, options = {
+        }, timeout = 5000)=>{
+            const { method , headers ={
+            } , data  } = options;
+            url = `${this._baseURL}${url}`;
+            return new Promise((resolve, reject)=>{
+                if (!method) {
+                    reject(new Error('No method provided'));
+                    return;
+                }
+                const xhr = new XMLHttpRequest();
+                const isGet = method === METHODS.GET;
+                xhr.open(method, isGet && !!data ? `${url}${queryStringify(data)}` : url);
+                Object.keys(headers).forEach((key)=>{
+                    xhr.setRequestHeader(key, headers[key]);
+                });
+                xhr.onload = ()=>{
+                    if (xhr.status >= 200 && xhr.status < 300) resolve(xhr);
+                    else reject(xhr);
+                };
+                xhr.responseType = 'json';
+                xhr.withCredentials = true;
+                xhr.onabort = reject;
+                xhr.onerror = reject;
+                xhr.timeout = timeout;
+                xhr.ontimeout = reject;
+                if (isGet || !data) xhr.send();
+                else if (data instanceof FormData) xhr.send(data);
+                else {
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.send(JSON.stringify(data));
+                }
+            });
+        };
+        this._baseURL = 'https://ya-praktikum.tech/api/v2';
+    }
+}
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"7VWop":[function() {},{}],"g7TgW":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -12658,7 +12666,7 @@ const REGISTRATION_DATA = {
     password_confirm: new _inputDefault.default(PASSWORD_CONFIRM)
 };
 
-},{"../../components/input/input":"k9f01","../../components/main-button/main-button":"3GRdu","../../components/secondary-button/secondary-button":"i4ETK","../../Controllers/RegistrationController":"j5qt0","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../../Utils/utils":"bReMK"}],"7YVGY":[function() {},{}],"i4cjb":[function(require,module,exports) {
+},{"../../components/input/input":"k9f01","../../components/main-button/main-button":"3GRdu","../../components/secondary-button/secondary-button":"i4ETK","../../Utils/utils":"bReMK","../../Controllers/RegistrationController":"j5qt0","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"7YVGY":[function() {},{}],"i4cjb":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>Profile
@@ -12741,7 +12749,7 @@ class Profile extends _blockDefault.default {
     }
 }
 
-},{"./Profile.tmpl":"ejtPv","./Profile.data":"8DkHA","../../Utils/Block":"8SCws","./Profile.scss":"5VG53","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../../Utils/utils":"bReMK","../../Controllers/RegistrationController":"j5qt0","../../Controllers/userController":"91FRj","../../store/store":"7PScK","../../index":"4aleK"}],"ejtPv":[function(require,module,exports) {
+},{"./Profile.tmpl":"ejtPv","../../Utils/Block":"8SCws","../../Utils/utils":"bReMK","./Profile.data":"8DkHA","../../Controllers/RegistrationController":"j5qt0","../../Controllers/userController":"91FRj","../../store/store":"7PScK","../../index":"4aleK","./Profile.scss":"5VG53","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"ejtPv":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 exports.default = `\n	<div class="profile__container">\n		<div class="profile__container-back">\n			<a href="/#chats" id="backToChats">\n				<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">\n					<circle cx="14" cy="14" r="14" transform="rotate(-180 14 14)" fill="#3369F3"/>\n					<rect x="20" y="14.8" width="11" height="1.6" transform="rotate(-180 20 14.8)" fill="white"/>\n					<path d="M13 19L9 14L13 9" stroke="white" stroke-width="1.6"/>\n				</svg>\n			</a>\n		</div>\n		<form action="" method="post" class="profile__container-main profile" name="{{name}}">\n			<div class="profile__avatar">\n				<div class="profile__avatar-name">{{avatar}}</div>\n				<div class="profile__avatar-label">Поменять аватар</div>\n			</div>\n			<h1 class="profile__name">{{username}}</h1>\n			<div class="profile__info">\n			  {{{email}}}\n			  {{{login}}}\n			  {{{first_name}}}\n			  {{{second_name}}}\n			  {{{display_name}}}\n			  {{{phone}}}\n			</div>\n			<div class="profile__buttons">\n			  {{{changeData}}}\n			  {{{changePassword}}}\n			  {{{exit}}}\n			</div>\n		</form>\n	</div>\n`;
@@ -12870,7 +12878,7 @@ const PROFILE_DATA = {
     exit: new _secondaryButtonDefault.default(EXIT_BUTTON)
 };
 
-},{"../../components/input/input":"k9f01","../../components/secondary-button/secondary-button":"i4ETK","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../../components/main-button/main-button":"3GRdu","../../components/avatar/avatar":"46Htt"}],"46Htt":[function(require,module,exports) {
+},{"../../components/input/input":"k9f01","../../components/secondary-button/secondary-button":"i4ETK","../../components/main-button/main-button":"3GRdu","../../components/avatar/avatar":"46Htt","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"46Htt":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>Avatar
@@ -12894,7 +12902,7 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 exports.default = `\n  <form class="profile__avatar">\n    {{#if avatar}}\n      <img src="https://ya-praktikum.tech/api/v2/resources{{avatar}}" crossorigin="use-credentials">\n    {{/if}}\n      <input type="file" accept="image/*" class="profile__avatar-change" name="{{nameAvatar}}">\n    <!-- <div class="profile__avatar-label">Поменять аватар</div> -->\n  </form>\n`;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"dAb6v":[function() {},{}],"5VG53":[function() {},{}],"91FRj":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"dAb6v":[function() {},{}],"91FRj":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "userController", ()=>userController
@@ -13107,524 +13115,7 @@ const chat = (state, action)=>{
     }
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"9OG4H":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>Chat
-);
-var _chatsTmpl = require("./Chats.tmpl");
-var _chatsTmplDefault = parcelHelpers.interopDefault(_chatsTmpl);
-var _block = require("../../Utils/Block");
-var _blockDefault = parcelHelpers.interopDefault(_block);
-var _chatsData = require("./Chats.data");
-var _chatsController = require("../../Controllers/ChatsController");
-var _index = require("../../index");
-var _chatsScss = require("./Chats.scss");
-class Chat extends _blockDefault.default {
-    constructor(props){
-        super(props);
-    }
-    componentDidMount() {
-        _chatsData.TO_PROFILE.events = {
-            click: (e)=>{
-                e.preventDefault();
-                _index.router.go('/settings');
-            }
-        };
-        _chatsData.ADD_CHAT.events = {
-            click: (e)=>{
-                e.preventDefault();
-                const addChatField = document.querySelector('.chats__add-field');
-                addChatField.classList.toggle('show');
-            }
-        };
-        _chatsData.CREATE_NAME_CHAT.events = {
-            click: async (e)=>{
-                e.preventDefault();
-                const addChatField = e.target.closest('.chats__add-field');
-                const chatInput = addChatField.querySelector('.chats__add-chat-input');
-                if (!chatInput.value) return;
-                const newChatName = {
-                    title: chatInput.value
-                };
-                await _chatsController.chatController.createChat(newChatName);
-                chatInput.value = '';
-                addChatField.classList.toggle('show');
-                _index.router.go('/messenger');
-            }
-        };
-        this.setProps(_chatsData.CHATS_DATA);
-    }
-    render() {
-        return this.compile(_chatsTmplDefault.default, this.props);
-    }
-}
-
-},{"./Chats.tmpl":"8ppo5","../../Utils/Block":"8SCws","../../Controllers/ChatsController":"ipjXp","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./Chats.data":"hYegh","../../index":"4aleK","./Chats.scss":"GYxbg"}],"8ppo5":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-exports.default = `\n  <div class="chats__container">\n    <div class="chats__sidebar chats">\n      <div class="chats__links">\n        <div class="chats__add-chat">\n        {{{addChatButton}}}\n        </div>\n        <div class="chats__profile">\n        {{{toProfileButton}}}\n        </div>\n      </div>\n      <div class="chats__add-field">\n        <input class="chats__add-chat-input" type="text" placeholder="Введите название чата">\n        {{{createNameChatButton}}}\n      </div>\n      <input class="chats__search" type="text" placeholder="Поиск">\n      {{{chatList}}}\n    </div>\n    <div class="chats__content">\n      {{{chatHeader}}}\n      {{{chatMessagesField}}}\n      {{{chatMessageInput}}}\n    </div>\n  </div>\n`;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"ipjXp":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "chatController", ()=>chatController
-);
-var _api = require("../Utils/Api");
-var _apiDefault = parcelHelpers.interopDefault(_api);
-class ChatsAPI extends _apiDefault.default {
-    createChat(data) {
-        return this.post('/chats', {
-            data
-        });
-    }
-    addUser(data) {
-        return this.put('/chats/users', {
-            data
-        });
-    }
-    deleteChat(data) {
-        return this.delete('/chats', {
-            data
-        });
-    }
-    getChats(data) {
-        return this.get('/chats', {
-            data
-        });
-    }
-    getToken(id) {
-        return this.post(`/chats/token/${id}`);
-    }
-}
-const chatApi = new ChatsAPI();
-class ChatController {
-    async createChat(data) {
-        try {
-            return await chatApi.createChat(data);
-        } catch (e) {
-            throw new Error(`Error from ChatsController: ${e.message}`);
-        }
-    }
-    async addUser(data) {
-        try {
-            await chatApi.addUser(data);
-        } catch (e) {
-            throw new Error(`Error from ChatsController: ${e.message}`);
-        }
-    }
-    async deleteChat(data) {
-        try {
-            await chatApi.deleteChat(data);
-        } catch (e) {
-            throw new Error(`Error from ChatsController: ${e.message}`);
-        }
-    }
-    async getChatInfo(data) {
-        try {
-            return await chatApi.getChats(data);
-        } catch (e) {
-            throw new Error(`Error from ChatsController: ${e.message}`);
-        }
-    }
-    async getChatToken(data) {
-        try {
-            return await chatApi.getToken(data);
-        } catch (e) {
-            throw new Error(`Error from ChatsController: ${e.message}`);
-        }
-    }
-}
-const chatController = new ChatController();
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../Utils/Api":"7475A"}],"hYegh":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "MAIN_BUTTON", ()=>MAIN_BUTTON
-);
-parcelHelpers.export(exports, "TO_PROFILE", ()=>TO_PROFILE
-);
-parcelHelpers.export(exports, "ADD_CHAT", ()=>ADD_CHAT
-);
-parcelHelpers.export(exports, "CREATE_NAME_CHAT", ()=>CREATE_NAME_CHAT
-);
-parcelHelpers.export(exports, "MESSAGE_FIELD", ()=>MESSAGE_FIELD
-);
-parcelHelpers.export(exports, "CHAT_LIST", ()=>CHAT_LIST
-);
-parcelHelpers.export(exports, "ADD_USER", ()=>ADD_USER
-);
-parcelHelpers.export(exports, "CHATS_DATA", ()=>CHATS_DATA
-);
-var _chatMessageInput = require("./components/ChatMessageInput/ChatMessageInput");
-var _chatMessageInputDefault = parcelHelpers.interopDefault(_chatMessageInput);
-var _chatList = require("./components/СhatList/ChatList");
-var _chatListDefault = parcelHelpers.interopDefault(_chatList);
-var _chatMessagesField = require("./components/ChatMessagesField/ChatMessagesField");
-var _chatMessagesFieldDefault = parcelHelpers.interopDefault(_chatMessagesField);
-var _chatHeader = require("./components/ChatHeader/ChatHeader");
-var _chatHeaderDefault = parcelHelpers.interopDefault(_chatHeader);
-var _mainButton = require("../../components/main-button/main-button");
-var _mainButtonDefault = parcelHelpers.interopDefault(_mainButton);
-var _secondaryButton = require("../../components/secondary-button/secondary-button");
-var _secondaryButtonDefault = parcelHelpers.interopDefault(_secondaryButton);
-const MAIN_BUTTON = {
-    className: 'chats__message-send',
-    title: 'Отправить',
-    events: {
-    }
-};
-const TO_PROFILE = {
-    className: 'chats__profile-link',
-    title: 'Профиль',
-    icon: true,
-    events: {
-    }
-};
-const ADD_CHAT = {
-    className: 'chats__add-chat-link',
-    title: 'Добавить чат',
-    events: {
-    }
-};
-const CREATE_NAME_CHAT = {
-    className: 'chats__add-chat-button',
-    title: 'Создать',
-    events: {
-    }
-};
-const MESSAGE_FIELD = {
-    name: 'chats-form',
-    message: 'message',
-    mainButton: new _mainButtonDefault.default(MAIN_BUTTON)
-};
-const CHAT_LIST = {
-    chats: [],
-    events: {
-    }
-};
-const ADD_USER = {
-    className: 'add-user__button',
-    title: 'Добавить',
-    events: {
-    }
-};
-const CHAT_HEADER = {
-    addUserButton: new _mainButtonDefault.default(ADD_USER),
-    events: {
-    }
-};
-const CHATS_DATA = {
-    chatList: new _chatListDefault.default(CHAT_LIST),
-    addChatButton: new _secondaryButtonDefault.default(ADD_CHAT),
-    toProfileButton: new _secondaryButtonDefault.default(TO_PROFILE),
-    createNameChatButton: new _mainButtonDefault.default(CREATE_NAME_CHAT),
-    chatHeader: new _chatHeaderDefault.default(CHAT_HEADER),
-    chatMessagesField: new _chatMessagesFieldDefault.default(),
-    chatMessageInput: new _chatMessageInputDefault.default(MESSAGE_FIELD)
-};
-
-},{"./components/ChatMessageInput/ChatMessageInput":"dZOfO","./components/СhatList/ChatList":"faiFo","./components/ChatMessagesField/ChatMessagesField":"k48jJ","./components/ChatHeader/ChatHeader":"7EKkg","../../components/main-button/main-button":"3GRdu","../../components/secondary-button/secondary-button":"i4ETK","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"dZOfO":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>ChatMessageInput
-);
-var _chatMessageInputTmpl = require("./ChatMessageInput.tmpl");
-var _chatMessageInputTmplDefault = parcelHelpers.interopDefault(_chatMessageInputTmpl);
-var _block = require("../../../../Utils/Block");
-var _blockDefault = parcelHelpers.interopDefault(_block);
-var _chatsData = require("../../Chats.data");
-var _webSocket = require("../../../../Utils/WebSocket");
-var _chatMessageInputScss = require("./ChatMessageInput.scss");
-class ChatMessageInput extends _blockDefault.default {
-    constructor(props){
-        super(props);
-    }
-    componentDidMount() {
-        _chatsData.MAIN_BUTTON.events = {
-            click: (e)=>{
-                e.preventDefault();
-                const input = document.querySelector('#message');
-                if (input.value) {
-                    console.log('yes');
-                    _webSocket.webSocketAPI.socket.send(JSON.stringify({
-                        content: input.value,
-                        type: 'message'
-                    }));
-                }
-                input.value = '';
-            }
-        };
-        this.setProps(_chatsData.MESSAGE_FIELD);
-    }
-    render() {
-        return this.compile(_chatMessageInputTmplDefault.default, this.props);
-    }
-}
-
-},{"./ChatMessageInput.tmpl":"8Hal8","../../../../Utils/Block":"8SCws","../../Chats.data":"hYegh","../../../../Utils/WebSocket":"k7bzh","./ChatMessageInput.scss":"a5n15","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"8Hal8":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-exports.default = `\n  <form action="" method="post" class="chats__message-container" name="{{name}}">\n    <input class="chats__message-input" name="{{message}}" type="text" id="message">\n    {{{mainButton}}}\n  </form>\n`;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"k7bzh":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>WebSocketAPI
-);
-parcelHelpers.export(exports, "webSocketAPI", ()=>webSocketAPI
-);
-var _chatsController = require("../Controllers/ChatsController");
-var _store = require("../store/store");
-var _reducers = require("../store/reducers");
-class WebSocketAPI {
-    constructor(){
-        this._baseURL = 'wss://ya-praktikum.tech/ws/chats';
-    }
-    connect({ userID , chatID  }) {
-        this.userID = userID;
-        this.chatID = chatID;
-        _chatsController.chatController.getChatToken(this.chatID).then((data)=>{
-            this.token = data.response.token;
-            this.socket = new WebSocket(`${this._baseURL}/${this.userID}/${this.chatID}/${this.token}`);
-            this.socket.addEventListener('open', ()=>{
-                console.log('Соединение установлено');
-                this.socket.send(JSON.stringify({
-                    content: '',
-                    type: 'get old'
-                }));
-            });
-            this.socket.addEventListener('close', (e)=>{
-                if (e.wasClean) console.log('Соединение закрыто чисто');
-                else console.log('Обрыв соединения');
-                console.log(`Код: ${e.code} | Причина: ${e.reason}`);
-            });
-            this.socket.addEventListener('message', (e)=>{
-                console.log('Получены данные', e);
-                _store.store.dispatch(_reducers.setMessages(e.data));
-            });
-            this.socket.addEventListener('error', (e)=>{
-                console.log('Ошибка', e.message);
-            });
-        });
-    }
-}
-const webSocketAPI = new WebSocketAPI();
-
-},{"../Controllers/ChatsController":"ipjXp","../store/store":"7PScK","../store/reducers":"9J2GB","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"a5n15":[function() {},{}],"faiFo":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>ChatList
-);
-var _chatListTmpl = require("./ChatList.tmpl");
-var _chatListTmplDefault = parcelHelpers.interopDefault(_chatListTmpl);
-var _block = require("../../../../Utils/Block");
-var _blockDefault = parcelHelpers.interopDefault(_block);
-var _chats = require("../../Chats");
-var _chatsDefault = parcelHelpers.interopDefault(_chats);
-var _webSocket = require("../../../../Utils/WebSocket");
-var _store = require("../../../../store/store");
-var _reducers = require("../../../../store/reducers");
-var _chatListScss = require("./ChatList.scss");
-class ChatList extends _blockDefault.default {
-    constructor(props){
-        super(props);
-        this.props = props;
-        _store.store.subscribe({
-            'load_chats': this
-        });
-    }
-    componentDidMount() {
-        this.props.events = {
-            click: (e)=>{
-                e.preventDefault();
-                const parent = e.target.closest('.chats__list-chat');
-                if (parent) {
-                    const id = parent.dataset.chatId;
-                    const chatHeader = document.querySelector('.chat-header');
-                    const headerName = chatHeader.querySelector('.chat-header__title');
-                    const chats = _store.store.getState().chats;
-                    const chat = chats.filter((chat1)=>{
-                        return chat1.id === Number(id);
-                    });
-                    chatHeader.classList.add('show');
-                    chatHeader.setAttribute('data-selected-chat', id);
-                    headerName.textContent = chat[0].title ? chat[0].title : '';
-                    _store.store.dispatch(_reducers.selectChat(id));
-                    this.initWebSocket(id);
-                }
-            }
-        };
-        this.setProps(this.props);
-    }
-    initWebSocket(id) {
-        const data = _store.store.getState().user;
-        _webSocket.webSocketAPI.connect({
-            userID: data.id,
-            chatID: id
-        });
-    }
-    storeChanged(key) {
-        if (key === 'load_chats') {
-            const newProps = this.updateChatsList();
-            this.setProps(newProps);
-        }
-    }
-    updateChatsList() {
-        const chats = _store.store.getState().chats;
-        const newProps = {
-            chats: []
-        };
-        if (chats) chats.forEach((chat)=>{
-            newProps.chats.push(new _chatsDefault.default(chat));
-        });
-        return newProps;
-    }
-    render() {
-        return this.compile(_chatListTmplDefault.default, this.props);
-    }
-}
-
-},{"./ChatList.tmpl":"8JQ2V","../../../../Utils/Block":"8SCws","../../Chats":"9OG4H","../../../../Utils/WebSocket":"k7bzh","../../../../store/store":"7PScK","../../../../store/reducers":"9J2GB","./ChatList.scss":"1fo0J","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"8JQ2V":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-exports.default = `\n  <div class="chats__list">\n    {{#each chats}}\n        {{{this}}}\n    {{/each}}\n  </div>\n`;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"1fo0J":[function() {},{}],"k48jJ":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>ChatMessagesField
-);
-var _chatMessagesFieldTmpl = require("./ChatMessagesField.tmpl");
-var _chatMessagesFieldTmplDefault = parcelHelpers.interopDefault(_chatMessagesFieldTmpl);
-var _block = require("../../../../Utils/Block");
-var _blockDefault = parcelHelpers.interopDefault(_block);
-var _userController = require("../../../../Controllers/userController");
-var _store = require("../../../../store/store");
-var _chatMessagesFieldScss = require("./ChatMessagesField.scss");
-class ChatMessagesField extends _blockDefault.default {
-    constructor(props){
-        super(props);
-        _store.store.subscribe({
-            'messages_received': this
-        });
-        _store.store.subscribe({
-            'select_chat': this
-        });
-    }
-    storeChanged(key) {
-        const parent = document.querySelector('.messages-field');
-        const chat = _store.store.getState().chat;
-        const userID = _store.store.getState().user.id;
-        if (key === 'select_chat') return parent.innerHTML = '';
-        if (chat.messages.length) chat.messages.reverse().forEach((message)=>{
-            this.addMessage(message, userID, parent);
-        });
-        else this.addMessage(chat.messages, userID, parent);
-    }
-    addMessage(message, userID, parent) {
-        if (message.type === 'message') {
-            if (message.user_id === userID) parent.appendChild(this.createMessage(message.content, 'sent'));
-            else parent.appendChild(this.createMessage(message.content, 'received'));
-        }
-        if (message.type === 'user connected') parent.appendChild(this.createSystemMessage(message.content));
-    }
-    createMessage(text, className) {
-        const newMessage = document.createElement('div');
-        newMessage.innerText = text;
-        newMessage.classList.add('messages-field__message');
-        newMessage.classList.add(className);
-        return newMessage;
-    }
-    createSystemMessage(id) {
-        const newMessage = document.createElement('div');
-        newMessage.classList.add('messages-field__sys-message');
-        _userController.userController.userById(id).then((res)=>{
-            newMessage.innerText = `Подключился пользователь: ${res.response.first_name} ${res.response.second_name}`;
-        });
-        return newMessage;
-    }
-    render() {
-        return this.compile(_chatMessagesFieldTmplDefault.default, this.props);
-    }
-}
-
-},{"./ChatMessagesField.tmpl":"1hnLR","../../../../Utils/Block":"8SCws","../../../../Controllers/userController":"91FRj","../../../../store/store":"7PScK","./ChatMessagesField.scss":"e4nOK","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"1hnLR":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-exports.default = `\n  <div class="chats__messages-filed messages-field"></div>\n`;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"e4nOK":[function() {},{}],"7EKkg":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>ChatHeader
-);
-var _chatHeaderTmpl = require("./ChatHeader.tmpl");
-var _chatHeaderTmplDefault = parcelHelpers.interopDefault(_chatHeaderTmpl);
-var _block = require("../../../../Utils/Block");
-var _blockDefault = parcelHelpers.interopDefault(_block);
-var _chatsData = require("../../Chats.data");
-var _chatsController = require("../../../../Controllers/ChatsController");
-var _userController = require("../../../../Controllers/userController");
-var _index = require("../../../../index");
-var _chatHeaderScss = require("./ChatHeader.scss");
-class ChatHeader extends _blockDefault.default {
-    constructor(props){
-        super(props);
-    }
-    componentDidMount() {
-        this.props.events = {
-            click: async (e)=>{
-                e.preventDefault();
-                if (e.target.closest('span.icon-more')) {
-                    const options = document.querySelector('.chat-header__options');
-                    options.classList.toggle('show');
-                }
-                if (e.target.hasAttribute('data-delete-chat')) {
-                    const selectedChatId = Number(e.target.closest('.chat-header').dataset.selectedChat);
-                    await _chatsController.chatController.deleteChat({
-                        chatId: selectedChatId
-                    });
-                    _index.router.go('/messenger');
-                }
-                if (e.target.hasAttribute('data-add-user')) {
-                    const userInput = document.querySelector('.chat-header__add-user');
-                    userInput.classList.toggle('show');
-                }
-            }
-        };
-        _chatsData.ADD_USER.events = {
-            click: async (e)=>{
-                e.preventDefault();
-                const selectedChatId = Number(e.target.closest('.chat-header').dataset.selectedChat);
-                const options = e.target.closest('.chat-header__options');
-                const inputUsername = document.querySelector('.add-user__input');
-                if (inputUsername.value !== '') {
-                    const user = await _userController.userController.searchUser({
-                        login: inputUsername.value
-                    });
-                    await _chatsController.chatController.addUser({
-                        users: [
-                            user[0].id
-                        ],
-                        chatId: selectedChatId
-                    });
-                    options.classList.toggle('show');
-                }
-            }
-        };
-    }
-    render() {
-        return this.compile(_chatHeaderTmplDefault.default, this.props);
-    }
-}
-
-},{"./ChatHeader.tmpl":"ivVMi","../../../../Utils/Block":"8SCws","../../Chats.data":"hYegh","../../../../Controllers/ChatsController":"ipjXp","../../../../Controllers/userController":"91FRj","../../../../index":"4aleK","./ChatHeader.scss":"f16sM","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"ivVMi":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-exports.default = `\n  <div class="chats__content-header chat-header" data-selected-chat="">\n    <div class="chat-header__title"></div>\n    <span class="icon-more"></span>\n    <div class="chat-header__options">\n      <ul class="chat-header__options-list">\n        <li class="chat-header__options-list-item" data-add-user>Добавить пользователя</li>\n        <li class="chat-header__options-list-item" data-delete-chat>Удалить чат</li>\n      </ul>\n      <div class="chat-header__add-user">\n        <input class="add-user__input" type="text" placeholder="Введите логин">\n        {{{addUserButton}}}\n      </div>\n    </div>\n  </div>\n`;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"f16sM":[function() {},{}],"GYxbg":[function() {},{}],"bAPiR":[function() {},{}],"kvCHm":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"5VG53":[function() {},{}],"kvCHm":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _registrationController = require("../Controllers/RegistrationController");
@@ -13742,7 +13233,79 @@ class Router {
 }
 exports.default = Router;
 
-},{"../Controllers/RegistrationController":"j5qt0","../Controllers/ChatsController":"ipjXp","../store/store":"7PScK","../store/reducers":"9J2GB","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"lm1LX":[function(require,module,exports) {
+},{"../Controllers/RegistrationController":"j5qt0","../Controllers/ChatsController":"ipjXp","../store/store":"7PScK","../store/reducers":"9J2GB","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"ipjXp":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "chatController", ()=>chatController
+);
+var _api = require("../Utils/Api");
+var _apiDefault = parcelHelpers.interopDefault(_api);
+class ChatsAPI extends _apiDefault.default {
+    createChat(data) {
+        return this.post('/chats', {
+            data
+        });
+    }
+    addUser(data) {
+        return this.put('/chats/users', {
+            data
+        });
+    }
+    deleteChat(data) {
+        return this.delete('/chats', {
+            data
+        });
+    }
+    getChats(data) {
+        return this.get('/chats', {
+            data
+        });
+    }
+    getToken(id) {
+        return this.post(`/chats/token/${id}`);
+    }
+}
+const chatApi = new ChatsAPI();
+class ChatController {
+    async createChat(data) {
+        try {
+            return await chatApi.createChat(data);
+        } catch (e) {
+            throw new Error(`Error from ChatsController: ${e.message}`);
+        }
+    }
+    async addUser(data) {
+        try {
+            await chatApi.addUser(data);
+        } catch (e) {
+            throw new Error(`Error from ChatsController: ${e.message}`);
+        }
+    }
+    async deleteChat(data) {
+        try {
+            await chatApi.deleteChat(data);
+        } catch (e) {
+            throw new Error(`Error from ChatsController: ${e.message}`);
+        }
+    }
+    async getChatInfo(data) {
+        try {
+            return await chatApi.getChats(data);
+        } catch (e) {
+            throw new Error(`Error from ChatsController: ${e.message}`);
+        }
+    }
+    async getChatToken(data) {
+        try {
+            return await chatApi.getToken(data);
+        } catch (e) {
+            throw new Error(`Error from ChatsController: ${e.message}`);
+        }
+    }
+}
+const chatController = new ChatController();
+
+},{"../Utils/Api":"7475A","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"lm1LX":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>Error1
@@ -13888,6 +13451,483 @@ const PROFILE_PASSWORD_DATA = {
     savePassword: new _mainButtonDefault.default(SAVE_PASSWORD)
 };
 
-},{"../../components/input/input":"k9f01","../../components/main-button/main-button":"3GRdu","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"b6Ahh":[function() {},{}]},["5B0e3","4aleK"], "4aleK", "parcelRequirefc40")
+},{"../../components/input/input":"k9f01","../../components/main-button/main-button":"3GRdu","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"b6Ahh":[function() {},{}],"bAPiR":[function() {},{}],"eFvZC":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>Chat
+);
+var _chatTmpl = require("./Chat.tmpl");
+var _chatTmplDefault = parcelHelpers.interopDefault(_chatTmpl);
+var _block = require("../../Utils/Block");
+var _blockDefault = parcelHelpers.interopDefault(_block);
+var _chatData = require("./Chat.data");
+var _chatsController = require("../../Controllers/ChatsController");
+var _index = require("../../index");
+var _chatScss = require("./Chat.scss");
+class Chat extends _blockDefault.default {
+    constructor(props){
+        super(props);
+    }
+    componentDidMount() {
+        _chatData.TO_PROFILE.events = {
+            click: (e)=>{
+                e.preventDefault();
+                _index.router.go('/settings');
+            }
+        };
+        _chatData.ADD_CHAT.events = {
+            click: (e)=>{
+                e.preventDefault();
+                const addChatField = document.querySelector('.chats__add-field');
+                addChatField.classList.toggle('show');
+            }
+        };
+        _chatData.CREATE_NAME_CHAT.events = {
+            click: async (e)=>{
+                e.preventDefault();
+                const addChatField = e.target.closest('.chats__add-field');
+                const chatInput = addChatField.querySelector('.chats__add-chat-input');
+                if (!chatInput.value) return;
+                const newChatName = {
+                    title: chatInput.value
+                };
+                await _chatsController.chatController.createChat(newChatName);
+                chatInput.value = '';
+                addChatField.classList.toggle('show');
+                _index.router.go('/messenger');
+            }
+        };
+        this.setProps(_chatData.CHATS_DATA);
+    }
+    render() {
+        return this.compile(_chatTmplDefault.default, this.props);
+    }
+}
+
+},{"./Chat.tmpl":"1q0w1","./Chat.data":"aP6jb","../../index":"4aleK","./Chat.scss":"6GOE6","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../../Utils/Block":"8SCws","../../Controllers/ChatsController":"ipjXp"}],"1q0w1":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = `\n  <div class="chats__container">\n    <div class="chats__sidebar chats">\n      <div class="chats__links">\n        <div class="chats__add-chat">\n        {{{addChatButton}}}\n        </div>\n        <div class="chats__profile">\n        {{{toProfileButton}}}\n        </div>\n      </div>\n      <div class="chats__add-field">\n        <input class="chats__add-chat-input" type="text" placeholder="Введите название чата">\n        {{{createNameChatButton}}}\n      </div>\n      <input class="chats__search" type="text" placeholder="Поиск">\n      {{{chatList}}}\n    </div>\n    <div class="chats__content">\n      {{{chatHeader}}}\n      {{{chatMessagesField}}}\n      {{{chatMessageInput}}}\n    </div>\n  </div>\n`;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"aP6jb":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "MAIN_BUTTON", ()=>MAIN_BUTTON
+);
+parcelHelpers.export(exports, "TO_PROFILE", ()=>TO_PROFILE
+);
+parcelHelpers.export(exports, "ADD_CHAT", ()=>ADD_CHAT
+);
+parcelHelpers.export(exports, "CREATE_NAME_CHAT", ()=>CREATE_NAME_CHAT
+);
+parcelHelpers.export(exports, "MESSAGE_FIELD", ()=>MESSAGE_FIELD
+);
+parcelHelpers.export(exports, "CHAT_LIST", ()=>CHAT_LIST
+);
+parcelHelpers.export(exports, "ADD_USER", ()=>ADD_USER
+);
+parcelHelpers.export(exports, "CHATS_DATA", ()=>CHATS_DATA
+);
+var _chatMessageInput = require("./ChatMessageInput/ChatMessageInput");
+var _chatMessageInputDefault = parcelHelpers.interopDefault(_chatMessageInput);
+var _mainButton = require("../../components/main-button/main-button");
+var _mainButtonDefault = parcelHelpers.interopDefault(_mainButton);
+var _secondaryButton = require("../../components/secondary-button/secondary-button");
+var _secondaryButtonDefault = parcelHelpers.interopDefault(_secondaryButton);
+var _chatList = require("./СhatList/ChatList");
+var _chatListDefault = parcelHelpers.interopDefault(_chatList);
+var _chatHeader = require("./ChatHeader/ChatHeader");
+var _chatHeaderDefault = parcelHelpers.interopDefault(_chatHeader);
+var _chatMessagesField = require("./ChatMessagesField/ChatMessagesField");
+var _chatMessagesFieldDefault = parcelHelpers.interopDefault(_chatMessagesField);
+const MAIN_BUTTON = {
+    className: 'chats__message-send',
+    title: 'Отправить',
+    events: {
+    }
+};
+const TO_PROFILE = {
+    className: 'chats__profile-link',
+    title: 'Профиль',
+    icon: true,
+    events: {
+    }
+};
+const ADD_CHAT = {
+    className: 'chats__add-chat-link',
+    title: 'Добавить чат',
+    events: {
+    }
+};
+const CREATE_NAME_CHAT = {
+    className: 'chats__add-chat-button',
+    title: 'Создать',
+    events: {
+    }
+};
+const MESSAGE_FIELD = {
+    name: 'chats-form',
+    message: 'message',
+    mainButton: new _mainButtonDefault.default(MAIN_BUTTON)
+};
+const CHAT_LIST = {
+    chats: [],
+    events: {
+    }
+};
+const ADD_USER = {
+    className: 'add-user__button',
+    title: 'Добавить',
+    events: {
+    }
+};
+const CHAT_HEADER = {
+    addUserButton: new _mainButtonDefault.default(ADD_USER),
+    events: {
+    }
+};
+const CHATS_DATA = {
+    chatList: new _chatListDefault.default(CHAT_LIST),
+    addChatButton: new _secondaryButtonDefault.default(ADD_CHAT),
+    toProfileButton: new _secondaryButtonDefault.default(TO_PROFILE),
+    createNameChatButton: new _mainButtonDefault.default(CREATE_NAME_CHAT),
+    chatHeader: new _chatHeaderDefault.default(CHAT_HEADER),
+    chatMessagesField: new _chatMessagesFieldDefault.default(),
+    chatMessageInput: new _chatMessageInputDefault.default(MESSAGE_FIELD)
+};
+
+},{"./ChatMessageInput/ChatMessageInput":"dmhih","../../components/main-button/main-button":"3GRdu","../../components/secondary-button/secondary-button":"i4ETK","./СhatList/ChatList":"6Yz80","./ChatHeader/ChatHeader":"6qnKn","./ChatMessagesField/ChatMessagesField":"b179I","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"dmhih":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>ChatMessageInput
+);
+var _chatMessageInputTmpl = require("./ChatMessageInput.tmpl");
+var _chatMessageInputTmplDefault = parcelHelpers.interopDefault(_chatMessageInputTmpl);
+var _block = require("../../../Utils/Block");
+var _blockDefault = parcelHelpers.interopDefault(_block);
+var _chatData = require("../Chat.data");
+var _webSocket = require("../../../Utils/WebSocket");
+var _chatMessageInputScss = require("./ChatMessageInput.scss");
+class ChatMessageInput extends _blockDefault.default {
+    constructor(props){
+        super(props);
+    }
+    componentDidMount() {
+        _chatData.MAIN_BUTTON.events = {
+            click: (e)=>{
+                e.preventDefault();
+                const input = document.querySelector('#message');
+                if (input.value) {
+                    console.log('yes');
+                    _webSocket.webSocketAPI.socket.send(JSON.stringify({
+                        content: input.value,
+                        type: 'message'
+                    }));
+                }
+                input.value = '';
+            }
+        };
+        this.setProps(_chatData.MESSAGE_FIELD);
+    }
+    render() {
+        return this.compile(_chatMessageInputTmplDefault.default, this.props);
+    }
+}
+
+},{"./ChatMessageInput.tmpl":"4eZdU","../../../Utils/Block":"8SCws","../Chat.data":"aP6jb","../../../Utils/WebSocket":"k7bzh","./ChatMessageInput.scss":"hBQ4A","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"4eZdU":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = `\n  <form action="" method="post" class="chats__message-container" name="{{name}}">\n    <input class="chats__message-input" name="{{message}}" type="text" id="message">\n    {{{mainButton}}}\n  </form>\n`;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"k7bzh":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>WebSocketAPI
+);
+parcelHelpers.export(exports, "webSocketAPI", ()=>webSocketAPI
+);
+var _chatsController = require("../Controllers/ChatsController");
+var _store = require("../store/store");
+var _reducers = require("../store/reducers");
+class WebSocketAPI {
+    constructor(){
+        this._baseURL = 'wss://ya-praktikum.tech/ws/chats';
+    }
+    connect({ userID , chatID  }) {
+        this.userID = userID;
+        this.chatID = chatID;
+        _chatsController.chatController.getChatToken(this.chatID).then((data)=>{
+            this.token = data.response.token;
+            this.socket = new WebSocket(`${this._baseURL}/${this.userID}/${this.chatID}/${this.token}`);
+            this.socket.addEventListener('open', ()=>{
+                console.log('Соединение установлено');
+                this.socket.send(JSON.stringify({
+                    content: '',
+                    type: 'get old'
+                }));
+            });
+            this.socket.addEventListener('close', (e)=>{
+                if (e.wasClean) console.log('Соединение закрыто чисто');
+                else console.log('Обрыв соединения');
+                console.log(`Код: ${e.code} | Причина: ${e.reason}`);
+            });
+            this.socket.addEventListener('message', (e)=>{
+                console.log('Получены данные', e);
+                _store.store.dispatch(_reducers.setMessages(e.data));
+            });
+            this.socket.addEventListener('error', (e)=>{
+                console.log('Ошибка', e.message);
+            });
+        });
+    }
+}
+const webSocketAPI = new WebSocketAPI();
+
+},{"../Controllers/ChatsController":"ipjXp","../store/store":"7PScK","../store/reducers":"9J2GB","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"hBQ4A":[function() {},{}],"6Yz80":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>ChatList
+);
+var _chatListTmpl = require("./ChatList.tmpl");
+var _chatListTmplDefault = parcelHelpers.interopDefault(_chatListTmpl);
+var _block = require("../../../Utils/Block");
+var _blockDefault = parcelHelpers.interopDefault(_block);
+var _chat = require("../../../components/chat/chat");
+var _chatDefault = parcelHelpers.interopDefault(_chat);
+var _webSocket = require("../../../Utils/WebSocket");
+var _store = require("../../../store/store");
+var _reducers = require("../../../store/reducers");
+var _chatListScss = require("./ChatList.scss");
+class ChatList extends _blockDefault.default {
+    constructor(props){
+        super(props);
+        this.props = props;
+        _store.store.subscribe({
+            'load_chats': this
+        });
+    }
+    componentDidMount() {
+        this.props.events = {
+            click: (e)=>{
+                e.preventDefault();
+                const parent = e.target.closest('.chats__list-chat');
+                if (parent) {
+                    const id = parent.dataset.chatId;
+                    const chatHeader = document.querySelector('.chat-header');
+                    const headerName = chatHeader.querySelector('.chat-header__title');
+                    const chats = _store.store.getState().chats;
+                    const chat = chats.filter((chat1)=>{
+                        return chat1.id === Number(id);
+                    });
+                    chatHeader.classList.add('show');
+                    chatHeader.setAttribute('data-selected-chat', id);
+                    headerName.textContent = chat[0].title ? chat[0].title : '';
+                    _store.store.dispatch(_reducers.selectChat(id));
+                    this.initWebSocket(id);
+                }
+            }
+        };
+        this.setProps(this.props);
+    }
+    initWebSocket(id) {
+        const data = _store.store.getState().user;
+        _webSocket.webSocketAPI.connect({
+            userID: data.id,
+            chatID: id
+        });
+    }
+    storeChanged(key) {
+        if (key === 'load_chats') {
+            const newProps = this.updateChatsList();
+            this.setProps(newProps);
+        }
+    }
+    updateChatsList() {
+        const chats = _store.store.getState().chats;
+        const newProps = {
+            chats: []
+        };
+        if (chats) chats.forEach((chat)=>{
+            newProps.chats.push(new _chatDefault.default(chat));
+        });
+        return newProps;
+    }
+    render() {
+        return this.compile(_chatListTmplDefault.default, this.props);
+    }
+}
+
+},{"./ChatList.tmpl":"gtPw9","../../../components/chat/chat":"f3OFg","./ChatList.scss":"iMEgd","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../../../Utils/Block":"8SCws","../../../Utils/WebSocket":"k7bzh","../../../store/store":"7PScK","../../../store/reducers":"9J2GB"}],"gtPw9":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = `\n  <div class="chats__list">\n    {{#each chats}}\n        {{{this}}}\n    {{/each}}\n  </div>\n`;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"f3OFg":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>Chat
+);
+var _chatTmpl = require("./chat.tmpl");
+var _chatTmplDefault = parcelHelpers.interopDefault(_chatTmpl);
+var _block = require("../../Utils/Block");
+var _blockDefault = parcelHelpers.interopDefault(_block);
+var _chatScss = require("./chat.scss");
+class Chat extends _blockDefault.default {
+    constructor(props){
+        super(props);
+    }
+    componentDidMount() {
+        if (this.props.last_message) {
+            const time = new Date(this.props.last_message.time).toLocaleTimeString();
+            const day = new Date(this.props.last_message.time).toLocaleDateString();
+            this.props.datetime = `${time} ${day}`;
+            this.setProps(this.props);
+        }
+    }
+    render() {
+        return this.compile(_chatTmplDefault.default, this.props);
+    }
+}
+
+},{"./chat.tmpl":"kSWGZ","./chat.scss":"1a0wW","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../../Utils/Block":"8SCws"}],"kSWGZ":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = `\n  <div class="chats__list-chat chat" data-chat-id="{{id}}">\n    <div class="chat__avatar">\n    {{#if avatar}}\n      <img src="https://ya-praktikum.tech/api/v2/resources{{avatar}}" crossorigin="use-credentials">\n    {{/if}}\n    </div>\n    <div class="chat__content">\n      <div class="chat__title">{{title}}</div>\n      {{#if last_message.user}}\n      <div class="chat__message">{{last_message.user.login}}: {{last_message.content}}</div>\n      {{else}}\n      <div class="chat__message">{{last_message.content}}</div>\n      {{/if}}\n    </div>\n    <time class="chat__time" datetime="{{last_message.time}}">{{datetime}}</time>\n    {{#if unread_count}}\n    <span class="chat__unread">{{unread_count}}</span>\n    {{/if}}\n  </div>\n`;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"1a0wW":[function() {},{}],"iMEgd":[function() {},{}],"6qnKn":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>ChatHeader
+);
+var _chatHeaderTmpl = require("./ChatHeader.tmpl");
+var _chatHeaderTmplDefault = parcelHelpers.interopDefault(_chatHeaderTmpl);
+var _block = require("../../../Utils/Block");
+var _blockDefault = parcelHelpers.interopDefault(_block);
+var _chatData = require("../Chat.data");
+var _chatsController = require("../../../Controllers/ChatsController");
+var _userController = require("../../../Controllers/userController");
+var _index = require("../../../index");
+var _chatHeaderScss = require("./ChatHeader.scss");
+class ChatHeader extends _blockDefault.default {
+    constructor(props){
+        super(props);
+    }
+    componentDidMount() {
+        this.props.events = {
+            click: async (e)=>{
+                e.preventDefault();
+                if (e.target.closest('span.icon-more')) {
+                    const options = document.querySelector('.chat-header__options');
+                    options.classList.toggle('show');
+                }
+                if (e.target.hasAttribute('data-delete-chat')) {
+                    const selectedChatId = Number(e.target.closest('.chat-header').dataset.selectedChat);
+                    await _chatsController.chatController.deleteChat({
+                        chatId: selectedChatId
+                    });
+                    _index.router.go('/messenger');
+                }
+                if (e.target.hasAttribute('data-add-user')) {
+                    const userInput = document.querySelector('.chat-header__add-user');
+                    userInput.classList.toggle('show');
+                }
+            }
+        };
+        _chatData.ADD_USER.events = {
+            click: async (e)=>{
+                e.preventDefault();
+                const selectedChatId = Number(e.target.closest('.chat-header').dataset.selectedChat);
+                const options = e.target.closest('.chat-header__options');
+                const inputUsername = document.querySelector('.add-user__input');
+                if (inputUsername.value !== '') {
+                    const user = await _userController.userController.searchUser({
+                        login: inputUsername.value
+                    });
+                    await _chatsController.chatController.addUser({
+                        users: [
+                            user[0].id
+                        ],
+                        chatId: selectedChatId
+                    });
+                    options.classList.toggle('show');
+                }
+            }
+        };
+    }
+    render() {
+        return this.compile(_chatHeaderTmplDefault.default, this.props);
+    }
+}
+
+},{"./ChatHeader.tmpl":"2e7JV","../../../Utils/Block":"8SCws","../Chat.data":"aP6jb","../../../Controllers/ChatsController":"ipjXp","../../../Controllers/userController":"91FRj","../../../index":"4aleK","./ChatHeader.scss":"8gJW8","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"2e7JV":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = `\n  <div class="chats__content-header chat-header" data-selected-chat="">\n    <div class="chat-header__title"></div>\n    <span class="icon-more"></span>\n    <div class="chat-header__options">\n      <ul class="chat-header__options-list">\n        <li class="chat-header__options-list-item" data-add-user>Добавить пользователя</li>\n        <li class="chat-header__options-list-item" data-delete-chat>Удалить чат</li>\n      </ul>\n      <div class="chat-header__add-user">\n        <input class="add-user__input" type="text" placeholder="Введите логин">\n        {{{addUserButton}}}\n      </div>\n    </div>\n  </div>\n`;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"8gJW8":[function() {},{}],"b179I":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>ChatMessagesField
+);
+var _chatMessagesFieldTmpl = require("./ChatMessagesField.tmpl");
+var _chatMessagesFieldTmplDefault = parcelHelpers.interopDefault(_chatMessagesFieldTmpl);
+var _block = require("../../../Utils/Block");
+var _blockDefault = parcelHelpers.interopDefault(_block);
+var _userController = require("../../../Controllers/userController");
+var _store = require("../../../store/store");
+var _chatMessagesFieldScss = require("./ChatMessagesField.scss");
+class ChatMessagesField extends _blockDefault.default {
+    constructor(props){
+        super(props);
+        _store.store.subscribe({
+            'messages_received': this
+        });
+        _store.store.subscribe({
+            'select_chat': this
+        });
+    }
+    storeChanged(key) {
+        const parent = document.querySelector('.messages-field');
+        const chat = _store.store.getState().chat;
+        const userID = _store.store.getState().user.id;
+        if (key === 'select_chat') return parent.innerHTML = '';
+        if (chat.messages.length) chat.messages.reverse().forEach((message)=>{
+            this.addMessage(message, userID, parent);
+        });
+        else this.addMessage(chat.messages, userID, parent);
+    }
+    addMessage(message, userID, parent) {
+        if (message.type === 'message') {
+            if (message.user_id === userID) parent.appendChild(this.createMessage(message.content, 'sent'));
+            else parent.appendChild(this.createMessage(message.content, 'received'));
+        }
+        if (message.type === 'user connected') parent.appendChild(this.createSystemMessage(message.content));
+    }
+    createMessage(text, className) {
+        const newMessage = document.createElement('div');
+        newMessage.innerText = text;
+        newMessage.classList.add('messages-field__message');
+        newMessage.classList.add(className);
+        return newMessage;
+    }
+    createSystemMessage(id) {
+        const newMessage = document.createElement('div');
+        newMessage.classList.add('messages-field__sys-message');
+        _userController.userController.userById(id).then((res)=>{
+            newMessage.innerText = `Подключился пользователь: ${res.response.first_name} ${res.response.second_name}`;
+        });
+        return newMessage;
+    }
+    render() {
+        return this.compile(_chatMessagesFieldTmplDefault.default, this.props);
+    }
+}
+
+},{"./ChatMessagesField.tmpl":"dkqVg","../../../Utils/Block":"8SCws","../../../Controllers/userController":"91FRj","../../../store/store":"7PScK","./ChatMessagesField.scss":"jEC9X","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"dkqVg":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = `\n  <div class="chats__messages-filed messages-field"></div>\n`;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"jEC9X":[function() {},{}],"6GOE6":[function() {},{}]},["5B0e3","4aleK"], "4aleK", "parcelRequirefc40")
 
 //# sourceMappingURL=index.324aea44.js.map

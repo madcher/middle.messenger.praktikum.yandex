@@ -1,7 +1,7 @@
 import messageFieldTmpl from './ChatMessageInput.tmpl';
-import Block from '../../../../Utils/Block';
-import {MAIN_BUTTON, MESSAGE_FIELD} from '../../Chats.data';
-import {webSocketAPI} from '../../../../Utils/WebSocket';
+import Block from '../../../Utils/Block';
+import {MAIN_BUTTON, MESSAGE_FIELD} from '../Chat.data';
+import {webSocketAPI} from '../../../Utils/WebSocket';
 import './ChatMessageInput.scss';
 
 export default class ChatMessageInput extends Block {

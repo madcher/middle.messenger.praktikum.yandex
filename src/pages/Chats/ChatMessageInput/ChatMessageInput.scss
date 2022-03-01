@@ -1,5 +1,6 @@
-@import "../../../../scss/colors";
-@import "../../../../scss/mixins";
+@import "../../../scss/colors";
+@import "../../../scss/mixins";
+
 .chats__message-container {
   @include flex(row, space-between, center);
   position: relative;

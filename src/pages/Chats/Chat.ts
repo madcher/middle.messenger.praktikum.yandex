@@ -1,14 +1,14 @@
-import chatsTmpl from './Chats.tmpl';
+import chatsTmpl from './Chat.tmpl';
 import Block from '../../Utils/Block';
 import {
 	ADD_CHAT,
 	CHATS_DATA,
 	CREATE_NAME_CHAT,
 	TO_PROFILE,
-} from './Chats.data';
+} from './Chat.data';
 import {chatController} from '../../Controllers/ChatsController';
 import {router} from '../../index';
-import './Chats.scss';
+import './Chat.scss';
 
 export default class Chat extends Block {
 	constructor(props?: any) {

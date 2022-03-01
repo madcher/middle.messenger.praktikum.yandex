@@ -1,9 +1,9 @@
 import charHeaderTmpl from './ChatHeader.tmpl';
-import Block from '../../../../Utils/Block';
-import {ADD_USER} from '../../Chats.data';
-import {chatController} from '../../../../Controllers/ChatsController';
-import {userController} from '../../../../Controllers/userController';
-import {router} from '../../../../index';
+import Block from '../../../Utils/Block';
+import {ADD_USER} from '../Chat.data';
+import {chatController} from '../../../Controllers/ChatsController';
+import {userController} from '../../../Controllers/userController';
+import {router} from '../../../index';
 import './ChatHeader.scss';
 
 export default class ChatHeader extends Block {

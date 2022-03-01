@@ -1,9 +1,9 @@
 import chatListTmpl from './ChatList.tmpl';
-import Block from '../../../../Utils/Block';
-import Chat from '../../Chats';
-import {webSocketAPI} from '../../../../Utils/WebSocket';
-import {store} from '../../../../store/store';
-import {selectChat} from '../../../../store/reducers';
+import Block from '../../../Utils/Block';
+import Chat from '../../../components/chat/chat';
+import {webSocketAPI} from '../../../Utils/WebSocket';
+import {store} from '../../../store/store';
+import {selectChat} from '../../../store/reducers';
 import './ChatList.scss';
 
 

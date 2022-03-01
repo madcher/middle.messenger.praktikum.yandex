@@ -96,6 +96,16 @@ export default abstract class Block {
 				nodes[index] = prop;
 				props[propName] = `<div id='${index}'></div>`;
 			}
+			if (propName === 'chats') {
+				if (prop.length !== 0) {
+					prop.forEach((item: any, index: any) => {
+						if (prop[index] instanceof Block) {
+							nodes[index] = item;
+							return prop[index] = `<div id='${index}'></div>`;
+						}
+					});
+				}
+			}
 		});
 
 		fragment.innerHTML = template(props);
