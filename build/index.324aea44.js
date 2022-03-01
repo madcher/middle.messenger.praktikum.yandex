@@ -478,7 +478,7 @@ const TAG = '#output';
 const router = new _routerDefault.default(TAG);
 router.use('/', _loginDefault.default).use('/messenger', _chatDefault.default).use('/settings', _profileDefault.default).use('/sign-up', _registrationDefault.default).use('/settings/change-password', _changePasswordDefault.default).use('/error', _errorDefault.default).start();
 
-},{"./pages/Login/Login":"l8v5I","./pages/Registration/Registration":"g7TgW","./pages/Profile/Profile":"i4cjb","./Utils/Router":"kvCHm","./pages/Error/Error":"lm1LX","./pages/ChangePassword/ChangePassword":"aut7O","./scss/styles.scss":"bAPiR","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","./pages/Chats/Chat":"eFvZC"}],"l8v5I":[function(require,module,exports) {
+},{"./pages/Login/Login":"l8v5I","./pages/Registration/Registration":"g7TgW","./pages/Profile/Profile":"i4cjb","./pages/Chats/Chat":"eFvZC","./Utils/Router":"kvCHm","./pages/Error/Error":"lm1LX","./pages/ChangePassword/ChangePassword":"aut7O","./scss/styles.scss":"bAPiR","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"l8v5I":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>Login
@@ -13115,343 +13115,7 @@ const chat = (state, action)=>{
     }
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"5VG53":[function() {},{}],"kvCHm":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _registrationController = require("../Controllers/RegistrationController");
-var _chatsController = require("../Controllers/ChatsController");
-var _store = require("../store/store");
-var _reducers = require("../store/reducers");
-function isEqual(lhs, rhs) {
-    return lhs === rhs;
-}
-const render = (tag, block)=>{
-    const root = document.querySelector(tag);
-    root.innerHTML = '';
-    root.appendChild(block);
-    return root;
-};
-class Route {
-    constructor(pathname1, view, props){
-        this._pathname = pathname1;
-        this._blockClass = view;
-        this._block = null;
-        this._props = props;
-    }
-    navigate(pathname) {
-        if (this.match(pathname)) {
-            this._pathname = pathname;
-            this.render();
-        }
-    }
-    leave() {
-        if (this._block) this._block.hide();
-    }
-    match(pathname) {
-        return isEqual(pathname, this._pathname);
-    }
-    render() {
-        if (!this._block) {
-            this._block = new this._blockClass();
-            return render(this._props.rootQuery, this._block.getContent());
-        }
-        render(this._props.rootQuery, this._block.render());
-    }
-}
-class Router {
-    constructor(rootQuery){
-        if (Router.__instance) {
-            Router.__instance._rootQuery = rootQuery;
-            return Router.__instance;
-        }
-        this.routes = [];
-        this.history = window.history;
-        this._currentRoute = null;
-        this._rootQuery = rootQuery;
-        Router.__instance = this;
-    }
-    use(pathname, block) {
-        const route = new Route(pathname, block, {
-            rootQuery: this._rootQuery
-        });
-        this.routes.push(route);
-        return this;
-    }
-    start() {
-        // Реагируем на изменения в адресной строке и вызываем перерисовку
-        window.onpopstate = (event)=>{
-            this._onRoute(event.currentTarget.location.pathname);
-        };
-        this._onRoute(window.location.pathname);
-    }
-    _onRoute(pathname) {
-        this.checkRoute(pathname).then(()=>{
-            let route = this.getRoute(pathname);
-            if (!route) route = this.getRoute('/error');
-            if (this._currentRoute) this._currentRoute.leave();
-            this._currentRoute = route;
-            route.render();
-        });
-    }
-    async checkRoute(pathname) {
-        if (pathname === '/' || pathname === '/sign-up') await _registrationController.registrationController.getUserInfo().then(async (res)=>{
-            _store.store.dispatch(_reducers.setUser(res.response));
-            if (res.status >= 200 && res.status < 400) {
-                console.log('user', res.response);
-                await _chatsController.chatController.getChatInfo().then((res1)=>{
-                    _store.store.dispatch(_reducers.loadChats(res1.response));
-                    this.go('/messenger');
-                });
-            }
-        });
-        if (pathname === '/settings' || pathname === '/messenger' || pathname === '/settings/change-password') await _registrationController.registrationController.getUserInfo().then(async (res)=>{
-            if (res.status > 400) this.go('/');
-            if (res.status >= 200 && res.status < 400) {
-                _store.store.dispatch(_reducers.setUser(res.response));
-                await _chatsController.chatController.getChatInfo().then((res1)=>{
-                    _store.store.dispatch(_reducers.loadChats(res1.response));
-                });
-            }
-        });
-        return;
-    }
-    go(pathname) {
-        this.history.pushState({
-        }, '', pathname);
-        this._onRoute(pathname);
-    }
-    back() {
-        this.history.back();
-    }
-    forward() {
-        this.history.forward();
-    }
-    getRoute(pathname) {
-        return this.routes.find((route)=>route.match(pathname)
-        );
-    }
-}
-exports.default = Router;
-
-},{"../Controllers/RegistrationController":"j5qt0","../Controllers/ChatsController":"ipjXp","../store/store":"7PScK","../store/reducers":"9J2GB","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"ipjXp":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "chatController", ()=>chatController
-);
-var _api = require("../Utils/Api");
-var _apiDefault = parcelHelpers.interopDefault(_api);
-class ChatsAPI extends _apiDefault.default {
-    createChat(data) {
-        return this.post('/chats', {
-            data
-        });
-    }
-    addUser(data) {
-        return this.put('/chats/users', {
-            data
-        });
-    }
-    deleteChat(data) {
-        return this.delete('/chats', {
-            data
-        });
-    }
-    getChats(data) {
-        return this.get('/chats', {
-            data
-        });
-    }
-    getToken(id) {
-        return this.post(`/chats/token/${id}`);
-    }
-}
-const chatApi = new ChatsAPI();
-class ChatController {
-    async createChat(data) {
-        try {
-            return await chatApi.createChat(data);
-        } catch (e) {
-            throw new Error(`Error from ChatsController: ${e.message}`);
-        }
-    }
-    async addUser(data) {
-        try {
-            await chatApi.addUser(data);
-        } catch (e) {
-            throw new Error(`Error from ChatsController: ${e.message}`);
-        }
-    }
-    async deleteChat(data) {
-        try {
-            await chatApi.deleteChat(data);
-        } catch (e) {
-            throw new Error(`Error from ChatsController: ${e.message}`);
-        }
-    }
-    async getChatInfo(data) {
-        try {
-            return await chatApi.getChats(data);
-        } catch (e) {
-            throw new Error(`Error from ChatsController: ${e.message}`);
-        }
-    }
-    async getChatToken(data) {
-        try {
-            return await chatApi.getToken(data);
-        } catch (e) {
-            throw new Error(`Error from ChatsController: ${e.message}`);
-        }
-    }
-}
-const chatController = new ChatController();
-
-},{"../Utils/Api":"7475A","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"lm1LX":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>Error1
-);
-var _errorTmpl = require("./Error.tmpl");
-var _errorTmplDefault = parcelHelpers.interopDefault(_errorTmpl);
-var _block = require("../../Utils/Block");
-var _blockDefault = parcelHelpers.interopDefault(_block);
-var _errorData = require("./Error.data");
-var _errorScss = require("./Error.scss");
-class Error1 extends _blockDefault.default {
-    constructor(props){
-        super(props);
-    }
-    componentDidMount() {
-        this.setProps(_errorData.ERROR_DATA);
-    }
-    render() {
-        return this.compile(_errorTmplDefault.default, this.props);
-    }
-}
-
-},{"./Error.tmpl":"coEn4","../../Utils/Block":"8SCws","./Error.data":"kerRb","./Error.scss":"4riDw","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"coEn4":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-exports.default = `\n  <div class="error__container error">\n    <h1 class="error__label">{{label}}</h1>\n    <div class="error__text">{{text}}</div>\n    <a class="error__back" href="/messenger">Назад к чатам</a>\n  </div>\n`;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"kerRb":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "ERROR404_DATA", ()=>ERROR404_DATA
-);
-parcelHelpers.export(exports, "ERROR500_DATA", ()=>ERROR500_DATA
-);
-parcelHelpers.export(exports, "ERROR_DATA", ()=>ERROR_DATA
-);
-const ERROR404_DATA = {
-    label: '404',
-    text: 'Не туда попали'
-};
-const ERROR500_DATA = {
-    label: '500',
-    text: 'Мы уже фиксим'
-};
-const ERROR_DATA = {
-    label: '404',
-    text: 'Не туда попали'
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"4riDw":[function() {},{}],"aut7O":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>ChangePassword
-);
-var _changePasswordTmpl = require("./ChangePassword.tmpl");
-var _changePasswordTmplDefault = parcelHelpers.interopDefault(_changePasswordTmpl);
-var _block = require("../../Utils/Block");
-var _blockDefault = parcelHelpers.interopDefault(_block);
-var _utils = require("../../Utils/utils");
-var _changePasswordData = require("./ChangePassword.data");
-var _userController = require("../../Controllers/userController");
-var _store = require("../../store/store");
-var _index = require("../../index");
-var _changePasswordScss = require("./ChangePassword.scss");
-class ChangePassword extends _blockDefault.default {
-    constructor(props){
-        super(props);
-        this.validator = new _utils.FormValidator();
-    }
-    componentDidMount() {
-        const data = _store.store.getState().user;
-        _changePasswordData.INPUTS.NEW_PASSWORD.events = {
-            click: (e)=>this.validator.onInputClick(e.target, _changePasswordData.INPUTS.NEW_PASSWORD.name)
-            ,
-            input: (e)=>this.validator.onInput(e.target)
-        };
-        _changePasswordData.SAVE_PASSWORD.events = {
-            click: async (e)=>{
-                e.preventDefault();
-                const data1 = this.validator.onSubmitButtonClick(e, _changePasswordData.PROFILE_PASSWORD_DATA.name);
-                if (_utils.isEmptyObject(data1)) await _userController.userController.changePassword(data1).then(()=>{
-                    _index.router.go('/settings');
-                });
-            }
-        };
-        if (data) _changePasswordData.PROFILE_PASSWORD_DATA.username = `${data.first_name} ${data.second_name}`;
-        this.setProps(_changePasswordData.PROFILE_PASSWORD_DATA);
-    }
-    render() {
-        return this.compile(_changePasswordTmplDefault.default, this.props);
-    }
-}
-
-},{"./ChangePassword.tmpl":"7j97c","../../Utils/Block":"8SCws","../../Utils/utils":"bReMK","./ChangePassword.data":"jVg5E","../../Controllers/userController":"91FRj","../../store/store":"7PScK","../../index":"4aleK","./ChangePassword.scss":"b6Ahh","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"7j97c":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-exports.default = `\n  <div class="profile__container">\n      <div class="profile__container-back">\n          <a href="/settings" id="backToProfile">\n              <span class="icon-arrow-left"></span>\n          </a>\n      </div>\n      <form action="" method="post" class="profile__container-main profile" name="{{name}}">\n          <h1 class="profile__name">{{username}}</h1>\n          <div class="profile__info-password">\n              {{{oldPassword}}}\n              {{{newPassword}}}\n              {{{savePassword}}}\n          </div>\n      </form>\n  </div>\n`;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"jVg5E":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "INPUTS", ()=>INPUTS
-);
-parcelHelpers.export(exports, "SAVE_PASSWORD", ()=>SAVE_PASSWORD
-);
-parcelHelpers.export(exports, "PROFILE_PASSWORD_DATA", ()=>PROFILE_PASSWORD_DATA
-);
-var _input = require("../../components/input/input");
-var _inputDefault = parcelHelpers.interopDefault(_input);
-var _mainButton = require("../../components/main-button/main-button");
-var _mainButtonDefault = parcelHelpers.interopDefault(_mainButton);
-const INPUTS = {
-    OLD_PASSWORD: {
-        label: 'Старый пароль',
-        value: '',
-        type: 'password',
-        name: 'oldPassword',
-        id: 'old_password',
-        events: {
-        }
-    },
-    NEW_PASSWORD: {
-        label: 'Новый пароль',
-        value: '',
-        type: 'password',
-        name: 'newPassword',
-        id: 'new_password',
-        events: {
-        }
-    }
-};
-const SAVE_PASSWORD = {
-    title: 'Сохранить',
-    className: 'profile__info-save-password',
-    events: {
-    }
-};
-const PROFILE_PASSWORD_DATA = {
-    name: 'profile-password-form',
-    username: '',
-    oldPassword: new _inputDefault.default(INPUTS.OLD_PASSWORD),
-    newPassword: new _inputDefault.default(INPUTS.NEW_PASSWORD),
-    savePassword: new _mainButtonDefault.default(SAVE_PASSWORD)
-};
-
-},{"../../components/input/input":"k9f01","../../components/main-button/main-button":"3GRdu","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"b6Ahh":[function() {},{}],"bAPiR":[function() {},{}],"eFvZC":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"5VG53":[function() {},{}],"eFvZC":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>Chat
@@ -13504,7 +13168,7 @@ class Chat extends _blockDefault.default {
     }
 }
 
-},{"./Chat.tmpl":"1q0w1","./Chat.data":"aP6jb","../../index":"4aleK","./Chat.scss":"6GOE6","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../../Utils/Block":"8SCws","../../Controllers/ChatsController":"ipjXp"}],"1q0w1":[function(require,module,exports) {
+},{"./Chat.tmpl":"1q0w1","../../Utils/Block":"8SCws","./Chat.data":"aP6jb","../../Controllers/ChatsController":"ipjXp","../../index":"4aleK","./Chat.scss":"6GOE6","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"1q0w1":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 exports.default = `\n  <div class="chats__container">\n    <div class="chats__sidebar chats">\n      <div class="chats__links">\n        <div class="chats__add-chat">\n        {{{addChatButton}}}\n        </div>\n        <div class="chats__profile">\n        {{{toProfileButton}}}\n        </div>\n      </div>\n      <div class="chats__add-field">\n        <input class="chats__add-chat-input" type="text" placeholder="Введите название чата">\n        {{{createNameChatButton}}}\n      </div>\n      <input class="chats__search" type="text" placeholder="Поиск">\n      {{{chatList}}}\n    </div>\n    <div class="chats__content">\n      {{{chatHeader}}}\n      {{{chatMessagesField}}}\n      {{{chatMessageInput}}}\n    </div>\n  </div>\n`;
@@ -13683,7 +13347,79 @@ class WebSocketAPI {
 }
 const webSocketAPI = new WebSocketAPI();
 
-},{"../Controllers/ChatsController":"ipjXp","../store/store":"7PScK","../store/reducers":"9J2GB","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"hBQ4A":[function() {},{}],"6Yz80":[function(require,module,exports) {
+},{"../Controllers/ChatsController":"ipjXp","../store/store":"7PScK","../store/reducers":"9J2GB","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"ipjXp":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "chatController", ()=>chatController
+);
+var _api = require("../Utils/Api");
+var _apiDefault = parcelHelpers.interopDefault(_api);
+class ChatsAPI extends _apiDefault.default {
+    createChat(data) {
+        return this.post('/chats', {
+            data
+        });
+    }
+    addUser(data) {
+        return this.put('/chats/users', {
+            data
+        });
+    }
+    deleteChat(data) {
+        return this.delete('/chats', {
+            data
+        });
+    }
+    getChats(data) {
+        return this.get('/chats', {
+            data
+        });
+    }
+    getToken(id) {
+        return this.post(`/chats/token/${id}`);
+    }
+}
+const chatApi = new ChatsAPI();
+class ChatController {
+    async createChat(data) {
+        try {
+            return await chatApi.createChat(data);
+        } catch (e) {
+            throw new Error(`Error from ChatsController: ${e.message}`);
+        }
+    }
+    async addUser(data) {
+        try {
+            await chatApi.addUser(data);
+        } catch (e) {
+            throw new Error(`Error from ChatsController: ${e.message}`);
+        }
+    }
+    async deleteChat(data) {
+        try {
+            await chatApi.deleteChat(data);
+        } catch (e) {
+            throw new Error(`Error from ChatsController: ${e.message}`);
+        }
+    }
+    async getChatInfo(data) {
+        try {
+            return await chatApi.getChats(data);
+        } catch (e) {
+            throw new Error(`Error from ChatsController: ${e.message}`);
+        }
+    }
+    async getChatToken(data) {
+        try {
+            return await chatApi.getToken(data);
+        } catch (e) {
+            throw new Error(`Error from ChatsController: ${e.message}`);
+        }
+    }
+}
+const chatController = new ChatController();
+
+},{"../Utils/Api":"7475A","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"hBQ4A":[function() {},{}],"6Yz80":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>ChatList
@@ -13757,7 +13493,7 @@ class ChatList extends _blockDefault.default {
     }
 }
 
-},{"./ChatList.tmpl":"gtPw9","../../../components/chat/chat":"f3OFg","./ChatList.scss":"iMEgd","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../../../Utils/Block":"8SCws","../../../Utils/WebSocket":"k7bzh","../../../store/store":"7PScK","../../../store/reducers":"9J2GB"}],"gtPw9":[function(require,module,exports) {
+},{"./ChatList.tmpl":"gtPw9","../../../Utils/Block":"8SCws","../../../components/chat/chat":"f3OFg","../../../Utils/WebSocket":"k7bzh","../../../store/store":"7PScK","../../../store/reducers":"9J2GB","./ChatList.scss":"iMEgd","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"gtPw9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 exports.default = `\n  <div class="chats__list">\n    {{#each chats}}\n        {{{this}}}\n    {{/each}}\n  </div>\n`;
@@ -13789,7 +13525,7 @@ class Chat extends _blockDefault.default {
     }
 }
 
-},{"./chat.tmpl":"kSWGZ","./chat.scss":"1a0wW","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../../Utils/Block":"8SCws"}],"kSWGZ":[function(require,module,exports) {
+},{"./chat.tmpl":"kSWGZ","../../Utils/Block":"8SCws","./chat.scss":"1a0wW","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"kSWGZ":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 exports.default = `\n  <div class="chats__list-chat chat" data-chat-id="{{id}}">\n    <div class="chat__avatar">\n    {{#if avatar}}\n      <img src="https://ya-praktikum.tech/api/v2/resources{{avatar}}" crossorigin="use-credentials">\n    {{/if}}\n    </div>\n    <div class="chat__content">\n      <div class="chat__title">{{title}}</div>\n      {{#if last_message.user}}\n      <div class="chat__message">{{last_message.user.login}}: {{last_message.content}}</div>\n      {{else}}\n      <div class="chat__message">{{last_message.content}}</div>\n      {{/if}}\n    </div>\n    <time class="chat__time" datetime="{{last_message.time}}">{{datetime}}</time>\n    {{#if unread_count}}\n    <span class="chat__unread">{{unread_count}}</span>\n    {{/if}}\n  </div>\n`;
@@ -13928,6 +13664,270 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 exports.default = `\n  <div class="chats__messages-filed messages-field"></div>\n`;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"jEC9X":[function() {},{}],"6GOE6":[function() {},{}]},["5B0e3","4aleK"], "4aleK", "parcelRequirefc40")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"jEC9X":[function() {},{}],"6GOE6":[function() {},{}],"kvCHm":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _registrationController = require("../Controllers/RegistrationController");
+var _chatsController = require("../Controllers/ChatsController");
+var _store = require("../store/store");
+var _reducers = require("../store/reducers");
+function isEqual(lhs, rhs) {
+    return lhs === rhs;
+}
+const render = (tag, block)=>{
+    const root = document.querySelector(tag);
+    root.innerHTML = '';
+    root.appendChild(block);
+    return root;
+};
+class Route {
+    constructor(pathname1, view, props){
+        this._pathname = pathname1;
+        this._blockClass = view;
+        this._block = null;
+        this._props = props;
+    }
+    navigate(pathname) {
+        if (this.match(pathname)) {
+            this._pathname = pathname;
+            this.render();
+        }
+    }
+    leave() {
+        if (this._block) this._block.hide();
+    }
+    match(pathname) {
+        return isEqual(pathname, this._pathname);
+    }
+    render() {
+        if (!this._block) {
+            this._block = new this._blockClass();
+            return render(this._props.rootQuery, this._block.getContent());
+        }
+        render(this._props.rootQuery, this._block.render());
+    }
+}
+class Router {
+    constructor(rootQuery){
+        if (Router.__instance) {
+            Router.__instance._rootQuery = rootQuery;
+            return Router.__instance;
+        }
+        this.routes = [];
+        this.history = window.history;
+        this._currentRoute = null;
+        this._rootQuery = rootQuery;
+        Router.__instance = this;
+    }
+    use(pathname, block) {
+        const route = new Route(pathname, block, {
+            rootQuery: this._rootQuery
+        });
+        this.routes.push(route);
+        return this;
+    }
+    start() {
+        // Реагируем на изменения в адресной строке и вызываем перерисовку
+        window.onpopstate = (event)=>{
+            this._onRoute(event.currentTarget.location.pathname);
+        };
+        this._onRoute(window.location.pathname);
+    }
+    _onRoute(pathname) {
+        this.checkRoute(pathname).then(()=>{
+            let route = this.getRoute(pathname);
+            if (!route) route = this.getRoute('/error');
+            if (this._currentRoute) this._currentRoute.leave();
+            this._currentRoute = route;
+            route.render();
+        });
+    }
+    async checkRoute(pathname) {
+        if (pathname === '/' || pathname === '/sign-up') await _registrationController.registrationController.getUserInfo().then(async (res)=>{
+            _store.store.dispatch(_reducers.setUser(res.response));
+            if (res.status >= 200 && res.status < 400) {
+                console.log('user', res.response);
+                await _chatsController.chatController.getChatInfo().then((res1)=>{
+                    _store.store.dispatch(_reducers.loadChats(res1.response));
+                    this.go('/messenger');
+                });
+            }
+        });
+        if (pathname === '/settings' || pathname === '/messenger' || pathname === '/settings/change-password') await _registrationController.registrationController.getUserInfo().then(async (res)=>{
+            if (res.status > 400) this.go('/');
+            if (res.status >= 200 && res.status < 400) {
+                _store.store.dispatch(_reducers.setUser(res.response));
+                await _chatsController.chatController.getChatInfo().then((res1)=>{
+                    _store.store.dispatch(_reducers.loadChats(res1.response));
+                });
+            }
+        });
+        return;
+    }
+    go(pathname) {
+        this.history.pushState({
+        }, '', pathname);
+        this._onRoute(pathname);
+    }
+    back() {
+        this.history.back();
+    }
+    forward() {
+        this.history.forward();
+    }
+    getRoute(pathname) {
+        return this.routes.find((route)=>route.match(pathname)
+        );
+    }
+}
+exports.default = Router;
+
+},{"../Controllers/RegistrationController":"j5qt0","../Controllers/ChatsController":"ipjXp","../store/store":"7PScK","../store/reducers":"9J2GB","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"lm1LX":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>Error1
+);
+var _errorTmpl = require("./Error.tmpl");
+var _errorTmplDefault = parcelHelpers.interopDefault(_errorTmpl);
+var _block = require("../../Utils/Block");
+var _blockDefault = parcelHelpers.interopDefault(_block);
+var _errorData = require("./Error.data");
+var _errorScss = require("./Error.scss");
+class Error1 extends _blockDefault.default {
+    constructor(props){
+        super(props);
+    }
+    componentDidMount() {
+        this.setProps(_errorData.ERROR_DATA);
+    }
+    render() {
+        return this.compile(_errorTmplDefault.default, this.props);
+    }
+}
+
+},{"./Error.tmpl":"coEn4","../../Utils/Block":"8SCws","./Error.data":"kerRb","./Error.scss":"4riDw","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"coEn4":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = `\n  <div class="error__container error">\n    <h1 class="error__label">{{label}}</h1>\n    <div class="error__text">{{text}}</div>\n    <a class="error__back" href="/messenger">Назад к чатам</a>\n  </div>\n`;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"kerRb":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "ERROR404_DATA", ()=>ERROR404_DATA
+);
+parcelHelpers.export(exports, "ERROR500_DATA", ()=>ERROR500_DATA
+);
+parcelHelpers.export(exports, "ERROR_DATA", ()=>ERROR_DATA
+);
+const ERROR404_DATA = {
+    label: '404',
+    text: 'Не туда попали'
+};
+const ERROR500_DATA = {
+    label: '500',
+    text: 'Мы уже фиксим'
+};
+const ERROR_DATA = {
+    label: '404',
+    text: 'Не туда попали'
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"4riDw":[function() {},{}],"aut7O":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>ChangePassword
+);
+var _changePasswordTmpl = require("./ChangePassword.tmpl");
+var _changePasswordTmplDefault = parcelHelpers.interopDefault(_changePasswordTmpl);
+var _block = require("../../Utils/Block");
+var _blockDefault = parcelHelpers.interopDefault(_block);
+var _utils = require("../../Utils/utils");
+var _changePasswordData = require("./ChangePassword.data");
+var _userController = require("../../Controllers/userController");
+var _store = require("../../store/store");
+var _index = require("../../index");
+var _changePasswordScss = require("./ChangePassword.scss");
+class ChangePassword extends _blockDefault.default {
+    constructor(props){
+        super(props);
+        this.validator = new _utils.FormValidator();
+    }
+    componentDidMount() {
+        const data = _store.store.getState().user;
+        _changePasswordData.INPUTS.NEW_PASSWORD.events = {
+            click: (e)=>this.validator.onInputClick(e.target, _changePasswordData.INPUTS.NEW_PASSWORD.name)
+            ,
+            input: (e)=>this.validator.onInput(e.target)
+        };
+        _changePasswordData.SAVE_PASSWORD.events = {
+            click: async (e)=>{
+                e.preventDefault();
+                const data1 = this.validator.onSubmitButtonClick(e, _changePasswordData.PROFILE_PASSWORD_DATA.name);
+                if (_utils.isEmptyObject(data1)) await _userController.userController.changePassword(data1).then(()=>{
+                    _index.router.go('/settings');
+                });
+            }
+        };
+        if (data) _changePasswordData.PROFILE_PASSWORD_DATA.username = `${data.first_name} ${data.second_name}`;
+        this.setProps(_changePasswordData.PROFILE_PASSWORD_DATA);
+    }
+    render() {
+        return this.compile(_changePasswordTmplDefault.default, this.props);
+    }
+}
+
+},{"./ChangePassword.tmpl":"7j97c","../../Utils/Block":"8SCws","../../Utils/utils":"bReMK","./ChangePassword.data":"jVg5E","../../Controllers/userController":"91FRj","../../store/store":"7PScK","../../index":"4aleK","./ChangePassword.scss":"b6Ahh","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"7j97c":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = `\n  <div class="profile__container">\n      <div class="profile__container-back">\n          <a href="/settings" id="backToProfile">\n              <span class="icon-arrow-left"></span>\n          </a>\n      </div>\n      <form action="" method="post" class="profile__container-main profile" name="{{name}}">\n          <h1 class="profile__name">{{username}}</h1>\n          <div class="profile__info-password">\n              {{{oldPassword}}}\n              {{{newPassword}}}\n              {{{savePassword}}}\n          </div>\n      </form>\n  </div>\n`;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"jVg5E":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "INPUTS", ()=>INPUTS
+);
+parcelHelpers.export(exports, "SAVE_PASSWORD", ()=>SAVE_PASSWORD
+);
+parcelHelpers.export(exports, "PROFILE_PASSWORD_DATA", ()=>PROFILE_PASSWORD_DATA
+);
+var _input = require("../../components/input/input");
+var _inputDefault = parcelHelpers.interopDefault(_input);
+var _mainButton = require("../../components/main-button/main-button");
+var _mainButtonDefault = parcelHelpers.interopDefault(_mainButton);
+const INPUTS = {
+    OLD_PASSWORD: {
+        label: 'Старый пароль',
+        value: '',
+        type: 'password',
+        name: 'oldPassword',
+        id: 'old_password',
+        events: {
+        }
+    },
+    NEW_PASSWORD: {
+        label: 'Новый пароль',
+        value: '',
+        type: 'password',
+        name: 'newPassword',
+        id: 'new_password',
+        events: {
+        }
+    }
+};
+const SAVE_PASSWORD = {
+    title: 'Сохранить',
+    className: 'profile__info-save-password',
+    events: {
+    }
+};
+const PROFILE_PASSWORD_DATA = {
+    name: 'profile-password-form',
+    username: '',
+    oldPassword: new _inputDefault.default(INPUTS.OLD_PASSWORD),
+    newPassword: new _inputDefault.default(INPUTS.NEW_PASSWORD),
+    savePassword: new _mainButtonDefault.default(SAVE_PASSWORD)
+};
+
+},{"../../components/input/input":"k9f01","../../components/main-button/main-button":"3GRdu","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"b6Ahh":[function() {},{}],"bAPiR":[function() {},{}]},["5B0e3","4aleK"], "4aleK", "parcelRequirefc40")
 
 //# sourceMappingURL=index.324aea44.js.map
