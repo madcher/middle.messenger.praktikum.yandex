@@ -485,15 +485,39 @@ parcelHelpers.export(exports, "default", ()=>Login
 );
 var _loginTmpl = require("./Login.tmpl");
 var _loginTmplDefault = parcelHelpers.interopDefault(_loginTmpl);
-var _loginData = require("./Login.data");
 var _block = require("../../Utils/Block");
 var _blockDefault = parcelHelpers.interopDefault(_block);
+var _utils = require("../../Utils/utils");
+var _loginData = require("./Login.data");
+var _registrationController = require("../../Controllers/RegistrationController");
+var _index = require("../../index");
 var _loginScss = require("./Login.scss");
 class Login extends _blockDefault.default {
     constructor(props){
         super(props);
+        this.validator = new _utils.FormValidator();
     }
     componentDidMount() {
+        Object.values(_loginData.INPUTS).forEach((value)=>{
+            return value.events = {
+                click: (e)=>this.validator.onInputClick(e.target, value.name)
+                ,
+                input: (e)=>this.validator.onInput(e.target)
+            };
+        });
+        _loginData.MAIN_BUTTON.events = {
+            click: async (e)=>{
+                e.preventDefault();
+                const data = this.validator.onSubmitButtonClick(e, _loginData.LOGIN_DATA.name);
+                if (_utils.isEmptyObject(data)) await _registrationController.registrationController.signIn(data);
+            }
+        };
+        _loginData.SECONDARY_BUTTON.events = {
+            click: async (e)=>{
+                e.preventDefault();
+                _index.router.go('/sign-up');
+            }
+        };
         this.setProps(_loginData.LOGIN_DATA);
     }
     render() {
@@ -501,7 +525,7 @@ class Login extends _blockDefault.default {
     }
 }
 
-},{"./Login.tmpl":"4KGSn","./Login.data":"lQJTD","../../Utils/Block":"8SCws","./Login.scss":"7VWop","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"4KGSn":[function(require,module,exports) {
+},{"./Login.tmpl":"4KGSn","./Login.data":"lQJTD","../../Utils/Block":"8SCws","./Login.scss":"7VWop","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../../Utils/utils":"bReMK","../../Controllers/RegistrationController":"j5qt0","../../index":"4aleK"}],"4KGSn":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 exports.default = `\n  <form action="" method="post" class="login form__container" name="{{name}}">\n      <div class="form__field">\n          <h1 class="form__title">{{title}}</h1>\n          {{{login}}}\n          {{{password}}}\n      </div>\n      <div class="form__buttons">\n          {{{mainButton}}}\n          {{{secondaryButton}}}\n      </div>\n  </form>\n`;
@@ -541,59 +565,58 @@ exports.export = function(dest, destName, get) {
 },{}],"lQJTD":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "INPUTS", ()=>INPUTS
+);
+parcelHelpers.export(exports, "MAIN_BUTTON", ()=>MAIN_BUTTON
+);
+parcelHelpers.export(exports, "SECONDARY_BUTTON", ()=>SECONDARY_BUTTON
+);
 parcelHelpers.export(exports, "LOGIN_DATA", ()=>LOGIN_DATA
 );
 var _input = require("../../components/input/input");
 var _inputDefault = parcelHelpers.interopDefault(_input);
 var _mainButton = require("../../components/main-button/main-button");
 var _mainButtonDefault = parcelHelpers.interopDefault(_mainButton);
-var _utils = require("../../Utils/utils");
 var _secondaryButton = require("../../components/secondary-button/secondary-button");
 var _secondaryButtonDefault = parcelHelpers.interopDefault(_secondaryButton);
-var _registrationController = require("../../Controllers/RegistrationController");
-const validator = new _utils.FormValidator();
-const LOGIN = {
-    label: 'Логин',
-    type: 'text',
-    name: 'login',
-    id: 'login',
-    events: {
-        click: (e)=>validator.onInputClick(e.target, LOGIN.name)
-        ,
-        input: (e)=>validator.onInput(e.target)
-    }
-};
-const PASSWORD = {
-    label: 'Пароль',
-    type: 'password',
-    name: 'password',
-    id: 'password',
-    events: {
-        click: (e)=>validator.onInputClick(e.target, PASSWORD.name)
-        ,
-        input: (e)=>validator.onInput(e.target)
+const INPUTS = {
+    LOGIN: {
+        label: 'Логин',
+        type: 'text',
+        name: 'login',
+        id: 'login',
+        events: {
+        }
+    },
+    PASSWORD: {
+        label: 'Пароль',
+        type: 'password',
+        name: 'password',
+        id: 'password',
+        events: {
+        }
     }
 };
 const MAIN_BUTTON = {
     title: 'Авторизоваться',
     events: {
-        click: (e)=>validator.onSubmitButtonClick(e, LOGIN_DATA.name, _registrationController.registrationController.signIn)
     }
 };
 const SECONDARY_BUTTON = {
     title: 'Нет аккаунта?',
-    href: '/#registration'
+    events: {
+    }
 };
 const LOGIN_DATA = {
-    title: 'Вход',
     name: 'login-form',
+    title: 'Вход',
+    login: new _inputDefault.default(INPUTS.LOGIN),
+    password: new _inputDefault.default(INPUTS.PASSWORD),
     secondaryButton: new _secondaryButtonDefault.default(SECONDARY_BUTTON),
-    mainButton: new _mainButtonDefault.default(MAIN_BUTTON),
-    login: new _inputDefault.default(LOGIN),
-    password: new _inputDefault.default(PASSWORD)
+    mainButton: new _mainButtonDefault.default(MAIN_BUTTON)
 };
 
-},{"../../components/input/input":"k9f01","../../components/main-button/main-button":"3GRdu","../../Utils/utils":"bReMK","../../components/secondary-button/secondary-button":"i4ETK","../../Controllers/RegistrationController":"j5qt0","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"k9f01":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../../components/input/input":"k9f01","../../components/main-button/main-button":"3GRdu","../../components/secondary-button/secondary-button":"i4ETK"}],"k9f01":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>Input
@@ -12203,7 +12226,31 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 exports.default = `\n  {{#if className}}\n  <input class="{{className}}" type="submit" value="{{title}}">\n  {{else}}\n  <input class="main__btn" type="submit" value="{{title}}">\n  {{/if}}\n`;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"9fcAJ":[function() {},{}],"bReMK":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"9fcAJ":[function() {},{}],"i4ETK":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>SecondaryButton
+);
+var _secondaryButtonTmpl = require("./secondary-button.tmpl");
+var _secondaryButtonTmplDefault = parcelHelpers.interopDefault(_secondaryButtonTmpl);
+var _block = require("../../Utils/Block");
+var _blockDefault = parcelHelpers.interopDefault(_block);
+var _secondaryButtonScss = require("./secondary-button.scss");
+class SecondaryButton extends _blockDefault.default {
+    constructor(props){
+        super(props);
+    }
+    render() {
+        return this.compile(_secondaryButtonTmplDefault.default, this.props);
+    }
+}
+
+},{"./secondary-button.tmpl":"6FazI","../../Utils/Block":"8SCws","./secondary-button.scss":"j0s30","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"6FazI":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = `\n  <a class="secondary__btn" href="{{href}}">\n    <span>{{title}}</span>\n  </a>\n`;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"j0s30":[function() {},{}],"7VWop":[function() {},{}],"bReMK":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "render", ()=>render
@@ -12323,31 +12370,7 @@ const ValidationFields = {
     }
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"i4ETK":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>SecondaryButton
-);
-var _secondaryButtonTmpl = require("./secondary-button.tmpl");
-var _secondaryButtonTmplDefault = parcelHelpers.interopDefault(_secondaryButtonTmpl);
-var _block = require("../../Utils/Block");
-var _blockDefault = parcelHelpers.interopDefault(_block);
-var _secondaryButtonScss = require("./secondary-button.scss");
-class SecondaryButton extends _blockDefault.default {
-    constructor(props){
-        super(props);
-    }
-    render() {
-        return this.compile(_secondaryButtonTmplDefault.default, this.props);
-    }
-}
-
-},{"./secondary-button.tmpl":"6FazI","../../Utils/Block":"8SCws","./secondary-button.scss":"j0s30","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"6FazI":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-exports.default = `\n  <a class="secondary__btn" href="{{href}}">\n    <span>{{title}}</span>\n  </a>\n`;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"j0s30":[function() {},{}],"j5qt0":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"j5qt0":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "registrationController", ()=>registrationController
@@ -12522,22 +12545,45 @@ class HTTPTransport {
     }
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"7VWop":[function() {},{}],"g7TgW":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"g7TgW":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>Registration
 );
 var _registrationTmpl = require("./Registration.tmpl");
 var _registrationTmplDefault = parcelHelpers.interopDefault(_registrationTmpl);
-var _registrationData = require("./Registration.data");
 var _block = require("../../Utils/Block");
 var _blockDefault = parcelHelpers.interopDefault(_block);
+var _utils = require("../../Utils/utils");
+var _registrationData = require("./Registration.data");
+var _registrationController = require("../../Controllers/RegistrationController");
+var _index = require("../../index");
 var _registrationScss = require("./Registration.scss");
 class Registration extends _blockDefault.default {
     constructor(props){
         super(props);
+        this.validator = new _utils.FormValidator();
     }
     componentDidMount() {
+        Object.values(_registrationData.INPUTS).forEach((value)=>{
+            return value.events = {
+                click: (e)=>this.validator.onInputClick(e.target, value.name)
+                ,
+                input: (e)=>this.validator.onInput(e.target)
+            };
+        });
+        _registrationData.MAIN_BUTTON.events = {
+            click: async (e)=>{
+                const data = this.validator.onSubmitButtonClick(e, _registrationData.REGISTRATION_DATA.name);
+                if (_utils.isEmptyObject(data)) await _registrationController.registrationController.signUp(data);
+            }
+        };
+        _registrationData.SECONDARY_BUTTON.events = {
+            click: (e)=>{
+                e.preventDefault();
+                _index.router.go('/sign-up');
+            }
+        };
         this.setProps(_registrationData.REGISTRATION_DATA);
     }
     render() {
@@ -12545,7 +12591,7 @@ class Registration extends _blockDefault.default {
     }
 }
 
-},{"./Registration.tmpl":"lhNOM","./Registration.data":"3ul6n","../../Utils/Block":"8SCws","./Registration.scss":"7YVGY","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"lhNOM":[function(require,module,exports) {
+},{"./Registration.tmpl":"lhNOM","./Registration.data":"3ul6n","../../Utils/Block":"8SCws","./Registration.scss":"7YVGY","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../../index":"4aleK","../../Utils/utils":"bReMK","../../Controllers/RegistrationController":"j5qt0"}],"lhNOM":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 exports.default = `\n  <form action="" method="post" class="registration form__container" name="{{name}}">\n      <div class="form__field">\n          <h1 class="form__title">{{title}}</h1>\n          {{{email}}}\n          {{{login}}}\n          {{{first_name}}}\n          {{{second_name}}}\n          {{{phone}}}\n          {{{password}}}\n          {{{password_confirm}}}\n      </div>\n      <div class="form__buttons">\n          {{{mainButton}}}\n          {{{secondaryButton}}}\n      </div>\n  </form>\n`;
@@ -12553,6 +12599,12 @@ exports.default = `\n  <form action="" method="post" class="registration form__c
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"3ul6n":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "INPUTS", ()=>INPUTS
+);
+parcelHelpers.export(exports, "MAIN_BUTTON", ()=>MAIN_BUTTON
+);
+parcelHelpers.export(exports, "SECONDARY_BUTTON", ()=>SECONDARY_BUTTON
+);
 parcelHelpers.export(exports, "REGISTRATION_DATA", ()=>REGISTRATION_DATA
 );
 var _input = require("../../components/input/input");
@@ -12561,112 +12613,90 @@ var _mainButton = require("../../components/main-button/main-button");
 var _mainButtonDefault = parcelHelpers.interopDefault(_mainButton);
 var _secondaryButton = require("../../components/secondary-button/secondary-button");
 var _secondaryButtonDefault = parcelHelpers.interopDefault(_secondaryButton);
-var _utils = require("../../Utils/utils");
-var _registrationController = require("../../Controllers/RegistrationController");
-const validator = new _utils.FormValidator();
-const EMAIL = {
-    label: 'Почта',
-    type: 'email',
-    name: 'email',
-    id: 'email',
-    events: {
-        click: (e)=>validator.onInputClick(e.target, EMAIL.name)
-        ,
-        input: (e)=>validator.onInput(e.target)
-    }
-};
-const FIRST_NAME = {
-    label: 'Имя',
-    type: 'text',
-    name: 'first_name',
-    id: 'name',
-    events: {
-        click: (e)=>validator.onInputClick(e.target, FIRST_NAME.name)
-        ,
-        input: (e)=>validator.onInput(e.target)
-    }
-};
-const SECOND_NAME = {
-    label: 'Фамилия',
-    type: 'text',
-    name: 'second_name',
-    id: 'second_name',
-    events: {
-        click: (e)=>validator.onInputClick(e.target, SECOND_NAME.name)
-        ,
-        input: (e)=>validator.onInput(e.target)
-    }
-};
-const LOGIN = {
-    label: 'Логин',
-    type: 'text',
-    name: 'login',
-    id: 'login',
-    events: {
-        click: (e)=>validator.onInputClick(e.target, LOGIN.name)
-        ,
-        input: (e)=>validator.onInput(e.target)
-    }
-};
-const PHONE = {
-    label: 'Телефон',
-    type: 'tel',
-    name: 'phone',
-    id: 'phone',
-    events: {
-        click: (e)=>validator.onInputClick(e.target, PHONE.name)
-        ,
-        input: (e)=>validator.onInput(e.target)
-    }
-};
-const PASSWORD = {
-    label: 'Пароль',
-    type: 'password',
-    name: 'password',
-    id: 'password',
-    events: {
-        click: (e)=>validator.onInputClick(e.target, PASSWORD.name)
-        ,
-        input: (e)=>validator.onInput(e.target)
-    }
-};
-const PASSWORD_CONFIRM = {
-    label: 'Пароль (еще раз)',
-    type: 'password',
-    name: 'password_confirm',
-    id: 'password_confirm',
-    events: {
-        click: (e)=>validator.onInputClick(e.target, PASSWORD_CONFIRM.name)
-        ,
-        input: (e)=>validator.onInput(e.target)
+const INPUTS = {
+    EMAIL: {
+        label: 'Почта',
+        type: 'email',
+        name: 'email',
+        id: 'email',
+        events: {
+        }
+    },
+    FIRST_NAME: {
+        label: 'Имя',
+        type: 'text',
+        name: 'first_name',
+        id: 'name',
+        events: {
+        }
+    },
+    SECOND_NAME: {
+        label: 'Фамилия',
+        type: 'text',
+        name: 'second_name',
+        id: 'second_name',
+        events: {
+        }
+    },
+    LOGIN: {
+        label: 'Логин',
+        type: 'text',
+        name: 'login',
+        id: 'login',
+        events: {
+        }
+    },
+    PASSWORD: {
+        label: 'Пароль',
+        type: 'password',
+        name: 'password',
+        id: 'password',
+        events: {
+        }
+    },
+    PHONE: {
+        label: 'Телефон',
+        type: 'tel',
+        name: 'phone',
+        id: 'phone',
+        events: {
+        }
+    },
+    PASSWORD_CONFIRM: {
+        label: 'Пароль (еще раз)',
+        type: 'password',
+        name: 'password_confirm',
+        id: 'password_confirm',
+        events: {
+        }
     }
 };
 const MAIN_BUTTON = {
     title: 'Зарегистрироваться',
     href: '/#chats',
     events: {
-        click: (e)=>validator.onSubmitButtonClick(e, REGISTRATION_DATA.name, _registrationController.registrationController.signUp)
     }
 };
 const SECONDARY_BUTTON = {
     title: 'Войти',
-    href: '/#login'
+    events: {
+    }
 };
 const REGISTRATION_DATA = {
-    title: 'Регистрация',
     name: 'registration-form',
-    secondaryButton: new _secondaryButtonDefault.default(SECONDARY_BUTTON),
+    title: 'Регистрация',
+    email: new _inputDefault.default(INPUTS.EMAIL),
+    login: new _inputDefault.default(INPUTS.LOGIN),
+    first_name: new _inputDefault.default(INPUTS.FIRST_NAME),
+    second_name: new _inputDefault.default(INPUTS.SECOND_NAME),
+    phone: new _inputDefault.default(INPUTS.PHONE),
+    password: new _inputDefault.default(INPUTS.PASSWORD),
+    password_confirm: new _inputDefault.default(INPUTS.PASSWORD_CONFIRM),
     mainButton: new _mainButtonDefault.default(MAIN_BUTTON),
-    email: new _inputDefault.default(EMAIL),
-    login: new _inputDefault.default(LOGIN),
-    first_name: new _inputDefault.default(FIRST_NAME),
-    second_name: new _inputDefault.default(SECOND_NAME),
-    phone: new _inputDefault.default(PHONE),
-    password: new _inputDefault.default(PASSWORD),
-    password_confirm: new _inputDefault.default(PASSWORD_CONFIRM)
+    secondaryButton: new _secondaryButtonDefault.default(SECONDARY_BUTTON)
 };
 
-},{"../../components/input/input":"k9f01","../../components/main-button/main-button":"3GRdu","../../components/secondary-button/secondary-button":"i4ETK","../../Utils/utils":"bReMK","../../Controllers/RegistrationController":"j5qt0","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"7YVGY":[function() {},{}],"i4cjb":[function(require,module,exports) {
+},{"../../components/input/input":"k9f01","../../components/main-button/main-button":"3GRdu","../../components/secondary-button/secondary-button":"i4ETK","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"7YVGY":[function() {},{}],"i4cjb":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>Profile
