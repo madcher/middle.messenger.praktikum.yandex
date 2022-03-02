@@ -88,30 +88,31 @@
 }
 .profile__container {
   position: relative;
+  display: flex;
   width: 100%;
   height: 100%;
 }
 .profile__container-back {
-  background-color: #fbfbfb;
-  width: 65px;
-  height: 100%;
-  border-right: 1px solid #eaeaea;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #fbfbfb;
+  width: 65px;
+  height: 100%;
+  border-right: 1px solid #eaeaea;
 }
-.profile__container-back #backToChats {
+.profile__container-back a {
   position: relative;
   width: 28px;
   height: 28px;
   border-radius: 50%;
   background-color: #3369f3;
 }
-.profile__container-back #backToChats:hover {
+.profile__container-back a:hover {
   background-color: #3369c3;
 }
-.profile__container-back #backToChats .icon-arrow-left {
+.profile__container-back a .icon-arrow-left {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -120,52 +121,30 @@
 }
 
 .profile {
+  display: flex;
+  flex-direction: column;
   width: 510px;
-  position: absolute;
-  top: 50%;
-  left: calc(50% + 32.5px);
-  transform: translate(-50%, -50%);
-}
-.profile__avatar {
-  position: relative;
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  background-color: #efefef;
-  margin: 20px auto;
-  cursor: pointer;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-.profile__avatar:hover .profile__avatar-label {
-  display: flex;
-  background-color: #000;
-  opacity: 50%;
-}
-.profile__avatar-label {
-  position: absolute;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  color: #fff;
-  font-size: 13px;
-  line-height: 14px;
-}
-.profile__avatar-name {
-  font-size: 32px;
-  font-weight: 600;
-  color: #3369f3;
+  margin: auto;
 }
 .profile__name {
   text-align: center;
 }
 .profile__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 30px 0;
+}
+.profile__info.change .input__wrapper:not(:last-child) {
+  border-bottom: 1px solid #3369f3;
+}
+.profile__info.change .input__wrapper .input__field {
+  pointer-events: auto;
+  color: #3369f3;
+}
+.profile__info.change .profile__info-save {
+  display: block;
 }
 .profile__info .input__wrapper {
   position: relative;
@@ -184,8 +163,10 @@
   color: #999;
   font-size: 13px;
   text-align: end;
+  border-bottom: none;
+  pointer-events: none;
 }
-.profile__info .input__wrapper span {
+.profile__info .input__wrapper .input__error-message {
   position: absolute;
   right: 0;
   bottom: 2.5px;
@@ -193,12 +174,25 @@
 .profile__info .input__wrapper:not(:last-child) {
   border-bottom: 1px solid #eaeaea;
 }
-.profile__info .input__wrapper .input__field {
-  border-bottom: none;
+.profile__info-save {
+  display: none;
+  margin: 10px auto;
+  border: none;
+  width: 150px;
+  height: 37px;
+  text-align: center;
+  line-height: 37px;
+  border-radius: 8px;
+  background-color: #3369f3;
+  color: #fff;
+  cursor: pointer;
+}
+.profile__info-save:hover {
+  background-color: #3369c3;
 }
 .profile__buttons .secondary__btn {
-  font-size: 13px;
   display: flex;
+  font-size: 13px;
   width: 100%;
   padding: 10px 0;
 }
