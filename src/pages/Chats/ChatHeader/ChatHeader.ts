@@ -13,15 +13,17 @@ export default class ChatHeader extends Block {
 
 	componentDidMount() {
 		this.props.events = {
-			click: async (e: any) => {
+			click: async (e: MouseEvent) => {
 				e.preventDefault();
-				if (e.target.closest('span.icon-more')) {
+				const target = e.target as HTMLElement;
+				if (target.closest('span.icon-more')) {
 					const options = document.querySelector('.chat-header__options');
 					options.classList.toggle('show');
 				}
 
-				if (e.target.hasAttribute('data-delete-chat')) {
-					const selectedChatId = Number(e.target.closest('.chat-header').dataset.selectedChat);
+				if (target.hasAttribute('data-delete-chat')) {
+					const selectedChatId =
+						Number((target.closest('.chat-header') as HTMLElement).dataset.selectedChat);
 					await chatController.deleteChat({
 						chatId: selectedChatId,
 					});
@@ -29,7 +31,7 @@ export default class ChatHeader extends Block {
 					router.go('/messenger');
 				}
 
-				if (e.target.hasAttribute('data-add-user')) {
+				if (target.hasAttribute('data-add-user')) {
 					const userInput = document.querySelector('.chat-header__add-user');
 					userInput.classList.toggle('show');
 				}
@@ -37,10 +39,12 @@ export default class ChatHeader extends Block {
 		};
 
 		ADD_USER.events = {
-			click: async (e: any) => {
+			click: async (e: MouseEvent) => {
 				e.preventDefault();
-				const selectedChatId = Number(e.target.closest('.chat-header').dataset.selectedChat);
-				const options = e.target.closest('.chat-header__options');
+				const target = e.target as HTMLElement;
+				const selectedChatId =
+					Number((target.closest('.chat-header') as HTMLElement).dataset.selectedChat);
+				const options = target.closest('.chat-header__options');
 				const inputUsername = document.querySelector('.add-user__input') as HTMLInputElement;
 
 				if (inputUsername.value !== '') {

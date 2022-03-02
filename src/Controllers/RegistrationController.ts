@@ -2,11 +2,11 @@ import {router} from '../index';
 import Api from '../Utils/Api';
 
 class AuthAPI extends Api {
-	signUp(data: any) {
+	signUp(data: Record<string, any>) {
 		return this.post('/auth/signup', {data});
 	}
 
-	signIn(data: any) {
+	signIn(data: Record<string, any>) {
 		return this.post('/auth/signin', {data});
 	}
 
@@ -22,7 +22,7 @@ class AuthAPI extends Api {
 const registrationApi = new AuthAPI();
 
 class RegistrationController {
-	async signIn(data: any) {
+	async signIn(data: Record<string, any>) {
 		try {
 			await registrationApi.signIn(data);
 			router.go('/messenger');
@@ -31,7 +31,7 @@ class RegistrationController {
 		}
 	}
 
-	async signUp(data: any) {
+	async signUp(data: Record<string, any>) {
 		try {
 			await registrationApi.signUp(data);
 			router.go('/messenger');

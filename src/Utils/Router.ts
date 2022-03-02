@@ -7,7 +7,7 @@ function isEqual(lhs: any, rhs: any) {
 	return lhs === rhs;
 }
 
-const render = (tag: string, block: any) => {
+const render = (tag: string, block: HTMLElement) => {
 	const root = document.querySelector(tag) as HTMLElement;
 	root.innerHTML = '';
 	root.appendChild(block);
@@ -15,12 +15,12 @@ const render = (tag: string, block: any) => {
 };
 
 class Route {
-	private _pathname: any;
+	private _pathname: string;
 	private _blockClass: any;
 	private _block: any;
 	_props: any;
 
-	constructor(pathname: any, view: any, props: any) {
+	constructor(pathname: string, view: any, props: Record<string, any>) {
 		this._pathname = pathname;
 		this._blockClass = view;
 		this._block = null;
@@ -75,7 +75,7 @@ class Router {
 		Router.__instance = this;
 	}
 
-	use(pathname: any, block: any) {
+	use(pathname: string, block: any) {
 		const route = new Route(pathname, block, {rootQuery: this._rootQuery});
 		this.routes.push(route);
 		return this;
@@ -90,7 +90,7 @@ class Router {
 		this._onRoute(window.location.pathname);
 	}
 
-	_onRoute(pathname: any) {
+	_onRoute(pathname: string) {
 		this.checkRoute(pathname).then(() => {
 			let route = this.getRoute(pathname);
 
@@ -110,11 +110,11 @@ class Router {
 
 	async checkRoute(pathname: string) {
 		if (pathname === '/' || pathname === '/sign-up') {
-			await registrationController.getUserInfo().then(async (res: any) => {
+			await registrationController.getUserInfo().then(async (res: Record<string, any>) => {
 				store.dispatch(setUser(res.response));
 				if (res.status >= 200 && res.status < 400) {
 					console.log('user', res.response);
-					await chatController.getChatInfo().then((res: any) => {
+					await chatController.getChatInfo().then((res: Record<string, any>) => {
 						store.dispatch(loadChats(res.response));
 						this.go('/messenger');
 					});
@@ -126,13 +126,13 @@ class Router {
 			pathname === '/messenger' ||
 			pathname === '/settings/change-password'
 		) {
-			await registrationController.getUserInfo().then(async (res: any) => {
+			await registrationController.getUserInfo().then(async (res: Record<string, any>) => {
 				if (res.status > 400) {
 					this.go('/');
 				}
 				if (res.status >= 200 && res.status < 400) {
 					store.dispatch(setUser(res.response));
-					await chatController.getChatInfo().then((res: any) => {
+					await chatController.getChatInfo().then((res: Record<string, any>) => {
 						store.dispatch(loadChats(res.response));
 					});
 				}
@@ -141,7 +141,7 @@ class Router {
 		return;
 	}
 
-	go(pathname: any) {
+	go(pathname: string) {
 		this.history.pushState({}, '', pathname);
 		this._onRoute(pathname);
 	}
@@ -154,8 +154,8 @@ class Router {
 		this.history.forward();
 	}
 
-	getRoute(pathname: any) {
-		return this.routes.find((route: any) => route.match(pathname));
+	getRoute(pathname: string) {
+		return this.routes.find((route: string) => route.match(pathname));
 	}
 }
 

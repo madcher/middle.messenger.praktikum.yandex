@@ -1,67 +1,67 @@
 import Api from '../Utils/Api';
 
 class UserAPI extends Api {
-	changeProfile(data: any) {
+	changeProfile(data: Record<string, any>) {
 		return this.put('/user/profile', {data});
 	}
 
-	changePassword(data: any) {
+	changePassword(data: Record<string, any>) {
 		return this.put('/user/password', {data});
 	}
 
-	changeAvatar(data: any) {
+	changeAvatar(data: Record<string, any>) {
 		return this.put('/user/profile/avatar', {data});
 	}
 
-	searchUser(data: any) {
+	searchUser(data: Record<string, any>) {
 		return this.post('/user/search', {data});
 	}
 
-	getUserById(id: any) {
+	getUserById(id: Record<string, any>) {
 		return this.get(`/user/${id}`);
 	}
 }
 const userAPI = new UserAPI();
 
 class UserController {
-	async changeProfile(data: any) {
+	async changeProfile(data: Record<string, any>) {
 		try {
 			return await userAPI.changeProfile(data);
-		} catch (e: any) {
-			throw new Error(`Error from UserController: ${e.message}`);
+		} catch (e) {
+			throw new Error(`Error from UserController: ${e}`);
 		}
 	}
 
-	async changePassword(data: any) {
+	async changePassword(data: Record<string, any>) {
 		try {
 			return await userAPI.changePassword(data);
-		} catch (e: any) {
-			throw new Error(`Error from UserController: ${e.message}`);
+		} catch (e) {
+			throw new Error(`Error from UserController: ${e}`);
 		}
 	}
 
-	async changeAvatar(data: any) {
+	async changeAvatar(data: Record<string, any>) {
 		try {
 			return await userAPI.changeAvatar(data);
-		} catch (e: any) {
+		} catch (e) {
 			console.log(e);
 			// throw new Error(`Error from UserController: ${e.message}`);
 		}
 	}
 
-	async searchUser(data: any) {
+	async searchUser(data: Record<string, any>) {
 		try {
 			return await userAPI.searchUser(data);
-		} catch (e: any) {
-			throw new Error(`Error from UserController: ${e.message}`);
+		} catch (e) {
+			throw new Error(`Error from UserController: ${e}`);
 		}
 	}
 
-	async userById(id: any) {
+	async userById(id: Record<string, any>) {
 		try {
 			return await userAPI.getUserById(id);
-		} catch (e: any) {
-			throw new Error(`Error from UserController: ${e.message}`);
+		} catch (e) {
+			throw new Error(`Error from UserController: ${e}`);
 		}
 	}
 }

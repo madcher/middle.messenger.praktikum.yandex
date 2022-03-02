@@ -525,7 +525,7 @@ class Login extends _blockDefault.default {
     }
 }
 
-},{"./Login.tmpl":"4KGSn","./Login.data":"lQJTD","../../Utils/Block":"8SCws","./Login.scss":"7VWop","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../../Utils/utils":"bReMK","../../Controllers/RegistrationController":"j5qt0","../../index":"4aleK"}],"4KGSn":[function(require,module,exports) {
+},{"./Login.tmpl":"4KGSn","../../Utils/Block":"8SCws","../../Utils/utils":"bReMK","./Login.data":"lQJTD","../../Controllers/RegistrationController":"j5qt0","../../index":"4aleK","./Login.scss":"7VWop","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"4KGSn":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 exports.default = `\n  <form action="" method="post" class="login form__container" name="{{name}}">\n      <div class="form__field">\n          <h1 class="form__title">{{title}}</h1>\n          {{{login}}}\n          {{{password}}}\n      </div>\n      <div class="form__buttons">\n          {{{mainButton}}}\n          {{{secondaryButton}}}\n      </div>\n  </form>\n`;
@@ -562,85 +562,7 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"lQJTD":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "INPUTS", ()=>INPUTS
-);
-parcelHelpers.export(exports, "MAIN_BUTTON", ()=>MAIN_BUTTON
-);
-parcelHelpers.export(exports, "SECONDARY_BUTTON", ()=>SECONDARY_BUTTON
-);
-parcelHelpers.export(exports, "LOGIN_DATA", ()=>LOGIN_DATA
-);
-var _input = require("../../components/input/input");
-var _inputDefault = parcelHelpers.interopDefault(_input);
-var _mainButton = require("../../components/main-button/main-button");
-var _mainButtonDefault = parcelHelpers.interopDefault(_mainButton);
-var _secondaryButton = require("../../components/secondary-button/secondary-button");
-var _secondaryButtonDefault = parcelHelpers.interopDefault(_secondaryButton);
-const INPUTS = {
-    LOGIN: {
-        label: 'Логин',
-        type: 'text',
-        name: 'login',
-        id: 'login',
-        events: {
-        }
-    },
-    PASSWORD: {
-        label: 'Пароль',
-        type: 'password',
-        name: 'password',
-        id: 'password',
-        events: {
-        }
-    }
-};
-const MAIN_BUTTON = {
-    title: 'Авторизоваться',
-    events: {
-    }
-};
-const SECONDARY_BUTTON = {
-    title: 'Нет аккаунта?',
-    events: {
-    }
-};
-const LOGIN_DATA = {
-    name: 'login-form',
-    title: 'Вход',
-    login: new _inputDefault.default(INPUTS.LOGIN),
-    password: new _inputDefault.default(INPUTS.PASSWORD),
-    secondaryButton: new _secondaryButtonDefault.default(SECONDARY_BUTTON),
-    mainButton: new _mainButtonDefault.default(MAIN_BUTTON)
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../../components/input/input":"k9f01","../../components/main-button/main-button":"3GRdu","../../components/secondary-button/secondary-button":"i4ETK"}],"k9f01":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>Input
-);
-var _inputTmpl = require("./input.tmpl");
-var _inputTmplDefault = parcelHelpers.interopDefault(_inputTmpl);
-var _block = require("../../Utils/Block");
-var _blockDefault = parcelHelpers.interopDefault(_block);
-var _inputScss = require("./input.scss");
-class Input extends _blockDefault.default {
-    constructor(props){
-        super(props);
-    }
-    render() {
-        return this.compile(_inputTmplDefault.default, this.props);
-    }
-}
-
-},{"./input.tmpl":"l9ZuJ","../../Utils/Block":"8SCws","./input.scss":"cF5vR","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"l9ZuJ":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-exports.default = `\n  <div class="input__wrapper">\n      <label class="input__label" for="{{id}}">{{label}}</label>\n      <input class="input__field" type="{{type}}" name="{{name}}" id="{{id}}" value="{{value}}">\n      <span class="input__error-message" data-name="{{name}}"></span>\n  </div>\n`;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"8SCws":[function(require,module,exports) {
+},{}],"8SCws":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>Block
@@ -12202,55 +12124,7 @@ PrintVisitor.prototype.HashPair = function(pair) {
 },{"./visitor":"2O4Fg"}],"8VSUO":[function(require,module,exports) {
 "use strict";
 
-},{}],"cF5vR":[function() {},{}],"3GRdu":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>MainButton
-);
-var _mainButtonTmpl = require("./main-button.tmpl");
-var _mainButtonTmplDefault = parcelHelpers.interopDefault(_mainButtonTmpl);
-var _block = require("../../Utils/Block");
-var _blockDefault = parcelHelpers.interopDefault(_block);
-var _mainButtonScss = require("./main-button.scss");
-class MainButton extends _blockDefault.default {
-    constructor(props){
-        super(props);
-    }
-    render() {
-        return this.compile(_mainButtonTmplDefault.default, this.props);
-    }
-}
-
-},{"./main-button.tmpl":"2GQXv","../../Utils/Block":"8SCws","./main-button.scss":"9fcAJ","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"2GQXv":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-exports.default = `\n  {{#if className}}\n  <input class="{{className}}" type="submit" value="{{title}}">\n  {{else}}\n  <input class="main__btn" type="submit" value="{{title}}">\n  {{/if}}\n`;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"9fcAJ":[function() {},{}],"i4ETK":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>SecondaryButton
-);
-var _secondaryButtonTmpl = require("./secondary-button.tmpl");
-var _secondaryButtonTmplDefault = parcelHelpers.interopDefault(_secondaryButtonTmpl);
-var _block = require("../../Utils/Block");
-var _blockDefault = parcelHelpers.interopDefault(_block);
-var _secondaryButtonScss = require("./secondary-button.scss");
-class SecondaryButton extends _blockDefault.default {
-    constructor(props){
-        super(props);
-    }
-    render() {
-        return this.compile(_secondaryButtonTmplDefault.default, this.props);
-    }
-}
-
-},{"./secondary-button.tmpl":"6FazI","../../Utils/Block":"8SCws","./secondary-button.scss":"j0s30","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"6FazI":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-exports.default = `\n  <a class="secondary__btn" href="{{href}}">\n    <span>{{title}}</span>\n  </a>\n`;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"j0s30":[function() {},{}],"7VWop":[function() {},{}],"bReMK":[function(require,module,exports) {
+},{}],"bReMK":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "render", ()=>render
@@ -12370,7 +12244,133 @@ const ValidationFields = {
     }
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"j5qt0":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"lQJTD":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "INPUTS", ()=>INPUTS
+);
+parcelHelpers.export(exports, "MAIN_BUTTON", ()=>MAIN_BUTTON
+);
+parcelHelpers.export(exports, "SECONDARY_BUTTON", ()=>SECONDARY_BUTTON
+);
+parcelHelpers.export(exports, "LOGIN_DATA", ()=>LOGIN_DATA
+);
+var _input = require("../../components/input/input");
+var _inputDefault = parcelHelpers.interopDefault(_input);
+var _mainButton = require("../../components/main-button/main-button");
+var _mainButtonDefault = parcelHelpers.interopDefault(_mainButton);
+var _secondaryButton = require("../../components/secondary-button/secondary-button");
+var _secondaryButtonDefault = parcelHelpers.interopDefault(_secondaryButton);
+const INPUTS = {
+    LOGIN: {
+        label: 'Логин',
+        type: 'text',
+        name: 'login',
+        id: 'login',
+        events: {
+        }
+    },
+    PASSWORD: {
+        label: 'Пароль',
+        type: 'password',
+        name: 'password',
+        id: 'password',
+        events: {
+        }
+    }
+};
+const MAIN_BUTTON = {
+    title: 'Авторизоваться',
+    events: {
+    }
+};
+const SECONDARY_BUTTON = {
+    title: 'Нет аккаунта?',
+    events: {
+    }
+};
+const LOGIN_DATA = {
+    name: 'login-form',
+    title: 'Вход',
+    login: new _inputDefault.default(INPUTS.LOGIN),
+    password: new _inputDefault.default(INPUTS.PASSWORD),
+    secondaryButton: new _secondaryButtonDefault.default(SECONDARY_BUTTON),
+    mainButton: new _mainButtonDefault.default(MAIN_BUTTON)
+};
+
+},{"../../components/input/input":"k9f01","../../components/main-button/main-button":"3GRdu","../../components/secondary-button/secondary-button":"i4ETK","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"k9f01":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>Input
+);
+var _inputTmpl = require("./input.tmpl");
+var _inputTmplDefault = parcelHelpers.interopDefault(_inputTmpl);
+var _block = require("../../Utils/Block");
+var _blockDefault = parcelHelpers.interopDefault(_block);
+var _inputScss = require("./input.scss");
+class Input extends _blockDefault.default {
+    constructor(props){
+        super(props);
+    }
+    render() {
+        return this.compile(_inputTmplDefault.default, this.props);
+    }
+}
+
+},{"./input.tmpl":"l9ZuJ","../../Utils/Block":"8SCws","./input.scss":"cF5vR","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"l9ZuJ":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = `\n  <div class="input__wrapper">\n      <label class="input__label" for="{{id}}">{{label}}</label>\n      <input class="input__field" type="{{type}}" name="{{name}}" id="{{id}}" value="{{value}}">\n      <span class="input__error-message" data-name="{{name}}"></span>\n  </div>\n`;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"cF5vR":[function() {},{}],"3GRdu":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>MainButton
+);
+var _mainButtonTmpl = require("./main-button.tmpl");
+var _mainButtonTmplDefault = parcelHelpers.interopDefault(_mainButtonTmpl);
+var _block = require("../../Utils/Block");
+var _blockDefault = parcelHelpers.interopDefault(_block);
+var _mainButtonScss = require("./main-button.scss");
+class MainButton extends _blockDefault.default {
+    constructor(props){
+        super(props);
+    }
+    render() {
+        return this.compile(_mainButtonTmplDefault.default, this.props);
+    }
+}
+
+},{"./main-button.tmpl":"2GQXv","../../Utils/Block":"8SCws","./main-button.scss":"9fcAJ","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"2GQXv":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = `\n  {{#if className}}\n  <input class="{{className}}" type="submit" value="{{title}}">\n  {{else}}\n  <input class="main__btn" type="submit" value="{{title}}">\n  {{/if}}\n`;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"9fcAJ":[function() {},{}],"i4ETK":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>SecondaryButton
+);
+var _secondaryButtonTmpl = require("./secondary-button.tmpl");
+var _secondaryButtonTmplDefault = parcelHelpers.interopDefault(_secondaryButtonTmpl);
+var _block = require("../../Utils/Block");
+var _blockDefault = parcelHelpers.interopDefault(_block);
+var _secondaryButtonScss = require("./secondary-button.scss");
+class SecondaryButton extends _blockDefault.default {
+    constructor(props){
+        super(props);
+    }
+    render() {
+        return this.compile(_secondaryButtonTmplDefault.default, this.props);
+    }
+}
+
+},{"./secondary-button.tmpl":"6FazI","../../Utils/Block":"8SCws","./secondary-button.scss":"j0s30","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"6FazI":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = `\n  <a class="secondary__btn" href="{{href}}">\n    <span>{{title}}</span>\n  </a>\n`;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"j0s30":[function() {},{}],"j5qt0":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "registrationController", ()=>registrationController
@@ -12545,7 +12545,7 @@ class HTTPTransport {
     }
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"g7TgW":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"7VWop":[function() {},{}],"g7TgW":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>Registration
@@ -12591,7 +12591,7 @@ class Registration extends _blockDefault.default {
     }
 }
 
-},{"./Registration.tmpl":"lhNOM","./Registration.data":"3ul6n","../../Utils/Block":"8SCws","./Registration.scss":"7YVGY","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc","../../index":"4aleK","../../Utils/utils":"bReMK","../../Controllers/RegistrationController":"j5qt0"}],"lhNOM":[function(require,module,exports) {
+},{"./Registration.tmpl":"lhNOM","../../Utils/Block":"8SCws","../../Utils/utils":"bReMK","./Registration.data":"3ul6n","../../Controllers/RegistrationController":"j5qt0","../../index":"4aleK","./Registration.scss":"7YVGY","@parcel/transformer-js/src/esmodule-helpers.js":"JacNc"}],"lhNOM":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 exports.default = `\n  <form action="" method="post" class="registration form__container" name="{{name}}">\n      <div class="form__field">\n          <h1 class="form__title">{{title}}</h1>\n          {{{email}}}\n          {{{login}}}\n          {{{first_name}}}\n          {{{second_name}}}\n          {{{phone}}}\n          {{{password}}}\n          {{{password_confirm}}}\n      </div>\n      <div class="form__buttons">\n          {{{mainButton}}}\n          {{{secondaryButton}}}\n      </div>\n  </form>\n`;
@@ -12970,14 +12970,14 @@ class UserController {
         try {
             return await userAPI.changeProfile(data);
         } catch (e) {
-            throw new Error(`Error from UserController: ${e.message}`);
+            throw new Error(`Error from UserController: ${e}`);
         }
     }
     async changePassword(data) {
         try {
             return await userAPI.changePassword(data);
         } catch (e) {
-            throw new Error(`Error from UserController: ${e.message}`);
+            throw new Error(`Error from UserController: ${e}`);
         }
     }
     async changeAvatar(data) {
@@ -12992,14 +12992,14 @@ class UserController {
         try {
             return await userAPI.searchUser(data);
         } catch (e) {
-            throw new Error(`Error from UserController: ${e.message}`);
+            throw new Error(`Error from UserController: ${e}`);
         }
     }
     async userById(id) {
         try {
             return await userAPI.getUserById(id);
         } catch (e) {
-            throw new Error(`Error from UserController: ${e.message}`);
+            throw new Error(`Error from UserController: ${e}`);
         }
     }
 }
@@ -13415,35 +13415,35 @@ class ChatController {
         try {
             return await chatApi.createChat(data);
         } catch (e) {
-            throw new Error(`Error from ChatsController: ${e.message}`);
+            throw new Error(`Error from ChatsController: ${e}`);
         }
     }
     async addUser(data) {
         try {
             await chatApi.addUser(data);
         } catch (e) {
-            throw new Error(`Error from ChatsController: ${e.message}`);
+            throw new Error(`Error from ChatsController: ${e}`);
         }
     }
     async deleteChat(data) {
         try {
             await chatApi.deleteChat(data);
         } catch (e) {
-            throw new Error(`Error from ChatsController: ${e.message}`);
+            throw new Error(`Error from ChatsController: ${e}`);
         }
     }
     async getChatInfo(data) {
         try {
             return await chatApi.getChats(data);
         } catch (e) {
-            throw new Error(`Error from ChatsController: ${e.message}`);
+            throw new Error(`Error from ChatsController: ${e}`);
         }
     }
     async getChatToken(data) {
         try {
             return await chatApi.getToken(data);
         } catch (e) {
-            throw new Error(`Error from ChatsController: ${e.message}`);
+            throw new Error(`Error from ChatsController: ${e}`);
         }
     }
 }
@@ -13544,8 +13544,9 @@ class Chat extends _blockDefault.default {
     }
     componentDidMount() {
         if (this.props.last_message) {
-            const time = new Date(this.props.last_message.time).toLocaleTimeString();
-            const day = new Date(this.props.last_message.time).toLocaleDateString();
+            const date = new Date(this.props.last_message.time);
+            const time = date.toLocaleTimeString();
+            const day = date.toLocaleDateString();
             this.props.datetime = `${time} ${day}`;
             this.setProps(this.props);
         }
@@ -13582,18 +13583,19 @@ class ChatHeader extends _blockDefault.default {
         this.props.events = {
             click: async (e)=>{
                 e.preventDefault();
-                if (e.target.closest('span.icon-more')) {
+                const target = e.target;
+                if (target.closest('span.icon-more')) {
                     const options = document.querySelector('.chat-header__options');
                     options.classList.toggle('show');
                 }
-                if (e.target.hasAttribute('data-delete-chat')) {
-                    const selectedChatId = Number(e.target.closest('.chat-header').dataset.selectedChat);
+                if (target.hasAttribute('data-delete-chat')) {
+                    const selectedChatId = Number(target.closest('.chat-header').dataset.selectedChat);
                     await _chatsController.chatController.deleteChat({
                         chatId: selectedChatId
                     });
                     _index.router.go('/messenger');
                 }
-                if (e.target.hasAttribute('data-add-user')) {
+                if (target.hasAttribute('data-add-user')) {
                     const userInput = document.querySelector('.chat-header__add-user');
                     userInput.classList.toggle('show');
                 }
@@ -13602,8 +13604,9 @@ class ChatHeader extends _blockDefault.default {
         _chatData.ADD_USER.events = {
             click: async (e)=>{
                 e.preventDefault();
-                const selectedChatId = Number(e.target.closest('.chat-header').dataset.selectedChat);
-                const options = e.target.closest('.chat-header__options');
+                const target = e.target;
+                const selectedChatId = Number(target.closest('.chat-header').dataset.selectedChat);
+                const options = target.closest('.chat-header__options');
                 const inputUsername = document.querySelector('.add-user__input');
                 if (inputUsername.value !== '') {
                     const user = await _userController.userController.searchUser({

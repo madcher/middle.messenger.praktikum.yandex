@@ -9,8 +9,9 @@ export default class Chat extends Block {
 
 	componentDidMount() {
 		if (this.props.last_message) {
-			const time = new Date(this.props.last_message.time).toLocaleTimeString();
-			const day = new Date(this.props.last_message.time).toLocaleDateString();
+			const date = new Date(this.props.last_message.time);
+			const time = date.toLocaleTimeString();
+			const day = date.toLocaleDateString();
 			this.props.datetime = `${time} ${day}`;
 			this.setProps(this.props);
 		}

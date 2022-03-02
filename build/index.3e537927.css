@@ -320,6 +320,7 @@
 .chats__list::-webkit-scrollbar {
   width: 0;
 }
+@charset "UTF-8";
 .chat-header {
   display: none;
   height: 50px;
@@ -337,12 +338,15 @@
   color: #3369f3;
 }
 .chat-header .icon-more {
-  font-size: 16px;
+  font-size: 20px;
   color: #999;
   cursor: pointer;
 }
 .chat-header .icon-more:hover {
   color: #3369f3;
+}
+.chat-header .icon-more::before {
+  content: "⚙";
 }
 .chat-header__options {
   display: none;

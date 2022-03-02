@@ -1,4 +1,4 @@
-export const setUser = (data: any) => {
+export const setUser = (data: Record<string, any>) => {
 	return {
 		type: 'SET_USER',
 		event: 'user_changed',
@@ -6,7 +6,7 @@ export const setUser = (data: any) => {
 	};
 };
 
-export const loadChats = (data: any) => {
+export const loadChats = (data: Record<string, any>) => {
 	return {
 		type: 'LOAD_CHATS',
 		event: 'load_chats',
@@ -14,7 +14,7 @@ export const loadChats = (data: any) => {
 	};
 };
 
-export const selectChat = (data: any) => {
+export const selectChat = (data: Record<string, any>) => {
 	return {
 		type: 'SELECT_CHAT',
 		event: 'select_chat',
@@ -22,7 +22,7 @@ export const selectChat = (data: any) => {
 	};
 };
 
-export const setMessages = (data: any) => {
+export const setMessages = (data: Record<string, any>) => {
 	return {
 		type: 'SET_MESSAGES',
 		event: 'messages_received',
@@ -30,7 +30,7 @@ export const setMessages = (data: any) => {
 	};
 };
 
-export const user = (state: any, action: any) => {
+export const user = (state: any, action: Record<string, any>) => {
 	switch (action.type) {
 	case 'SET_USER':
 		return action.data;
@@ -39,7 +39,7 @@ export const user = (state: any, action: any) => {
 	}
 };
 
-export const chats = (state: any, action: any) => {
+export const chats = (state: any, action: Record<string, any>) => {
 	switch (action.type) {
 	case 'LOAD_CHATS':
 		return action.data;
@@ -48,7 +48,7 @@ export const chats = (state: any, action: any) => {
 	}
 };
 
-export const chat = (state: any, action: any) => {
+export const chat = (state: any, action: Record<string, any>) => {
 	switch (action.type) {
 	case 'SELECT_CHAT':
 		return state = {
