@@ -1,6 +1,7 @@
-import { EventBus } from './EventBus';
+// @ts-ignore
+import {EventBus} from './EventBus';
 import * as Handlebars from 'handlebars';
-import { propsType } from '../types';
+import {propsType} from '../types';
 
 export default abstract class Block {
 	private _element: any;
@@ -62,8 +63,8 @@ export default abstract class Block {
 		return oldProps !== newProps;
 	}
 
-	setProps = ({ ...nextProps }: propsType) => {
-		const previousProps = { ...this.props };
+	setProps = ({...nextProps}: propsType) => {
+		const previousProps = {...this.props};
 		if (!nextProps) {
 			return;
 		}
@@ -95,6 +96,16 @@ export default abstract class Block {
 				nodes[index] = prop;
 				props[propName] = `<div id='${index}'></div>`;
 			}
+			if (propName === 'chats') {
+				if (prop.length !== 0) {
+					prop.forEach((item: any, index: any) => {
+						if (prop[index] instanceof Block) {
+							nodes[index] = item;
+							return prop[index] = `<div id='${index}'></div>`;
+						}
+					});
+				}
+			}
 		});
 
 		fragment.innerHTML = template(props);
@@ -121,7 +132,7 @@ export default abstract class Block {
 	}
 
 	private _addEvents(element?: any) {
-		const { events } = this.props;
+		const {events} = this.props;
 		if (events) {
 			Object.entries(events).forEach(([event, handler]) => {
 				if (element) {
@@ -133,7 +144,7 @@ export default abstract class Block {
 	}
 
 	private _removeEvents(element?: any) {
-		const { events } = this.props;
+		const {events} = this.props;
 		if (events) {
 			Object.entries(events).forEach(([event, handler]) => {
 				if (element) {
@@ -160,7 +171,7 @@ export default abstract class Block {
 					throw new Error('Нет доступа');
 				}
 				target[prop] = value;
-				self.eventBus().emit(Block.EVENTS.FLOW_CDU, { ...target }, target);
+				self.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
 				return true;
 			},
 			deleteProperty(target, prop: string) {
@@ -174,10 +185,16 @@ export default abstract class Block {
 	};
 
 	show() {
-		this._element.style.display = 'block';
+		if (this._element) {
+			const style = this._element.style || {};
+			style.display = 'block';
+		}
 	}
 
 	hide() {
-		this._element.style.display = 'none';
+		if (this._element) {
+			const style = this._element.style || {};
+			style.display = 'none';
+		}
 	}
 }

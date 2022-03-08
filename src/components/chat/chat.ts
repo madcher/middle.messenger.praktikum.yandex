@@ -1,7 +1,23 @@
-import * as Handlebars from 'handlebars';
-import chat from './chat.tmpl';
+import chatTmpl from './chat.tmpl';
+import Block from '../../Utils/Block';
 import './chat.scss';
 
-Handlebars.registerPartial('chat', chat);
+export default class Chat extends Block {
+	constructor(props?: any) {
+		super(props);
+	}
 
-export default chat;
+	componentDidMount() {
+		if (this.props.last_message) {
+			const date = new Date(this.props.last_message.time);
+			const time = date.toLocaleTimeString();
+			const day = date.toLocaleDateString();
+			this.props.datetime = `${time} ${day}`;
+			this.setProps(this.props);
+		}
+	}
+
+	public render() {
+		return this.compile(chatTmpl, this.props);
+	}
+}

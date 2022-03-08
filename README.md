@@ -1,12 +1,12 @@
 
-Мессенджер для первого модуля
+Мессенджер для третьего спринта
 
 Готово для второго спринта:
-- добавлены линтеры
-- добавлен тайпскрипт
-- проект переделан на блоки
+- добавлены api
+- добавлен роутинг
+- добавлены тесты
 
-домен netlify: https://61fc3ab79512bc00087a3c92--zen-perlman-c8cf62.netlify.app/
+домен netlify: https://romantic-turing-bac49e.netlify.app
 
-Ссылка на пулл реквест: https://github.com/madcher/middle.messenger.praktikum.yandex/pull/2
+Ссылка на пулл реквест: https://github.com/madcher/middle.messenger.praktikum.yandex/pull/3
 

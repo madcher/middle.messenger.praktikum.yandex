@@ -1,4 +1,4 @@
-import { ValidationFields as data } from '../consts';
+import {ValidationFields as data} from '../consts';
 
 export const render = (tag: string, block: HTMLElement) => {
 	const root = document.querySelector(tag) as HTMLElement;
@@ -10,7 +10,7 @@ export const render = (tag: string, block: HTMLElement) => {
 };
 
 export const css = (el: any, styles: Record<string, any> = {}) => {
-	Object.keys(styles).forEach(key => {
+	Object.keys(styles).forEach((key) => {
 		el.style[key] = styles[key];
 	});
 };
@@ -25,6 +25,9 @@ export class FormValidator {
 
 		if (data[name]) {
 			const re = data[name].re;
+			if (!re) {
+				return '';
+			}
 			validationResult = re.test(value) ? '' : data[name]?.message;
 		}
 		if (this.errorField) {
@@ -44,13 +47,12 @@ export class FormValidator {
 	onSubmitButtonClick = (e: Event, formName: string) => {
 		e.preventDefault();
 		this.output = {};
-		let isError = false;
 
 		const form = document.querySelector(`[name = ${formName}]`);
 		const fields = form.querySelectorAll('input');
 
-		fields.forEach(input => {
-			if (input.type !== 'submit') {
+		fields.forEach((input) => {
+			if (input.type !== 'submit' && input.name !== 'password_confirm') {
 				if (input.value !== '') {
 					this.output[input.name] = input.value;
 				} else {
@@ -58,22 +60,13 @@ export class FormValidator {
 				}
 			}
 		});
-		Object.keys(this.output).forEach(key => {
-			const val = this.inputCheck(this.output[key], key);
-			if (val) {
-				isError = true;
-			}
-		});
-		console.log(this.output);
 
-		if (!isError) {
-			window.location.hash = '#chats';
-		}
+		return this.output;
 	};
 
 	onInput = (target: any) => {
 		target.getAttribute('name') === 'password_confirm'
-			? this.passwordCheck(target.value, 'password_confirm')
+			? ''
 			: this.inputCheck(target.value, target.name);
 	};
 
@@ -88,3 +81,15 @@ export class FormValidator {
 		}
 	};
 }
+
+export const isEqual = (lhs: any, rhs: any) => {
+	return lhs === rhs;
+};
+
+export const isEmptyObject = (obj: any) => {
+	return (Object.keys(obj).length !== 0);
+};
+
+export const toLowerCase = (str: string) => {
+	return str.toLowerCase();
+};
