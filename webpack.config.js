@@ -15,6 +15,7 @@ const config = {
 		path: path.resolve(__dirname, 'dist'),
 	},
 	devServer: {
+		historyApiFallback: true,
 		open: true,
 		host: 'localhost',
 		port: 3000,
