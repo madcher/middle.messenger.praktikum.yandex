@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "My webpack project",
   "scripts": {
-    "dev": "parcel serve index.html --dist-dir ./build",
     "start": "node server.js",
     "test": "jest",
     "build": "webpack --mode=production --node-env=production",
@@ -19,9 +18,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
   "devDependencies": {
-    "@parcel/transformer-image": "^2.0.0-rc.0",
-    "@parcel/transformer-sass": "^2.3.2",
     "@typescript-eslint/eslint-plugin": "^5.1.0",
     "@typescript-eslint/parser": "^5.1.0",
     "@webpack-cli/generators": "^2.4.2",
@@ -33,6 +35,7 @@
     "eslint-plugin-import": "^2.25.2",
     "express": "4.17.1",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^7.0.4",
     "mocha": "^9.2.1",
     "sass": "^1.49.9",
     "sass-loader": "^12.6.0",
