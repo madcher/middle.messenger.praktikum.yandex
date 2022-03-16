@@ -17,7 +17,7 @@ class ChatsAPI extends Api {
 		return this.get('/chats', {data});
 	}
 
-	getToken(id: Record<string, any>) {
+	getToken(id: number) {
 		return this.post(`/chats/token/${id}`);
 	}
 }
@@ -56,7 +56,7 @@ class ChatController {
 		}
 	}
 
-	async getChatToken(data: Record<string, any>) {
+	async getChatToken(data: number) {
 		try {
 			return await chatApi.getToken(data);
 		} catch (e) {
